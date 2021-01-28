@@ -1,7 +1,7 @@
 {
   "name": "cashed",
   "version": "2.0.0",
-  "description": "Helps save you money on what you would have spent.",
+  "description": "Some boilerplate code to get you started - get shakin'!",
   "engines": {
     "node": "~12.11.1"
   },
@@ -41,7 +41,6 @@
   "author": "Fullstack Academy of Code",
   "license": "MIT",
   "dependencies": {
-    "@material-ui/core": "^4.11.3",
     "axios": "^0.19.0",
     "compression": "^1.7.3",
     "connect-session-sequelize": "^6.0.0",
