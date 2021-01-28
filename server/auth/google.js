@@ -4,6 +4,8 @@ const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy
 const {User} = require('../db/models')
 module.exports = router
 
+require('../../secrets')
+
 /**
  * For OAuth keys and other secrets, your Node process will search
  * process.env to find environment variables. On your production server,
@@ -45,6 +47,19 @@ if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
         .catch(done)
     }
   )
+
+  passport.serializeUser((user, done) => {
+    done(null, user.id)
+  })
+
+  passport.deserializeUser(async (id, done) => {
+    try {
+      const user = await User.findByPk(id)
+      done(null, user)
+    } catch (err) {
+      done(err)
+    }
+  })
 
   passport.use(strategy)
 
