@@ -1,18 +1,33 @@
 'use strict'
 
 const db = require('../server/db')
-const {User} = require('../server/db/models')
+const {User, Habit, UserHabit} = require('../server/db/models')
 
 async function seed() {
   await db.sync({force: true})
   console.log('db synced!')
 
   const users = await Promise.all([
-    User.create({email: 'cody@email.com', password: '123'}),
-    User.create({email: 'murphy@email.com', password: '123'})
+    User.create({firstName: 'Cody', lastName: 'Foo'}),
+    User.create({firstName: 'Murphy', lastName: 'Bar'}),
+    User.create({firstName: 'Ned', lastName: 'Rez'}),
+    User.create({firstName: 'Kevin', lastName: 'Ted'}),
+    User.create({firstName: 'John', lastName: 'Mar'})
   ])
 
+  const habits = await Promise.all([
+    Habit.create({habitName: 'Coffee', history: [1]}),
+    Habit.create({habitName: 'Restaurant', history: [1]})
+  ])
+
+  const currentUser = await User.findByPk(1)
+  const habit = await Habit.findByPk(1)
+  await currentUser.addHabit(habit, {through: {goal: 100}})
+
+  // users.addHabits(habits, {through: {goal: 1}})
+
   console.log(`seeded ${users.length} users`)
+  console.log(`seeded ${habits.length} habits`)
   console.log(`seeded successfully`)
 }
 
