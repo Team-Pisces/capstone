@@ -2,6 +2,8 @@ const router = require('express').Router()
 module.exports = router
 
 router.use('/users', require('./users'))
+router.use('/plaid', require('./plaid'))
+
 router.use('/habits', require('./habits'))
 
 router.use((req, res, next) => {

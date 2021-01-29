@@ -12,6 +12,9 @@ const User = db.define('user', {
   amountSaved: {
     type: Sequelize.INTEGER
   },
+  plaidAccessToken: {
+    type: Sequelize.STRING
+  },
   // email: {
   //   type: Sequelize.STRING,
   //   unique: true,
