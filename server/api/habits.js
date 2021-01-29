@@ -11,3 +11,8 @@ router.get('/', async (req, res, next) => {
     next(err)
   }
 })
+
+// POST api/habits
+// router.post('/', async (req, res, next) => {
+
+// })
