@@ -263,31 +263,37 @@ router.get('/accounts', function(request, response, next) {
   })
 })
 
-router.get('/transactions', (req, res, next) => {
-  const startDate = moment()
-    .subtract(30, 'days')
-    .format('YYYY-MM-DD')
-  const endDate = moment().format('YYYY-MM-DD')
-  client.getTransactions(
-    req.user.plaidAccessToken,
-    startDate,
-    endDate,
-    {
-      count: 250,
-      offset: 0
-    },
-    function(error, transactionsResponse) {
-      if (error != null) {
-        console.log(error)
-        return res.json({
-          error
-        })
-      } else {
-        console.log(transactionsResponse)
-        res.json(transactionsResponse)
-      }
-    }
-  )
+// For specific information on how to query this
+// data visit the docs @ https://plaid.com/docs/api/products/#transactions
+router.get('/transactions', async (req, res, next) => {
+  try {
+    const response = await client.getTransactions(req.user.accessToken)
+    res.send(response.transactions)
+  } catch (error) {
+    next(error)
+  }
+})
+
+// For specific information on how to query this
+// data visit the docs @ https://plaid.com/docs/api/products/#balance
+router.get('/balance', async (req, res, next) => {
+  try {
+    const response = await client.getBalance(req.user.accessToken)
+    res.send(response.accounts)
+  } catch (error) {
+    next(error)
+  }
+})
+
+// For specific information on how to query this
+// data visit the docs @ https://plaid.com/docs/api/products/#liabilities
+router.get('/liabilities', async (req, res, next) => {
+  try {
+    const response = await client.getLiabilities(req.user.accessToken)
+    res.send(response.liabilities)
+  } catch (error) {
+    next(error)
+  }
 })
 
 module.exports = router
