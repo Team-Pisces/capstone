@@ -282,7 +282,7 @@ router.get('/accounts', function(request, response, next) {
 // data visit the docs @ https://plaid.com/docs/api/products/#transactions
 router.get('/transactions', async (req, res, next) => {
   try {
-    const response = await client.getTransactions(req.user.accessToken)
+    const response = await client.getTransactions(req.user.plaidAccessToken)
     res.send(response.transactions)
   } catch (error) {
     next(error)
@@ -293,7 +293,7 @@ router.get('/transactions', async (req, res, next) => {
 // data visit the docs @ https://plaid.com/docs/api/products/#balance
 router.get('/balance', async (req, res, next) => {
   try {
-    const response = await client.getBalance(req.user.accessToken)
+    const response = await client.getBalance(req.user.plaidAccessToken)
     res.send(response.accounts)
   } catch (error) {
     next(error)
@@ -304,7 +304,8 @@ router.get('/balance', async (req, res, next) => {
 // data visit the docs @ https://plaid.com/docs/api/products/#liabilities
 router.get('/liabilities', async (req, res, next) => {
   try {
-    const response = await client.getLiabilities(req.user.accessToken)
+    console.log('user --->', req.user)
+    const response = await client.getLiabilities(req.user.plaidAccessToken)
     res.send(response.liabilities)
   } catch (error) {
     next(error)
