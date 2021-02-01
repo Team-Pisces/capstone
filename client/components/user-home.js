@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import Transactions from './Transactions'
 import Balance from './Balance'
-
+import Liabilitites from './Liabilities'
 /**
  * COMPONENT
  */
@@ -15,6 +15,8 @@ export const UserHome = props => {
       <h3>Welcome, {email}</h3>
       <Balance />
       {/* <Transactions /> */}
+      <Transactions />
+      <Liabilitites />
     </div>
   )
 }
