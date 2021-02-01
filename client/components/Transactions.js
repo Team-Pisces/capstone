@@ -1,5 +1,6 @@
 import React, {useEffect} from 'react'
 import {connect} from 'react-redux'
+import {fetchTransactions} from '../store/transactions'
 import {makeStyles} from '@material-ui/core/styles'
 import {
   Table,
@@ -49,6 +50,12 @@ export const Transactions = props => {
 const mapState = state => {
   return {
     user: state.user
+  }
+}
+
+const mapDispatch = dispatch => {
+  return {
+    fetchTransactions: () => dispatch(fetchTransactions)
   }
 }
 
