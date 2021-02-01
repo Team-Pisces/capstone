@@ -1,8 +1,10 @@
 import {Card, CardContent, Typography} from '@material-ui/core'
-import React from 'react'
+import React, {useState, useEffect} from 'react'
+import {useSelector} from 'react-redux'
+import {fetchBalance} from '../store/plaid'
 
-export default function Balance(props) {
-  const {balance} = props
+export default function Balance() {
+  const balance = useSelector(fetchBalance())
 
   return (
     <Card>

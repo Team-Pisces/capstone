@@ -14,7 +14,7 @@ export const UserHome = props => {
     <div>
       <h3>Welcome, {email}</h3>
       <Balance />
-      <Transactions />
+      {/* <Transactions /> */}
     </div>
   )
 }

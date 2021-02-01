@@ -24,7 +24,7 @@ export const fetchBalance = accessToken => async dispatch => {
     const res = await axios.get('/api/plaid/balance', {
       accessToken: accessToken
     })
-    dispatch(getAcounts(res.data))
+    dispatch(getBalance(res.data))
   } catch (err) {
     console.error(err)
   }
@@ -35,7 +35,7 @@ export const fetchAccountInfo = accessToken => async dispatch => {
     const res = await axios.get('/api/plaid/liabilities', {
       accessToken: accessToken
     })
-    dispatch(getAcounts(res.data))
+    dispatch(getAccounts(res.data))
   } catch (err) {
     console.error(err)
   }
