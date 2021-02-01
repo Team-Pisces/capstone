@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 // read env vars from .env file
 require('dotenv').config()
 
@@ -107,7 +108,7 @@ router.post('/create_link_token', function(request, response, next) {
   }
 
   client.createLinkToken(configs, function(error, createTokenResponse) {
-    if (error != null) {
+    if (error !== null) {
       console.error(error)
       return response.json({
         error: error
@@ -179,7 +180,7 @@ router.post('/create_link_token_for_payment', function(
               }
             },
             function(error, createTokenResponse) {
-              if (error != null) {
+              if (error !== null) {
                 console.log(error)
                 return response.json({
                   error
@@ -203,7 +204,7 @@ router.post('/create_link_token_for_payment', function(
 router.post('/set_access_token', function(request, response, next) {
   PUBLIC_TOKEN = request.body.public_token
   client.exchangePublicToken(PUBLIC_TOKEN, function(error, tokenResponse) {
-    if (error != null) {
+    if (error !== null) {
       console.log(error)
       return response.json({
         error
@@ -226,7 +227,7 @@ router.post('/get_access_token', function(request, response, next) {
     error,
     tokenResponse
   ) {
-    if (error != null) {
+    if (error !== null) {
       var msg = 'Could not exchange public_token!'
       console.log(msg + '\n' + JSON.stringify(error))
       return response.json({
@@ -273,7 +274,7 @@ router.get('/accounts', function(request, response, next) {
         error: error
       })
     }
-    console.log(accountsResponse)
+    console.log('accounts ---->', accountsResponse)
     response.json({error: null, accounts: accountsResponse})
   })
 })
