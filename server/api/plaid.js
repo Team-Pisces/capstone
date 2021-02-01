@@ -247,21 +247,6 @@ router.post('/get_access_token', function(request, response, next) {
   })
 })
 
-// Retrieve an Item's accounts
-// https://plaid.com/docs/#accounts
-// router.get('/accounts', function (request, response, next) {
-//   client.getAccounts(ACCESS_TOKEN, function (error, accountsResponse) {
-//     if (error != null) {
-//       console.log(error)
-//       return response.json({
-//         error,
-//       })
-//     }
-//     console.log(accountsResponse)
-//     response.json(accountsResponse)
-//   })
-// })
-
 router.get('/accounts', function(request, response, next) {
   client.getAccounts(request.user.plaidAccessToken, function(
     error,
@@ -282,7 +267,15 @@ router.get('/accounts', function(request, response, next) {
 // data visit the docs @ https://plaid.com/docs/api/products/#transactions
 router.get('/transactions', async (req, res, next) => {
   try {
-    const response = await client.getTransactions(req.user.plaidAccessToken)
+    const startDate = moment()
+      .subtract(30, 'days')
+      .format('YYYY-MM-DD')
+    const endDate = moment().format('YYYY-MM-DD')
+    const response = await client.getTransactions(
+      req.user.plaidAccessToken,
+      startDate,
+      endDate
+    )
     res.send(response.transactions)
   } catch (error) {
     next(error)
