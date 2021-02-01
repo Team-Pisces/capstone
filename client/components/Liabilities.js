@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {Table, Button} from '@material-ui/core'
-import {fetchAccounts} from '../store/plaid'
+import {fetchLiabilities} from '../store/plaid'
+import {connect} from 'react-redux'
 
 class Liabilitites extends Component {
   constructor() {
@@ -8,11 +9,15 @@ class Liabilitites extends Component {
   }
 
   handleClick = () => {
-    this.props.fetchAccounts(this.props.accessToken)
+    this.props.fetchLiabilities()
   }
 
   render() {
-    return <div />
+    return (
+      <React.Fragment>
+        <Button onClick={this.handleClick}>Liabilities</Button>
+      </React.Fragment>
+    )
   }
 }
 
@@ -21,7 +26,7 @@ const mapState = state => ({
 })
 
 const mapDispatch = dispatch => ({
-  fetchAccounts: () => dispatch(fetchAccounts())
+  fetchLiabilities: () => dispatch(fetchLiabilities())
 })
 
 export default connect(mapState, mapDispatch)(Liabilitites)
