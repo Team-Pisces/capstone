@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 // read env vars from .env file
 require('dotenv').config()
 
@@ -107,7 +108,7 @@ router.post('/create_link_token', function(request, response, next) {
   }
 
   client.createLinkToken(configs, function(error, createTokenResponse) {
-    if (error != null) {
+    if (error !== null) {
       console.error(error)
       return response.json({
         error: error
@@ -179,7 +180,7 @@ router.post('/create_link_token_for_payment', function(
               }
             },
             function(error, createTokenResponse) {
-              if (error != null) {
+              if (error !== null) {
                 console.log(error)
                 return response.json({
                   error
@@ -203,7 +204,7 @@ router.post('/create_link_token_for_payment', function(
 router.post('/set_access_token', function(request, response, next) {
   PUBLIC_TOKEN = request.body.public_token
   client.exchangePublicToken(PUBLIC_TOKEN, function(error, tokenResponse) {
-    if (error != null) {
+    if (error !== null) {
       console.log(error)
       return response.json({
         error
@@ -226,7 +227,7 @@ router.post('/get_access_token', function(request, response, next) {
     error,
     tokenResponse
   ) {
-    if (error != null) {
+    if (error !== null) {
       var msg = 'Could not exchange public_token!'
       console.log(msg + '\n' + JSON.stringify(error))
       return response.json({
@@ -247,20 +248,28 @@ router.post('/get_access_token', function(request, response, next) {
   })
 })
 
-router.get('/accounts', function(request, response, next) {
-  client.getAccounts(request.user.plaidAccessToken, function(
-    error,
-    accountsResponse
-  ) {
-    if (error != null) {
-      console.log(error)
-      return response.json({
-        error: error
-      })
-    }
-    console.log(accountsResponse)
-    response.json({error: null, accounts: accountsResponse})
-  })
+// Retrieve an Item's accounts
+// https://plaid.com/docs/#accounts
+// router.get('/accounts', function (request, response, next) {
+//   client.getAccounts(ACCESS_TOKEN, function (error, accountsResponse) {
+//     if (error != null) {
+//       console.log(error)
+//       return response.json({
+//         error,
+//       })
+//     }
+//     console.log(accountsResponse)
+//     response.json(accountsResponse)
+//   })
+// })
+
+router.get('/accounts', async (req, res, next) => {
+  try {
+    const response = await client.getAccounts(req.user.plaidAccessToken)
+    res.send(response.accounts)
+  } catch (error) {
+    next(error)
+  }
 })
 
 // For specific information on how to query this

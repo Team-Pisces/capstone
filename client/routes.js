@@ -8,6 +8,7 @@ import {
   UserHome,
   Habits,
   Transactions,
+  AccountsPage,
   Balance
 } from './components'
 
@@ -36,6 +37,7 @@ class Routes extends Component {
             <Route path="/habits" component={Habits} />
             <Route path="/transactions" component={Transactions} />
             <Route path="/balance" component={Balance} />
+            <Route path="/accounts" component={AccountsPage} />
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}
