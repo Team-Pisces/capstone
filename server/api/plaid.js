@@ -267,7 +267,15 @@ router.get('/accounts', function(request, response, next) {
 // data visit the docs @ https://plaid.com/docs/api/products/#transactions
 router.get('/transactions', async (req, res, next) => {
   try {
-    const response = await client.getTransactions(req.user.plaidAccessToken)
+    const startDate = moment()
+      .subtract(30, 'days')
+      .format('YYYY-MM-DD')
+    const endDate = moment().format('YYYY-MM-DD')
+    const response = await client.getTransactions(
+      req.user.plaidAccessToken,
+      startDate,
+      endDate
+    )
     res.send(response.transactions)
   } catch (error) {
     next(error)
