@@ -5,12 +5,19 @@ import {
   InputLabel,
   MenuItem,
   FormControl,
-  Select
+  Select,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper
 } from '@material-ui/core'
 import {makeStyles} from '@material-ui/core/styles'
 import React, {useState, useEffect} from 'react'
 import {connect} from 'react-redux'
-import {fetchBalance} from '../store/plaid'
+import {fetchBalance, fetchTransactions} from '../store/plaid'
 
 const useStyles = makeStyles(theme => ({
   formControl: {
@@ -29,16 +36,16 @@ export const Balance = props => {
 
   useEffect(() => {
     props.fetchBalance()
+    props.fetchTransactions()
   }, [])
 
   const handleChange = event => {
-    console.log('Value: ---> ', event.target.value)
     setAccount(event.target.value)
   }
 
-  console.log('PROPS: ----> ', props)
-  console.log('account: ----> ', account)
   const balance = props.balance || []
+  const transactions = props.transactions || []
+  console.log('Props: ---> ', props)
   return (
     <div>
       <FormControl variant="filled" className={classes.formControl}>
@@ -53,7 +60,7 @@ export const Balance = props => {
           {balance.length > 0
             ? balance.map(accountBalance => (
                 <MenuItem
-                  value={accountBalance.name}
+                  value={accountBalance}
                   key={accountBalance.account_id}
                 >
                   {accountBalance.name}
@@ -64,14 +71,27 @@ export const Balance = props => {
       </FormControl>
       <Card>
         <CardContent>
-          <Typography>Current Balance: </Typography>
+          <Typography>Balance: </Typography>
           {account
             ? balance.map(accountBalance => {
-                if (accountBalance.name === account) {
+                if (accountBalance.name === account.name) {
                   return (
-                    <Typography key={accountBalance.account_id} variant="h5">
-                      ${accountBalance.balances.current}
-                    </Typography>
+                    <div key={accountBalance.account_id}>
+                      <Typography>
+                        Current: $
+                        {parseFloat(
+                          Math.floor(accountBalance.balances.current * 100) /
+                            100
+                        ).toLocaleString('en')}
+                      </Typography>
+                      <Typography>
+                        Available: $
+                        {parseFloat(
+                          Math.floor(accountBalance.balances.available * 100) /
+                            100
+                        ).toLocaleString('en')}
+                      </Typography>
+                    </div>
                   )
                 } else {
                   return null
@@ -80,16 +100,49 @@ export const Balance = props => {
             : null}
         </CardContent>
       </Card>
+
+      <TableContainer component={Paper}>
+        <Table aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell>Name</TableCell>
+              <TableCell align="right">Amount</TableCell>
+              <TableCell align="right">Date</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {account
+              ? transactions.map(transaction => {
+                  if (transaction.account_id === account.account_id) {
+                    return (
+                      <TableRow key={transaction.transaction_id}>
+                        <TableCell component="th">{transaction.name}</TableCell>
+                        <TableCell align="right">
+                          {transaction.amount}
+                        </TableCell>
+                        <TableCell align="right">{transaction.date}</TableCell>
+                      </TableRow>
+                    )
+                  } else {
+                    return null
+                  }
+                })
+              : null}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </div>
   )
 }
 
 const mapState = state => ({
-  balance: state.plaid.balance
+  balance: state.plaid.balance,
+  transactions: state.plaid.transactions
 })
 
 const mapDispatch = dispatch => ({
-  fetchBalance: () => dispatch(fetchBalance())
+  fetchBalance: () => dispatch(fetchBalance()),
+  fetchTransactions: () => dispatch(fetchTransactions())
 })
 
 export default connect(mapState, mapDispatch)(Balance)
