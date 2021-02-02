@@ -11,6 +11,9 @@ const UserHabit = require('./userHabit')
 User.belongsToMany(Habit, {through: UserHabit})
 Habit.belongsToMany(User, {through: UserHabit})
 
+Habit.belongsTo(User)
+User.hasOne(Habit)
+
 /**
  * We'll export all of our models here, so that any time a module needs a model,
  * we can just require it from 'db/models'
