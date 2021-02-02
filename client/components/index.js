@@ -5,8 +5,9 @@
  */
 export {default as Navbar} from './navbar'
 export {default as UserHome} from './user-home'
-export {Login, Signup} from './auth-form'
+export {Login} from './auth-form'
 export {default as Habits} from './Habits'
 export {default as Balance} from './Balance'
 export {default as AccountsPage} from './AccountsPage'
 export {default as Transactions} from './Transactions'
+export {Signup} from './SignUp'
