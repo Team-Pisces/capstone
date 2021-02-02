@@ -7,59 +7,81 @@ import {
   FormControl,
   Select
 } from '@material-ui/core'
-import React, {Component} from 'react'
+import {makeStyles} from '@material-ui/core/styles'
+import React, {useState, useEffect} from 'react'
 import {connect} from 'react-redux'
 import {fetchBalance} from '../store/plaid'
 
-class Balance extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {value: ''}
-
-    this.handleChange = this.handleChange.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
+const useStyles = makeStyles(theme => ({
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 200
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2)
   }
-  componentDidMount() {
-    this.props.fetchBalance()
+}))
+
+export const Balance = props => {
+  const classes = useStyles()
+
+  const [account, setAccount] = useState('')
+
+  useEffect(() => {
+    props.fetchBalance()
+  }, [])
+
+  const handleChange = event => {
+    console.log('Value: ---> ', event.target.value)
+    setAccount(event.target.value)
   }
 
-  handleChange(event) {
-    this.setState({value: event.target.value})
-  }
+  console.log('PROPS: ----> ', props)
+  console.log('account: ----> ', account)
+  const balance = props.balance || []
+  return (
+    <div>
+      <FormControl variant="filled" className={classes.formControl}>
+        <InputLabel id="accountL">Select Account</InputLabel>
 
-  handleSubmit(event) {
-    alert('A name was submitted: ' + this.state.value)
-    event.preventDefault()
-  }
-
-  render() {
-    console.log('PROPS: ----> ', this.props)
-    const balance = this.props.balance || []
-    return (
-      <div>
-        <FormControl variant="filled">
-          <InputLabel id="demo-simple-select-filled-label">
-            Select Account
-          </InputLabel>
-
-          <Select
-            labelId="demo-simple-select-filled-label"
-            id="demo-simple-select-filled"
-            value={balance}
-            onChange={this.handleChange}
-          >
-            {balance.length > 0
-              ? balance.map(account => (
-                  <MenuItem key={account.account_id} value={account.name}>
-                    {account.name}
-                  </MenuItem>
-                ))
-              : null}
-          </Select>
-        </FormControl>
-      </div>
-    )
-  }
+        <Select
+          labelId="accountL"
+          id="account"
+          value={account}
+          onChange={handleChange}
+        >
+          {balance.length > 0
+            ? balance.map(accountBalance => (
+                <MenuItem
+                  value={accountBalance.name}
+                  key={accountBalance.account_id}
+                >
+                  {accountBalance.name}
+                </MenuItem>
+              ))
+            : null}
+        </Select>
+      </FormControl>
+      <Card>
+        <CardContent>
+          <Typography>Current Balance: </Typography>
+          {account
+            ? balance.map(accountBalance => {
+                if (accountBalance.name === account) {
+                  return (
+                    <Typography key={accountBalance.account_id} variant="h5">
+                      ${accountBalance.balances.current}
+                    </Typography>
+                  )
+                } else {
+                  return null
+                }
+              })
+            : null}
+        </CardContent>
+      </Card>
+    </div>
+  )
 }
 
 const mapState = state => ({
