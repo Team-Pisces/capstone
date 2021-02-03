@@ -1,4 +1,3 @@
-import React from 'react'
 import axios from 'axios'
 
 export const LOGIN_USER = 'LOGIN_USER'
@@ -8,8 +7,9 @@ export const GENERATE_LINK_TRANSACTIONS = 'GENERATE_LINK_TRANSACTIONS'
 export const GET_TRANSACTIONS = 'GET_TRANSACTIONS'
 export const GET_ACCOUNTS = 'GET_ACCOUNTS'
 
-export const getAccounts = (uid, callback) => dispatch => {
-  axios.post('/api/plaid/accounts', {uid}).then(res => {
+export const getAccounts = (uid, callback) => async dispatch => {
+  try {
+    const res = await axios.post('/api/plaid/accounts', {uid})
     if (res.status === 200) {
       dispatch({
         type: GET_ACCOUNTS,
@@ -20,77 +20,77 @@ export const getAccounts = (uid, callback) => dispatch => {
         callback(res.data.accounts)
       }
     }
-  })
+  } catch (error) {
+    console.error(error)
+  }
 }
 
 export const generateLinkTransactions = (
   public_token,
   uid,
   callback
-) => dispatch => {
-  axios.post('/api/plaid/get_access_token', {public_token, uid}).then(res => {
-    if (res.status === 200) {
-      dispatch({
-        type: GENERATE_LINK_TRANSACTIONS,
-        payload: {transactions: res.data.transactions}
-      })
-
-      if (callback) {
-        callback(uid)
-      }
-    }
+) => async dispatch => {
+  const res = await axios.post('/api/plaid/get_access_token', {
+    public_token,
+    uid
   })
+  if (res.status === 200) {
+    dispatch({
+      type: GENERATE_LINK_TRANSACTIONS,
+      payload: {transactions: res.data.transactions}
+    })
+
+    if (callback) {
+      callback(uid)
+    }
+  }
 }
 
-export const loginUser = (email, password, callback) => dispatch => {
-  axios.post('/api/plaid/login', {email, password}).then(res => {
-    if (res.status === 200) {
-      dispatch({
-        type: LOGIN_USER,
-        payload: {uid: res.data.id, isLoggedin: true}
-      })
-
-      generateLinkToken(res.data.id)
-    }
-  })
-}
-
-export const generateLinkToken = uid => dispatch => {
+export const generateLinkToken = uid => async dispatch => {
   console.log(uid)
-  axios.post('/api/plaid/create_link_token', {uid}).then(res => {
-    if (res.status === 200) {
-      dispatch({
-        type: GENERATE_LINK_TOKEN,
-        payload: {link_token: res.data.link_token}
-      })
-    }
-  })
+  const res = await axios.post('/api/plaid/create_link_token', {uid})
+  if (res.status === 200) {
+    dispatch({
+      type: GENERATE_LINK_TOKEN,
+      payload: {link_token: res.data.link_token}
+    })
+  }
 }
 
-export const getTransactions = (uid, callback) => dispatch => {
-  axios.post('/api/plaid/transactions', {uid}).then(res => {
-    if (res.status === 200) {
-      dispatch({
-        type: GET_TRANSACTIONS,
-        payload: {transactions: res.data.transactions}
-      })
+export const loginUser = (email, password, callback) => async dispatch => {
+  const res = await axios.post('/api/plaid/login', {email, password})
+  if (res.status === 200) {
+    dispatch({
+      type: LOGIN_USER,
+      payload: {uid: res.data.id, isLoggedin: true}
+    })
 
-      if (callback) {
-        callback(res.data.transactions)
-      }
-    }
-  })
+    generateLinkToken(res.data.id)
+  }
 }
 
-export const signupUser = (email, password) => dispatch => {
-  axios.post('/api/plaid/register', {email, password}).then(res => {
-    if (res.status === 200) {
-      dispatch({
-        type: SIGNUP_USER,
-        payload: {formCompleted: true}
-      })
+export const getTransactions = (uid, callback) => async dispatch => {
+  const res = await axios.post('/api/plaid/transactions', {uid})
+  if (res.status === 200) {
+    dispatch({
+      type: GET_TRANSACTIONS,
+      payload: {transactions: res.data.transactions}
+    })
+
+    if (callback) {
+      callback(res.data.transactions)
     }
-  })
+  }
+}
+
+export const signupUser = (email, password) => async dispatch => {
+  const res = await axios.post('/api/plaid/register', {email, password})
+  if (res.status === 200) {
+    dispatch({
+      type: SIGNUP_USER,
+      payload: {formCompleted: true}
+    })
+  }
 }
 
 export default function(state = initialState, action) {
