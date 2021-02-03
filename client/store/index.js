@@ -5,8 +5,9 @@ import {composeWithDevTools} from 'redux-devtools-extension'
 import user from './user'
 import habits from './habits'
 import plaid from './plaid'
+import categories from './categories'
 
-const reducer = combineReducers({user, habits, plaid})
+const reducer = combineReducers({user, habits, plaid, categories})
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))
 )

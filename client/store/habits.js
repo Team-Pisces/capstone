@@ -8,9 +8,9 @@ const getHabits = habits => ({
   habits
 })
 
-const addedHabit = habit => ({
+const addedHabit = habits => ({
   type: ADD_HABIT,
-  habit
+  habits
 })
 
 export const fetchHabits = () => {
@@ -31,8 +31,11 @@ export const addHabit = habit => {
       // for (let i = 0; i < habits.length; i++) {
       //   if (habit.name === )
       // }
-      const {data} = await axios.post('/api/habits', habit)
-      dispatch(addedHabit(data))
+      const {data} = await axios.get('/api/habits')
+      console.log(data)
+      data.habits.push(habit)
+      await axios.put('/api/habits', data)
+      dispatch(addedHabit(data.habits))
     } catch (err) {
       console.error(err)
     }
@@ -46,7 +49,7 @@ export default function(state = initialState, action) {
     case GET_HABITS:
       return action.habits
     case ADD_HABIT:
-      return [...state, action.habit]
+      return action.habits
     default:
       return state
   }

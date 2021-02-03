@@ -1,12 +1,14 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {fetchHabits, addHabitThunk} from '../store/habits'
+import {fetchHabits, addHabit} from '../store/habits'
+import {fetchCategories} from '../store/categories'
 
 class Habits extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       habit: '',
+      category: '',
       goal: 0
     }
 
@@ -20,27 +22,35 @@ class Habits extends React.Component {
     })
   }
 
-  handleSubmit(e) {
+  async handleSubmit(e) {
     e.preventDefault()
-    this.props.addHabit(this.state)
+    await this.props.addHabit(this.state)
+    this.props.fetchHabits()
   }
 
   componentDidMount() {
     this.props.fetchHabits()
+    this.props.fetchCategories()
   }
 
   render() {
-    const {habits} = this.props
+    const {habitInstance} = this.props
+    const habits = habitInstance.habits || []
+    console.log(habits)
+    const {categories} = this.props
     return (
       <div>
         <h1>Habits</h1>
         <div>
           {habits.length ? (
-            habits.map(habit => {
+            habits.map((habit, i) => {
               return (
-                <div key={habit.id}>
-                  <h3>{habit.habitName}</h3>
-                  <h4>{habit.history}</h4>
+                <div key={i}>
+                  <h3>
+                    Habit: {habit.habit} Category: {habit.category} Goal:{' '}
+                    {habit.goal}
+                  </h3>
+                  <h4 />
                 </div>
               )
             })
@@ -58,6 +68,23 @@ class Habits extends React.Component {
               value={this.state.habit}
             />
 
+            <label htmlFor="category">Category: </label>
+            <select
+              name="category"
+              onChange={this.handleChange}
+              value={this.state.category}
+            >
+              {categories.length
+                ? categories.map(category => {
+                    return (
+                      <option key={category.category_id}>
+                        {category.hierarchy[category.hierarchy.length - 1]}
+                      </option>
+                    )
+                  })
+                : null}
+            </select>
+
             <label htmlFor="goal">Goal: </label>
             <input
               name="goal"
@@ -74,12 +101,14 @@ class Habits extends React.Component {
 }
 
 const mapState = state => ({
-  habits: state.habits
+  habitInstance: state.habits,
+  categories: state.categories
 })
 
 const mapDispatch = dispatch => ({
   fetchHabits: () => dispatch(fetchHabits()),
-  addHabit: habit => dispatch(addHabitThunk(habit))
+  addHabit: habit => dispatch(addHabit(habit)),
+  fetchCategories: () => dispatch(fetchCategories())
 })
 
 export default connect(mapState, mapDispatch)(Habits)
