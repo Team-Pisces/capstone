@@ -39,19 +39,29 @@ async function seed() {
     })
   ])
 
-  const habits = await Promise.all([
-    Habit.create({habitName: 'Coffee', history: [1]}),
-    Habit.create({habitName: 'Restaurant', history: [1]})
-  ])
+  // const habits = await Promise.all([
+  //   Habit.create({
+  //     habits: {name: 'Buying Coffee', category: 'Coffee Shop', goal: 100},
+  //     history: [1],
+  //   }),
+  //   Habit.create({
+  //     habits: {
+  //       name: 'Going to the Movies',
+  //       category: 'Movie Theatres',
+  //       goal: 50,
+  //     },
+  //     history: [1],
+  //   }),
+  // ])
 
-  const currentUser = await User.findByPk(1)
-  const habit = await Habit.findByPk(1)
-  await currentUser.addHabit(habit, {through: {goal: 100}})
+  // const currentUser = await User.findByPk(1)
+  // const habit = await Habit.findByPk(1)
+  // await currentUser.addHabit(habit, {through: {goal: 100}})
 
   // users.addHabits(habits, {through: {goal: 1}})
 
   console.log(`seeded ${users.length} users`)
-  console.log(`seeded ${habits.length} habits`)
+  // console.log(`seeded ${habits.length} habits`)
   console.log(`seeded successfully`)
 }
 
