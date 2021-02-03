@@ -7,6 +7,8 @@ export const GENERATE_LINK_TRANSACTIONS = 'GENERATE_LINK_TRANSACTIONS'
 export const GET_TRANSACTIONS = 'GET_TRANSACTIONS'
 export const GET_ACCOUNTS = 'GET_ACCOUNTS'
 
+let initialState = {}
+
 export const getAccounts = (uid, callback) => async dispatch => {
   try {
     const res = await axios.post('/api/plaid/accounts', {uid})
