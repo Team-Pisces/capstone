@@ -45,7 +45,6 @@ export const Balance = props => {
 
   const balance = props.balance || []
   const transactions = props.transactions || []
-  console.log('Props: ---> ', props)
   return (
     <div>
       <FormControl variant="filled" className={classes.formControl}>
