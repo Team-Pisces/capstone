@@ -47,10 +47,8 @@ class Habits extends React.Component {
               return (
                 <div key={i}>
                   <h3>
-                    Habit: {habit.habit} Category: {habit.category} Goal:{' '}
-                    {habit.goal}
+                    Habit: {habit.habit} | Goal: ${habit.goal}
                   </h3>
-                  <h4 />
                 </div>
               )
             })
@@ -74,6 +72,7 @@ class Habits extends React.Component {
               onChange={this.handleChange}
               value={this.state.category}
             >
+              <option>Select Category</option>
               {categories.length
                 ? categories.map(category => {
                     return (
