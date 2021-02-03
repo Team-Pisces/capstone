@@ -306,9 +306,17 @@ router.get('/balance', async (req, res, next) => {
 // data visit the docs @ https://plaid.com/docs/api/products/#liabilities
 router.get('/liabilities', async (req, res, next) => {
   try {
-    console.log('user --->', req.user)
     const response = await client.getLiabilities(req.user.plaidAccessToken)
     res.send(response.liabilities)
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.get('/categories', async (req, res, next) => {
+  try {
+    const response = await client.getCategories()
+    res.send(response.categories)
   } catch (error) {
     next(error)
   }
