@@ -15,6 +15,7 @@ router.get('/', async (req, res, next) => {
 // POST api/habits
 router.post('/', async (req, res, next) => {
   try {
+    console.log('Habit Added!')
     const habit = await Habit.create({
       name: req.body.name,
       goal: req.body.goal,

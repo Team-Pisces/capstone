@@ -25,19 +25,17 @@ class Habits extends React.Component {
       name: '',
       goal: 0
     }
-
-    this.handleChange = this.handleChange.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  handleChange(e) {
+  handleChange = e => {
     this.setState({
       [e.target.name]: e.target.value
     })
   }
 
-  handleSubmit(e) {
+  handleSubmit = e => {
     e.preventDefault()
+    console.log('Hit me!')
     this.props.addHabit(this.state)
   }
 
@@ -91,7 +89,12 @@ class Habits extends React.Component {
                 onChange={this.handleChange}
                 value={this.state.goal}
               />
-              <Button variant="contained" color="primary" type="submit">
+              <Button
+                onClick={this.handleSubmit}
+                variant="contained"
+                color="primary"
+                type="submit"
+              >
                 Submit
               </Button>
             </FormControl>
@@ -108,9 +111,7 @@ const mapState = state => ({
 })
 
 const mapDispatch = dispatch => ({
-  fetchHabits: () => dispatch(fetchHabits()),
-  addHabit: habit => dispatch(addHabit(habit)),
-  fetchCategories: () => dispatch(fetchCategories())
+  addHabit: habit => dispatch(addHabit(habit))
 })
 
 export default connect(mapState, mapDispatch)(Habits)
