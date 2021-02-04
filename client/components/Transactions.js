@@ -25,7 +25,6 @@ class Transactions extends React.Component {
   render() {
     const transactions = this.props.transactions || []
     // const classes = useStyles()
-    console.log(transactions)
     return (
       <TableContainer component={Paper}>
         <Table aria-label="simple table">
