@@ -8,6 +8,7 @@ const bodyParser = require('body-parser')
 const moment = require('moment')
 const plaid = require('plaid')
 const {User} = require('../db/models')
+const linkedPlaidOnly = require('../linkedPlaidOnly')
 
 const APP_PORT = process.env.APP_PORT || 8080
 const PLAID_CLIENT_ID = process.env.PLAID_CLIENT_ID
@@ -248,7 +249,7 @@ router.post('/get_access_token', function(request, response, next) {
   })
 })
 
-router.get('/accounts', async (req, res, next) => {
+router.get('/accounts', linkedPlaidOnly, async (req, res, next) => {
   try {
     const response = await client.getAccounts(req.user.plaidAccessToken)
     res.send(response.accounts)
@@ -259,7 +260,7 @@ router.get('/accounts', async (req, res, next) => {
 
 // For specific information on how to query this
 // data visit the docs @ https://plaid.com/docs/api/products/#transactions
-router.get('/transactions', async (req, res, next) => {
+router.get('/transactions', linkedPlaidOnly, async (req, res, next) => {
   try {
     const startDate = moment()
       .subtract(30, 'days')
@@ -278,7 +279,7 @@ router.get('/transactions', async (req, res, next) => {
 
 // For specific information on how to query this
 // data visit the docs @ https://plaid.com/docs/api/products/#balance
-router.get('/balance', async (req, res, next) => {
+router.get('/balance', linkedPlaidOnly, async (req, res, next) => {
   try {
     const response = await client.getBalance(req.user.plaidAccessToken)
     res.send(response.accounts)
