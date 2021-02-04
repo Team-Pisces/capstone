@@ -1,6 +1,5 @@
 const User = require('./user')
 const Habit = require('./habits')
-const UserHabit = require('./userHabit')
 
 /**
  * If we had any associations to make, this would be a great place to put them!
@@ -8,8 +7,8 @@ const UserHabit = require('./userHabit')
  *
  *    BlogPost.belongsTo(User)
  */
-User.belongsToMany(Habit, {through: UserHabit})
-Habit.belongsToMany(User, {through: UserHabit})
+
+User.hasMany(Habit)
 
 /**
  * We'll export all of our models here, so that any time a module needs a model,
@@ -20,5 +19,4 @@ Habit.belongsToMany(User, {through: UserHabit})
 module.exports = {
   User,
   Habit
-  // UserHabit,
 }

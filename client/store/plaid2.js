@@ -27,30 +27,21 @@ export const getAccounts = (uid, callback) => async dispatch => {
   }
 }
 
-export const generateLinkTransactions = (
-  public_token,
-  uid,
-  callback
-) => async dispatch => {
-  const res = await axios.post('/api/plaid/get_access_token', {
-    public_token,
-    uid
+export const generateLinkTransactions = public_token => async dispatch => {
+  const res = await axios.post('/api/plaid/set_access_token', {
+    public_token
   })
   if (res.status === 200) {
     dispatch({
       type: GENERATE_LINK_TRANSACTIONS,
       payload: {transactions: res.data.transactions}
     })
-
-    if (callback) {
-      callback(uid)
-    }
   }
 }
 
-export const generateLinkToken = uid => async dispatch => {
-  console.log(uid)
-  const res = await axios.post('/api/plaid/create_link_token', {uid})
+export const generateLinkToken = () => async dispatch => {
+  const res = await axios.post('/api/plaid/create_link_token')
+  console.log('Hit')
   if (res.status === 200) {
     dispatch({
       type: GENERATE_LINK_TOKEN,
@@ -71,17 +62,13 @@ export const loginUser = (email, password, callback) => async dispatch => {
   }
 }
 
-export const getTransactions = (uid, callback) => async dispatch => {
-  const res = await axios.post('/api/plaid/transactions', {uid})
+export const getTransactions = () => async dispatch => {
+  const res = await axios.get('/api/plaid/transactions')
   if (res.status === 200) {
     dispatch({
       type: GET_TRANSACTIONS,
-      payload: {transactions: res.data.transactions}
+      payload: {transactions: res.data}
     })
-
-    if (callback) {
-      callback(res.data.transactions)
-    }
   }
 }
 

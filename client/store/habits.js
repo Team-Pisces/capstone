@@ -1,10 +1,16 @@
 import axios from 'axios'
 
 const GET_HABITS = 'GET_HABITS'
+const ADD_HABIT = 'ADD_HABIT'
 
 const getHabits = habits => ({
   type: GET_HABITS,
   habits
+})
+
+const addedHabit = habit => ({
+  type: ADD_HABIT,
+  habit
 })
 
 export const fetchHabits = () => {
@@ -18,12 +24,25 @@ export const fetchHabits = () => {
   }
 }
 
+export const addHabit = habit => {
+  return async dispatch => {
+    try {
+      const {data} = await axios.post('/api/habits', habit)
+      dispatch(addedHabit(data))
+    } catch (err) {
+      console.error(err)
+    }
+  }
+}
+
 const initialState = []
 
 export default function(state = initialState, action) {
   switch (action.type) {
     case GET_HABITS:
       return action.habits
+    case ADD_HABIT:
+      return [...state, action.habit]
     default:
       return state
   }

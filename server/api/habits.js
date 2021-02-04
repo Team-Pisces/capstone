@@ -13,6 +13,16 @@ router.get('/', async (req, res, next) => {
 })
 
 // POST api/habits
-// router.post('/', async (req, res, next) => {
-
-// })
+router.post('/', async (req, res, next) => {
+  try {
+    const habit = await Habit.create({
+      name: req.body.name,
+      goal: req.body.goal,
+      initialWeeklyAvg: req.body.transactions,
+      userId: req.user.id
+    })
+    res.send(habit)
+  } catch (err) {
+    next(err)
+  }
+})
