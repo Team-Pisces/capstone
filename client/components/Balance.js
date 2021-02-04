@@ -43,9 +43,52 @@ export const Balance = props => {
     setAccount(event.target.value)
   }
 
+  const getFrequency = (arr, value) => {
+    value = arr[0].category_id
+    const count = arr.reduce(
+      (acc, cur) => (cur.category_id === value ? ++acc : acc),
+      0
+    )
+    return count
+  }
+
+  // const count = (array) => {
+  //   let result = {}
+  //   array.forEach(function (arr) {
+  //     arr.category.forEach(function (category) {
+  //       console.log('inside count, cat -->', category[0])
+  //       if (result[category] === undefined) {
+  //         result[category] = 0
+  //       }
+  //       result[category]++
+  //     })
+  //   })
+  //   return result
+  // }
+  const count = array => {
+    let result = {}
+    for (let i = 0; i < array.length; i++) {
+      let currentElement = array[i].category
+
+      if (result[currentElement[0]]) {
+        result[currentElement[0]] += 1
+      } else {
+        result[currentElement[0]] = 1
+      }
+    }
+    let newResult = Object.entries(result)
+    return newResult
+  }
+
   const balance = props.balance || []
   const transactions = props.transactions || []
+  const accTransaction = transactions.filter(
+    transaction => transaction.account_id === account.account_id
+  )
+
+  console.log('count-->', count(accTransaction))
   console.log('Props: ---> ', props)
+  console.log('accTransaction --->', accTransaction)
   return (
     <div>
       <FormControl variant="filled" className={classes.formControl}>
@@ -70,8 +113,9 @@ export const Balance = props => {
         </Select>
       </FormControl>
       <Card>
+        <h2>Balance:</h2>
         <CardContent>
-          <Typography>Balance: </Typography>
+          {/* <Typography>Balance: </Typography> */}
           {account
             ? balance.map(accountBalance => {
                 if (accountBalance.name === account.name) {
@@ -101,6 +145,7 @@ export const Balance = props => {
         </CardContent>
       </Card>
 
+      <h4>Transactions:</h4>
       <TableContainer component={Paper}>
         <Table aria-label="simple table">
           <TableHead>
@@ -131,6 +176,28 @@ export const Balance = props => {
           </TableBody>
         </Table>
       </TableContainer>
+
+      <h4>Activity Tracker:</h4>
+      <TableContainer component={Paper}>
+        <Table aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell>Name</TableCell>
+              <TableCell align="right">Frequency</TableCell>
+            </TableRow>
+          </TableHead>
+          {count(accTransaction) ? (
+            <TableBody>
+              {count(accTransaction).map((transaction, i) => (
+                <TableRow key={i}>
+                  <TableCell component="th">{transaction[0]}</TableCell>
+                  <TableCell align="right">{transaction[1]}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          ) : null}
+        </Table>
+      </TableContainer>
     </div>
   )
 }
@@ -146,3 +213,14 @@ const mapDispatch = dispatch => ({
 })
 
 export default connect(mapState, mapDispatch)(Balance)
+
+// {accTransaction ? (
+//   <TableRow>
+//     <TableCell component="th">
+//       {accTransaction.category[0]}
+//     </TableCell>
+//     <TableCell align="right">
+//       {getFrequency(accTransaction, accTransaction.category_id)}
+//     </TableCell>
+//   </TableRow>
+// ) : null}
