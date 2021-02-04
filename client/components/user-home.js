@@ -6,6 +6,7 @@ import Balance from './Balance'
 /**
  * COMPONENT
  */
+
 export const UserHome = props => {
   const {email} = props
 
