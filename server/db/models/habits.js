@@ -13,3 +13,6 @@ const Habit = db.define('habit', {
 })
 
 module.exports = Habit
+
+// what if user wants to update habit?
+//
