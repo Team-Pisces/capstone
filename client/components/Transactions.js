@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {fetchTransactions} from '../store/plaid'
+import {getTransactions} from '../store/plaid2'
 import {
   Table,
   TableBody,
@@ -19,7 +19,7 @@ import {
 
 class Transactions extends React.Component {
   componentDidMount() {
-    this.props.fetchTransactions()
+    this.props.getTransactions()
   }
 
   render() {
@@ -54,13 +54,13 @@ class Transactions extends React.Component {
 
 const mapState = state => {
   return {
-    transactions: state.plaid.transactions
+    transactions: state.plaid2.transactions
   }
 }
 
 const mapDispatch = dispatch => {
   return {
-    fetchTransactions: () => dispatch(fetchTransactions())
+    getTransactions: () => dispatch(getTransactions())
   }
 }
 
