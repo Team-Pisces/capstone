@@ -13,6 +13,9 @@ const Habit = db.define('habit', {
   goal: {
     type: Sequelize.INTEGER
   },
+  initialWeeklyAvg: {
+    type: Sequelize.INTEGER
+  },
   history: {
     type: Sequelize.ARRAY(Sequelize.INTEGER),
     defaultValue: []

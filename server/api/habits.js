@@ -19,6 +19,7 @@ router.post('/', async (req, res, next) => {
     const habit = await Habit.create({
       name: req.body.name,
       goal: req.body.goal,
+      initialWeeklyAvg: req.body.transactions,
       userId: req.user.id
     })
     res.send(habit)

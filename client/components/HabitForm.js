@@ -27,13 +27,15 @@ import {
   TableBody
 } from '@material-ui/core'
 import {fetchTransactions} from '../store/plaid'
+import moment from 'moment'
 
 class Habits extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       name: '',
-      goal: 0
+      goal: 0,
+      transactions: 0
     }
   }
 
@@ -42,9 +44,22 @@ class Habits extends React.Component {
   }
 
   handleChange = e => {
-    this.setState({
-      [e.target.name]: e.target.value
-    })
+    if (e.target.name !== 'transactions') {
+      this.setState({
+        [e.target.name]: e.target.value
+      })
+    } else {
+      // .233333 = (1 / 30) * 7
+      // representing an average spending per week
+      let rawNum = Number(e.target.value) * 0.2333333333333
+      // Formats to currency value
+      let parsedNum = Math.floor(rawNum * 100)
+      let total = this.state.transactions
+      this.setState({
+        [e.target.name]: total + (e.target.checked ? parsedNum : parsedNum * -1)
+      })
+    }
+    console.log(this.state)
   }
 
   handleSubmit = e => {
@@ -142,7 +157,11 @@ class Habits extends React.Component {
                           </TableCell>
 
                           <TableCell align="right">
-                            <Checkbox />
+                            <Checkbox
+                              name="transactions"
+                              value={transaction.amount}
+                              onChange={this.handleChange}
+                            />
                           </TableCell>
                         </TableRow>
                       ))
