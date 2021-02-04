@@ -8,8 +8,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Paper,
-  Checkbox
+  Paper
 } from '@material-ui/core'
 
 // const useStyles = makeStyles({
@@ -35,9 +34,6 @@ class Transactions extends React.Component {
               <TableCell>Name</TableCell>
               <TableCell align="right">Amount</TableCell>
               <TableCell align="right">Date</TableCell>
-              {this.props.habitForm ? (
-                <TableCell align="right">Include</TableCell>
-              ) : null}
             </TableRow>
           </TableHead>
           <TableBody>
@@ -47,11 +43,6 @@ class Transactions extends React.Component {
                     <TableCell component="th">{transaction.name}</TableCell>
                     <TableCell align="right">{transaction.amount}</TableCell>
                     <TableCell align="right">{transaction.date}</TableCell>
-                    {this.props.habitForm ? (
-                      <TableCell align="right">
-                        <Checkbox />
-                      </TableCell>
-                    ) : null}
                   </TableRow>
                 ))
               : null}

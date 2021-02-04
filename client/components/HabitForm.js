@@ -2,7 +2,6 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {fetchHabits, addHabit} from '../store/habits'
 import {fetchCategories} from '../store/categories'
-import Transactions from './Transactions'
 import {
   Box,
   Grid,
@@ -17,8 +16,17 @@ import {
   FormHelperText,
   FormControl,
   Card,
-  CardContent
+  CardContent,
+  Table,
+  TableContainer,
+  TableRow,
+  TableCell,
+  Checkbox,
+  Paper,
+  TableHead,
+  TableBody
 } from '@material-ui/core'
+import {fetchTransactions} from '../store/plaid'
 
 class Habits extends React.Component {
   constructor(props) {
@@ -27,6 +35,10 @@ class Habits extends React.Component {
       name: '',
       goal: 0
     }
+  }
+
+  componentDidMount() {
+    this.props.fetchTransactions()
   }
 
   handleChange = e => {
@@ -42,8 +54,7 @@ class Habits extends React.Component {
   }
 
   render() {
-    const habits = this.props.habits || []
-    const {categories} = this.props
+    const transactions = this.props.transactions || []
     return (
       <Box>
         <Grid container spacing={3} justify="center">
@@ -103,10 +114,42 @@ class Habits extends React.Component {
               </FormControl>
             </FormGroup>
           </Box>
-
           <Box width="80vw">
             <Typography>Check All that Apply</Typography>
-            <Transactions habitForm={true} />
+            <TableContainer component={Paper}>
+              <Table aria-label="simple table">
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Name</TableCell>
+                    <TableCell align="right">Amount</TableCell>
+                    <TableCell align="right">Date</TableCell>
+
+                    <TableCell align="right">Include</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {transactions.length > 0
+                    ? transactions.map(transaction => (
+                        <TableRow key={transaction.transaction_id}>
+                          <TableCell component="th">
+                            {transaction.name}
+                          </TableCell>
+                          <TableCell align="right">
+                            {transaction.amount}
+                          </TableCell>
+                          <TableCell align="right">
+                            {transaction.date}
+                          </TableCell>
+
+                          <TableCell align="right">
+                            <Checkbox />
+                          </TableCell>
+                        </TableRow>
+                      ))
+                    : null}
+                </TableBody>
+              </Table>
+            </TableContainer>
           </Box>
         </Grid>
       </Box>
@@ -116,11 +159,13 @@ class Habits extends React.Component {
 
 const mapState = state => ({
   habits: state.habits,
-  categories: state.categories
+  categories: state.categories,
+  transactions: state.plaid.transactions
 })
 
 const mapDispatch = dispatch => ({
-  addHabit: habit => dispatch(addHabit(habit))
+  addHabit: habit => dispatch(addHabit(habit)),
+  fetchTransactions: () => dispatch(fetchTransactions())
 })
 
 export default connect(mapState, mapDispatch)(Habits)
