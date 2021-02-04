@@ -59,24 +59,28 @@ class Habits extends React.Component {
         [e.target.name]: total + (e.target.checked ? parsedNum : parsedNum * -1)
       })
     }
-    console.log(this.state)
   }
 
   handleSubmit = e => {
     e.preventDefault()
-    console.log('Hit me!')
+
     this.props.addHabit(this.state)
   }
 
   render() {
     const transactions = this.props.transactions || []
+
     return (
       <Box>
         <Grid container spacing={3} justify="center">
           <Box width="25vw" paddingTop="40px" paddingRight="20px">
             <Card>
               <CardContent>
-                <Typography>Habit Name</Typography>
+                <Typography>Habit: {this.state.name}</Typography>
+                <Typography>Goal: ${this.state.goal}</Typography>
+                <Typography>
+                  Weekly Spending: ${this.state.transactions / 100}
+                </Typography>
               </CardContent>
             </Card>
           </Box>

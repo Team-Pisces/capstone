@@ -52,19 +52,6 @@ export const Balance = props => {
     return count
   }
 
-  // const count = (array) => {
-  //   let result = {}
-  //   array.forEach(function (arr) {
-  //     arr.category.forEach(function (category) {
-  //       console.log('inside count, cat -->', category[0])
-  //       if (result[category] === undefined) {
-  //         result[category] = 0
-  //       }
-  //       result[category]++
-  //     })
-  //   })
-  //   return result
-  // }
   const count = array => {
     let result = {}
     for (let i = 0; i < array.length; i++) {
@@ -86,9 +73,6 @@ export const Balance = props => {
     transaction => transaction.account_id === account.account_id
   )
 
-  console.log('count-->', count(accTransaction))
-  console.log('Props: ---> ', props)
-  console.log('accTransaction --->', accTransaction)
   return (
     <div>
       <FormControl variant="filled" className={classes.formControl}>
