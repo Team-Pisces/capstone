@@ -1,10 +1,17 @@
+const {ARRAY} = require('sequelize')
 const Sequelize = require('sequelize')
 const db = require('../db')
 
 const Habit = db.define('habit', {
-  habits: {
-    type: Sequelize.ARRAY(Sequelize.JSON),
+  name: {
+    type: Sequelize.STRING
+  },
+  categories: {
+    type: Sequelize.ARRAY(Sequelize.STRING),
     defaultValue: []
+  },
+  goal: {
+    type: Sequelize.INTEGER
   },
   history: {
     type: Sequelize.ARRAY(Sequelize.INTEGER),

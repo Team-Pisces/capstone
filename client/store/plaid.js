@@ -34,7 +34,6 @@ export const fetchBalance = () => async dispatch => {
 
 export const fetchTransactions = () => async dispatch => {
   try {
-    console.log('Got here')
     const res = await axios.get('/api/plaid/transactions')
     dispatch(getTransactions(res.data))
   } catch (err) {
