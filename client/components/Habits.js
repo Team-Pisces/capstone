@@ -7,7 +7,7 @@ class Habits extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      habit: '',
+      name: '',
       category: '',
       goal: 0
     }
@@ -22,10 +22,9 @@ class Habits extends React.Component {
     })
   }
 
-  async handleSubmit(e) {
+  handleSubmit(e) {
     e.preventDefault()
-    await this.props.addHabit(this.state)
-    this.props.fetchHabits()
+    this.props.addHabit(this.state)
   }
 
   componentDidMount() {
@@ -34,9 +33,7 @@ class Habits extends React.Component {
   }
 
   render() {
-    const {habitInstance} = this.props
-    const habits = habitInstance.habits || []
-    console.log(habits)
+    const habits = this.props.habits || []
     const {categories} = this.props
     return (
       <div>
@@ -47,7 +44,7 @@ class Habits extends React.Component {
               return (
                 <div key={i}>
                   <h3>
-                    Habit: {habit.habit} | Goal: ${habit.goal}
+                    Habit: {habit.name} | Goal: ${habit.goal}
                   </h3>
                 </div>
               )
@@ -60,10 +57,10 @@ class Habits extends React.Component {
           <form id="add-habit-form" onSubmit={this.handleSubmit}>
             <label htmlFor="habit">Habit: </label>
             <input
-              name="habit"
+              name="name"
               type="text"
               onChange={this.handleChange}
-              value={this.state.habit}
+              value={this.state.name}
             />
 
             <label htmlFor="category">Category: </label>
@@ -100,7 +97,7 @@ class Habits extends React.Component {
 }
 
 const mapState = state => ({
-  habitInstance: state.habits,
+  habits: state.habits,
   categories: state.categories
 })
 

@@ -248,21 +248,6 @@ router.post('/get_access_token', function(request, response, next) {
   })
 })
 
-// Retrieve an Item's accounts
-// https://plaid.com/docs/#accounts
-// router.get('/accounts', function (request, response, next) {
-//   client.getAccounts(ACCESS_TOKEN, function (error, accountsResponse) {
-//     if (error != null) {
-//       console.log(error)
-//       return response.json({
-//         error,
-//       })
-//     }
-//     console.log(accountsResponse)
-//     response.json(accountsResponse)
-//   })
-// })
-
 router.get('/accounts', async (req, res, next) => {
   try {
     const response = await client.getAccounts(req.user.plaidAccessToken)
