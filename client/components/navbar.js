@@ -5,11 +5,11 @@ import {Link} from 'react-router-dom'
 import {logout} from '../store'
 import {AppBar, Typography, Toolbar, Button, Box} from '@material-ui/core'
 
-const Navbar = ({handleClick, isLoggedIn}) => (
+const Navbar = ({handleClick, isLoggedIn, user}) => (
   <Box display="relative">
     <AppBar style={{backgroundColor: 'green'}}>
       <Toolbar>
-        {isLoggedIn ? (
+        {isLoggedIn && user.plaidAccessToken ? (
           <>
             {/* The navbar will show these links after you log in */}
             <Button color="inherit" href="/home">
@@ -49,7 +49,8 @@ const Navbar = ({handleClick, isLoggedIn}) => (
  */
 const mapState = state => {
   return {
-    isLoggedIn: !!state.user.id
+    isLoggedIn: !!state.user.id,
+    user: state.user
   }
 }
 
