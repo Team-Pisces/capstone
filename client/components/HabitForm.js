@@ -29,7 +29,7 @@ class Habits extends React.Component {
     super(props)
     this.state = {
       name: '',
-      goal: 0,
+      goal: '',
       transactions: 0
     }
   }
@@ -66,7 +66,7 @@ class Habits extends React.Component {
     const transactions = this.props.transactions || []
 
     return (
-      <Box>
+      <Box paddingTop="60px">
         <Grid container spacing={3} justify="center">
           <Box width="25vw" paddingTop="40px" paddingRight="20px">
             <Card>
@@ -80,35 +80,40 @@ class Habits extends React.Component {
             </Card>
           </Box>
           <Box width="25vw" paddingTop="40px" paddingLeft="20px">
-            <Typography variant="h5">New Habit</Typography>
-            <FormGroup id="add-habit-form" onSubmit={this.handleSubmit}>
-              <FormControl>
-                <InputLabel htmlFor="habit">Habit: </InputLabel>
-                <Input
-                  name="name"
-                  type="text"
-                  onChange={this.handleChange}
-                  value={this.state.name}
-                />
-              </FormControl>
-              <FormControl>
-                <FormHelperText htmlFor="goal">Goal: </FormHelperText>
-                <Input
-                  name="goal"
-                  type="number"
-                  onChange={this.handleChange}
-                  value={this.state.goal}
-                />
-                <Button
-                  onClick={this.handleSubmit}
-                  variant="contained"
-                  color="primary"
-                  type="submit"
-                >
-                  Submit
-                </Button>
-              </FormControl>
-            </FormGroup>
+            <Card>
+              <CardContent>
+                <Typography variant="h5">New Habit</Typography>
+                <FormGroup id="add-habit-form" onSubmit={this.handleSubmit}>
+                  <FormControl>
+                    <InputLabel htmlFor="habit">Habit: </InputLabel>
+                    <Input
+                      name="name"
+                      type="text"
+                      onChange={this.handleChange}
+                      value={this.state.name}
+                    />
+                  </FormControl>
+                  <FormControl>
+                    <InputLabel htmlFor="goal">Goal: </InputLabel>
+                    <Input
+                      name="goal"
+                      type="number"
+                      onChange={this.handleChange}
+                      value={this.state.goal}
+                    />
+                    <Typography>Number of selected transactions:</Typography>
+                    <Button
+                      onClick={this.handleSubmit}
+                      variant="contained"
+                      color="primary"
+                      type="submit"
+                    >
+                      Submit
+                    </Button>
+                  </FormControl>
+                </FormGroup>
+              </CardContent>
+            </Card>
           </Box>
           <Box width="80vw">
             <Typography>Check All that Apply</Typography>

@@ -3,32 +3,45 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
+import {AppBar, Typography, Toolbar, Button, Box} from '@material-ui/core'
 
-const Navbar = ({handleClick, isLoggedIn}) => (
-  <div>
-    <h1>Cashed</h1>
-    <nav>
-      {isLoggedIn ? (
-        <div>
-          {/* The navbar will show these links after you log in */}
-          <Link to="/home">Home</Link>
-          <Link to="/habits">Habits</Link>
-          <Link to="/transactions">Transactions</Link>
-          <Link to="/accounts">Accounts</Link>
-          <a href="#" onClick={handleClick}>
-            Logout
-          </a>
-        </div>
-      ) : (
-        <div>
-          {/* The navbar will show these links before you log in */}
-          <Link to="/login">Login</Link>
-          <Link to="/signup">Sign Up</Link>
-        </div>
-      )}
-    </nav>
-    <hr />
-  </div>
+const Navbar = ({handleClick, isLoggedIn, user}) => (
+  <Box display="relative">
+    <AppBar style={{backgroundColor: 'green'}}>
+      <Toolbar>
+        {isLoggedIn && user.plaidAccessToken ? (
+          <>
+            {/* The navbar will show these links after you log in */}
+            <Button color="inherit" href="/home">
+              Home
+            </Button>
+            <Button color="inherit" href="/habits">
+              Habits
+            </Button>
+            <Button color="inherit" href="/transactions">
+              Transactions
+            </Button>
+            <Button color="inherit" href="/accounts">
+              Accounts
+            </Button>
+            <Button color="inherit" href="#" onClick={handleClick}>
+              Logout
+            </Button>
+          </>
+        ) : (
+          <>
+            {/* The navbar will show these links before you log in */}
+            <Button color="inherit" href="/login">
+              Login
+            </Button>
+            <Button color="inherit" href="/signup">
+              Sign Up
+            </Button>
+          </>
+        )}
+      </Toolbar>
+    </AppBar>
+  </Box>
 )
 
 /**
@@ -36,7 +49,8 @@ const Navbar = ({handleClick, isLoggedIn}) => (
  */
 const mapState = state => {
   return {
-    isLoggedIn: !!state.user.id
+    isLoggedIn: !!state.user.id,
+    user: state.user
   }
 }
 
