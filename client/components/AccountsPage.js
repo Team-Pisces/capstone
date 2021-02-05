@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react'
 import {connect} from 'react-redux'
-import {fetchAccounts} from '../store/plaid'
+import {getAccounts} from '../store/plaid2'
 import {
   Card,
   makeStyles,
@@ -19,13 +19,14 @@ const useStyles = makeStyles({
 const AccountsPage = props => {
   useEffect(
     () => {
-      props.fetchAccounts()
+      props.getAccounts()
     },
-    [fetchAccounts]
+    [getAccounts]
   )
   const accounts = props.accounts || []
   console.log(accounts)
   const classes = useStyles()
+  console.log(props)
   return (
     <div>
       <h1>Accounts:</h1>
@@ -67,11 +68,11 @@ const AccountsPage = props => {
 }
 
 const mapState = state => ({
-  accounts: state.plaid.accounts
+  accounts: state.plaid2.accounts
 })
 
 const mapDispatch = dispatch => ({
-  fetchAccounts: () => dispatch(fetchAccounts())
+  getAccounts: () => dispatch(getAccounts())
 })
 
 export default connect(mapState, mapDispatch)(AccountsPage)

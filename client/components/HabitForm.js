@@ -1,18 +1,14 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {fetchHabits, addHabit} from '../store/habits'
-import {fetchCategories} from '../store/categories'
+import {addHabit} from '../store/habits'
 import {
   Box,
   Grid,
   Typography,
   FormGroup,
-  FormContent,
   InputLabel,
   Input,
   Button,
-  Select,
-  MenuItem,
   FormHelperText,
   FormControl,
   Card,
@@ -26,8 +22,7 @@ import {
   TableHead,
   TableBody
 } from '@material-ui/core'
-import {fetchTransactions} from '../store/plaid'
-import moment from 'moment'
+import {getTransactions} from '../store/plaid2'
 
 class Habits extends React.Component {
   constructor(props) {
@@ -40,7 +35,7 @@ class Habits extends React.Component {
   }
 
   componentDidMount() {
-    this.props.fetchTransactions()
+    this.props.getTransactions()
   }
 
   handleChange = e => {
@@ -96,24 +91,6 @@ class Habits extends React.Component {
                   value={this.state.name}
                 />
               </FormControl>
-
-              {/* <label htmlFor="category">Category: </label>
-              <Select
-                name="category"
-                onChange={this.handleChange}
-                value={this.state.category}
-              >
-                <option>Select Category</option>
-                {categories.length
-                  ? categories.map((category) => {
-                      return (
-                        <MenuItem key={category.category_id}>
-                          {category.hierarchy[category.hierarchy.length - 1]}
-                        </MenuItem>
-                      )
-                    })
-                  : null}
-              </Select> */}
               <FormControl>
                 <FormHelperText htmlFor="goal">Goal: </FormHelperText>
                 <Input
@@ -183,12 +160,12 @@ class Habits extends React.Component {
 const mapState = state => ({
   habits: state.habits,
   categories: state.categories,
-  transactions: state.plaid.transactions
+  transactions: state.plaid2.transactions
 })
 
 const mapDispatch = dispatch => ({
   addHabit: habit => dispatch(addHabit(habit)),
-  fetchTransactions: () => dispatch(fetchTransactions())
+  getTransactions: () => dispatch(getTransactions())
 })
 
 export default connect(mapState, mapDispatch)(Habits)
