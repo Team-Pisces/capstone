@@ -9,18 +9,14 @@ export const GET_ACCOUNTS = 'GET_ACCOUNTS'
 
 let initialState = {}
 
-export const getAccounts = (uid, callback) => async dispatch => {
+export const getAccounts = () => async dispatch => {
   try {
-    const res = await axios.post('/api/plaid/accounts', {uid})
+    const res = await axios.get('/api/plaid/accounts')
     if (res.status === 200) {
       dispatch({
         type: GET_ACCOUNTS,
-        payload: {rawAccounts: res.data.accounts}
+        payload: {rawAccounts: res.data}
       })
-
-      if (callback) {
-        callback(res.data.accounts)
-      }
     }
   } catch (error) {
     console.error(error)
@@ -87,7 +83,7 @@ export default function(state = initialState, action) {
     case GET_ACCOUNTS:
       return {
         ...state,
-        rawAccounts: action.payload.rawAccounts
+        accounts: action.payload.rawAccounts
       }
     case GET_TRANSACTIONS:
       return {
