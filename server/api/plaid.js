@@ -88,13 +88,13 @@ router.post('/info', function(request, response, next) {
 
 // Create a link token with configs which we can then use to initialize Plaid Link client-side.
 // See https://plaid.com/docs/#create-link-token
-router.post('/create_link_token', function(request, response, next) {
+router.post('/create_link_token', (req, res, next) => {
   const configs = {
     user: {
       // This should correspond to a unique id for the current user.
-      client_user_id: 'user-id'
+      client_user_id: req.user.dataValues.googleId
     },
-    client_name: 'Plaid Quickstart',
+    client_name: 'Cashed',
     products: PLAID_PRODUCTS,
     country_codes: PLAID_COUNTRY_CODES,
     language: 'en'
@@ -108,14 +108,14 @@ router.post('/create_link_token', function(request, response, next) {
     configs.android_package_name = PLAID_ANDROID_PACKAGE_NAME
   }
 
-  client.createLinkToken(configs, function(error, createTokenResponse) {
+  client.createLinkToken(configs, (error, createTokenResponse) => {
     if (error !== null) {
       console.error(error)
-      return response.json({
+      return res.json({
         error: error
       })
     }
-    response.json(createTokenResponse)
+    res.json(createTokenResponse)
   })
 })
 
