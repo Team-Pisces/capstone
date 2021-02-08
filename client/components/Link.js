@@ -1,6 +1,5 @@
 import React from 'react'
 import {PlaidLink} from 'react-plaid-link'
-import axios from 'axios'
 import {connect} from 'react-redux'
 import {generateLinkToken, generateLinkTransactions} from '../store/plaid2'
 import {me} from '../store/user'
@@ -16,8 +15,9 @@ class Link extends React.Component {
       <PlaidLink
         style={{marginRight: '0', marginLeft: 'auto'}}
         token={link_token}
-        onSuccess={async token => {
-          await this.props.generateLinkTransactions(token)
+        // onSuccess generates a public token this token on its own
+        onSuccess={async public_token => {
+          await this.props.generateLinkTransactions(public_token)
           await this.props.me()
         }}
       >

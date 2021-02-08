@@ -88,56 +88,56 @@ router.post('/info', function(request, response, next) {
 
 // Create a link token with configs which we can then use to initialize Plaid Link client-side.
 // See https://plaid.com/docs/#create-link-token
-router.post('/create_link_token', function(request, response, next) {
+router.post('/create_link_token', (req, res, next) => {
   const configs = {
     user: {
       // This should correspond to a unique id for the current user.
-      client_user_id: 'user-id'
+      client_user_id: req.user.dataValues.googleId
     },
-    client_name: 'Plaid Quickstart',
+    client_name: 'Cashed',
     products: PLAID_PRODUCTS,
     country_codes: PLAID_COUNTRY_CODES,
     language: 'en'
   }
 
   if (PLAID_REDIRECT_URI !== '') {
-    configs.redirect_uri = PLAID_REDIRECT_URI
+    configs.redirect_uri = process.env.PLAID_REDIRECT_URI
   }
 
   if (PLAID_ANDROID_PACKAGE_NAME !== '') {
     configs.android_package_name = PLAID_ANDROID_PACKAGE_NAME
   }
 
-  client.createLinkToken(configs, function(error, createTokenResponse) {
+  client.createLinkToken(configs, (error, createTokenResponse) => {
     if (error !== null) {
       console.error(error)
-      return response.json({
+      return res.json({
         error: error
       })
     }
-    response.json(createTokenResponse)
+    res.json(createTokenResponse)
   })
 })
 
 // Exchange token flow - exchange a Link public_token for
 // an API access_token
 // https://plaid.com/docs/#exchange-token-flow
-router.post('/set_access_token', (request, response, next) => {
-  PUBLIC_TOKEN = request.body.public_token
+router.post('/set_access_token', (req, res, next) => {
+  PUBLIC_TOKEN = req.body.public_token
   client.exchangePublicToken(PUBLIC_TOKEN, async (error, tokenResponse) => {
     if (error !== null) {
       console.log(error)
-      return response.json({
+      return res.json({
         error
       })
     }
     ACCESS_TOKEN = tokenResponse.access_token
-    const user = await User.findByPk(request.user.id)
+    const user = await User.findByPk(req.user.id)
     user.plaidAccessToken = ACCESS_TOKEN
     await user.save()
     ITEM_ID = tokenResponse.item_id
     console.log(tokenResponse)
-    response.json({
+    res.json({
       access_token: ACCESS_TOKEN,
       item_id: ITEM_ID,
       error: null
