@@ -15,7 +15,6 @@ import {
   SingleHabit,
   AllHabits
 } from './components'
-
 import {me} from './store'
 // import SignUp from './components/SignUp'
 
