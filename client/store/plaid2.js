@@ -8,28 +8,28 @@ const GET_BALANCE = 'GET_BALANCE'
 
 const genLinkToken = linkToken => ({
   type: GENERATE_LINK_TOKEN,
-  linkToken: linkToken
+  linkToken
 })
 
 const genLinkTransactions = transactions => ({
   type: GENERATE_LINK_TRANSACTIONS,
-  transactions: transactions
+  transactions
 })
 
-//const getCategories = categories => ({
-//  type: GET_CATEGORIES,
-//  categories
-//})
-//
-//const getCategories = categories => ({
-//  type: GET_CATEGORIES,
-//  categories
-//})
-//
-//const getCategories = categories => ({
-//  type: GET_CATEGORIES,
-//  categories
-//})
+const setAccounts = accounts => ({
+  type: GET_ACCOUNTS,
+  accounts
+})
+
+const setTransactions = transactions => ({
+  type: GET_TRANSACTIONS,
+  transactions
+})
+
+const setBalance = balance => ({
+  type: GET_BALANCE,
+  balance
+})
 
 let initialState = {}
 
@@ -37,10 +37,7 @@ export const getAccounts = () => async dispatch => {
   try {
     const res = await axios.get('/api/plaid/accounts')
     if (res.status === 200) {
-      dispatch({
-        type: GET_ACCOUNTS,
-        payload: {rawAccounts: res.data}
-      })
+      dispatch(setAccounts(res.data))
     }
   } catch (error) {
     console.error(error)
@@ -74,20 +71,14 @@ export const generateLinkToken = () => async dispatch => {
 export const getTransactions = () => async dispatch => {
   const res = await axios.get('/api/plaid/transactions')
   if (res.status === 200) {
-    dispatch({
-      type: GET_TRANSACTIONS,
-      payload: {transactions: res.data}
-    })
+    dispatch(setTransactions(res.data))
   }
 }
 
 export const getBalance = () => async dispatch => {
   const res = await axios.get('/api/plaid/balance')
   if (res.status === 200) {
-    dispatch({
-      type: GET_TRANSACTIONS,
-      payload: {transactions: res.data}
-    })
+    dispatch(setBalance(res.data))
   }
 }
 
@@ -96,17 +87,17 @@ export default function(state = initialState, action) {
     case GET_ACCOUNTS:
       return {
         ...state,
-        accounts: action.payload.rawAccounts
+        accounts: action.accounts
       }
     case GET_TRANSACTIONS:
       return {
         ...state,
-        transactions: action.payload.transactions
+        transactions: action.transactions
       }
     case GET_BALANCE:
       return {
         ...state,
-        balance: action.payload.balance
+        balance: action.balance
       }
     case GENERATE_LINK_TRANSACTIONS:
       return {

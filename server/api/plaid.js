@@ -174,7 +174,7 @@ router.post('/get_access_token', function(request, response, next) {
 
 router.get('/accounts', linkedPlaidOnly, async (req, res, next) => {
   try {
-    const response = await client.getAccounts(req.body.plaidAccessToken)
+    const response = await client.getAccounts(req.user.plaidAccessToken)
     res.send(response.accounts)
   } catch (error) {
     next(error)
