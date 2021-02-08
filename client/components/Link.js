@@ -15,8 +15,9 @@ class Link extends React.Component {
       <PlaidLink
         style={{marginRight: '0', marginLeft: 'auto'}}
         token={link_token}
-        onSuccess={async token => {
-          await this.props.generateLinkTransactions(token)
+        // onSuccess generates a public token this token on its own
+        onSuccess={async public_token => {
+          await this.props.generateLinkTransactions(public_token)
           await this.props.me()
         }}
       >

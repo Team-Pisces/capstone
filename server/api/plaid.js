@@ -122,22 +122,22 @@ router.post('/create_link_token', (req, res, next) => {
 // Exchange token flow - exchange a Link public_token for
 // an API access_token
 // https://plaid.com/docs/#exchange-token-flow
-router.post('/set_access_token', (request, response, next) => {
-  PUBLIC_TOKEN = request.body.public_token
+router.post('/set_access_token', (req, res, next) => {
+  PUBLIC_TOKEN = req.body.public_token
   client.exchangePublicToken(PUBLIC_TOKEN, async (error, tokenResponse) => {
     if (error !== null) {
       console.log(error)
-      return response.json({
+      return res.json({
         error
       })
     }
     ACCESS_TOKEN = tokenResponse.access_token
-    const user = await User.findByPk(request.user.id)
+    const user = await User.findByPk(req.user.id)
     user.plaidAccessToken = ACCESS_TOKEN
     await user.save()
     ITEM_ID = tokenResponse.item_id
     console.log(tokenResponse)
-    response.json({
+    res.json({
       access_token: ACCESS_TOKEN,
       item_id: ITEM_ID,
       error: null
