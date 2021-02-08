@@ -37,7 +37,7 @@ export const generateLinkTransactions = public_token => async dispatch => {
 
 export const generateLinkToken = () => async dispatch => {
   const res = await axios.post('/api/plaid/create_link_token')
-  console.log('Hit')
+  console.log('Hit', res)
   if (res.status === 200) {
     dispatch({
       type: GENERATE_LINK_TOKEN,

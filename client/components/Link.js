@@ -1,6 +1,5 @@
 import React from 'react'
 import {PlaidLink} from 'react-plaid-link'
-import axios from 'axios'
 import {connect} from 'react-redux'
 import {generateLinkToken, generateLinkTransactions} from '../store/plaid2'
 import {me} from '../store/user'
