@@ -68,7 +68,8 @@
     "redux-thunk": "^2.3.0",
     "sequelize": "^5.22.3",
     "socket.io": "^2.4.1",
-    "util": "^0.12.3"
+    "util": "^0.12.3",
+    "victory": "^35.4.8"
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",

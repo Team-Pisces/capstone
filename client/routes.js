@@ -6,11 +6,14 @@ import {
   Login,
   Signup,
   UserHome,
-  Habits,
+  HabitForm,
   Transactions,
   AccountsPage,
   Balance,
-  Link
+  Link,
+  Chart,
+  SingleHabit,
+  AllHabits
 } from './components'
 
 import {me} from './store'
@@ -38,10 +41,12 @@ class Routes extends Component {
             {/* Routes placed here are only available after logging in */}
             <Route path="/link" component={Link} />
             <Route path="/home" component={UserHome} />
-            <Route path="/habits" component={Habits} />
+            <Route path="/habitform" component={HabitForm} />
             <Route path="/transactions" component={Transactions} />
             <Route path="/balance" component={Balance} />
             <Route path="/accounts" component={AccountsPage} />
+            <Route exact path="/habits" component={AllHabits} />
+            <Route path="/habits/:habitId" component={SingleHabit} />
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}
