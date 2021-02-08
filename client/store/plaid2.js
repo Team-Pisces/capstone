@@ -1,12 +1,35 @@
 import axios from 'axios'
 
-const LOGIN_USER = 'LOGIN_USER'
-const SIGNUP_USER = 'SIGNUP_USER'
 const GENERATE_LINK_TOKEN = 'GENERATE_LINK_TOKEN'
 const GENERATE_LINK_TRANSACTIONS = 'GENERATE_LINK_TRANSACTIONS'
 const GET_TRANSACTIONS = 'GET_TRANSACTIONS'
 const GET_ACCOUNTS = 'GET_ACCOUNTS'
 const GET_BALANCE = 'GET_BALANCE'
+
+const genLinkToken = linkToken => ({
+  type: GENERATE_LINK_TOKEN,
+  linkToken: linkToken
+})
+
+const genLinkTransactions = transactions => ({
+  type: GENERATE_LINK_TRANSACTIONS,
+  transactions: transactions
+})
+
+//const getCategories = categories => ({
+//  type: GET_CATEGORIES,
+//  categories
+//})
+//
+//const getCategories = categories => ({
+//  type: GET_CATEGORIES,
+//  categories
+//})
+//
+//const getCategories = categories => ({
+//  type: GET_CATEGORIES,
+//  categories
+//})
 
 let initialState = {}
 
@@ -25,25 +48,26 @@ export const getAccounts = () => async dispatch => {
 }
 
 export const generateLinkTransactions = public_token => async dispatch => {
-  const res = await axios.post('/api/plaid/set_access_token', {
-    public_token
-  })
-  if (res.status === 200) {
-    dispatch({
-      type: GENERATE_LINK_TRANSACTIONS,
-      payload: {transactions: res.data.transactions}
+  try {
+    const res = await axios.post('/api/plaid/set_access_token', {
+      public_token
     })
+    if (res.status === 200) {
+      dispatch(genLinkTransactions(res.data.transactions))
+    }
+  } catch (error) {
+    console.error(error)
   }
 }
 
 export const generateLinkToken = () => async dispatch => {
-  const res = await axios.post('/api/plaid/create_link_token')
-  console.log('Hit', res)
-  if (res.status === 200) {
-    dispatch({
-      type: GENERATE_LINK_TOKEN,
-      payload: {link_token: res.data.link_token}
-    })
+  try {
+    const res = await axios.post('/api/plaid/create_link_token')
+    if (res.status === 200) {
+      dispatch(genLinkToken(res.data.link_token))
+    }
+  } catch (error) {
+    console.error(error)
   }
 }
 
@@ -87,12 +111,12 @@ export default function(state = initialState, action) {
     case GENERATE_LINK_TRANSACTIONS:
       return {
         ...state,
-        transactions: action.payload.transactions
+        transactions: action.transactions
       }
     case GENERATE_LINK_TOKEN:
       return {
         ...state,
-        link_token: action.payload.link_token
+        link_token: action.linkToken
       }
     default:
       return state
