@@ -1,5 +1,6 @@
 const router = require('express').Router()
 const {Habit} = require('../db/models')
+const jwt = require('jsonwebtoken')
 module.exports = router
 
 // GET api/habits
@@ -26,5 +27,3 @@ router.post('/', async (req, res, next) => {
     next(err)
   }
 })
-
-const verifyToken = (req, res, next) => {}

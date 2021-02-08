@@ -1,6 +1,7 @@
 const router = require('express').Router()
 const User = require('../db/models/user')
 module.exports = router
+const jwt = require('jsonwebtoken')
 
 router.post('/login', async (req, res, next) => {
   try {
