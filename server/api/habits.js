@@ -26,3 +26,5 @@ router.post('/', async (req, res, next) => {
     next(err)
   }
 })
+
+const verifyToken = (req, res, next) => {}
