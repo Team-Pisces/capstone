@@ -2,6 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {fetchSingleHabit} from '../store/singleHabit'
 import RedChart from './RedChart'
+import GreenChart from './GreenChart'
 
 class SingleHabit extends React.Component {
   componentDidMount() {
@@ -9,9 +10,12 @@ class SingleHabit extends React.Component {
   }
   render() {
     const {habit} = this.props
+    const goal = habit.goal
+    const weeklyAvg = habit.initialWeeklyAvg / 100
     return (
       <div>
-        <RedChart weeklyAvg={habit.initialWeeklyAvg} />
+        <RedChart weeklyAvg={weeklyAvg} />
+        <GreenChart goal={goal} weeklyAvg={weeklyAvg} />
       </div>
     )
   }

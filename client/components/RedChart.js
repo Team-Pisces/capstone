@@ -8,14 +8,13 @@ class RedChart extends React.Component {
     let result = weeklyAvg * 52 * (1 + 0.08 / 1) ** year
     return result.toFixed(2) * -1
   }
-  // componentDidMount() {
-  //   this.props.fetchWeeklyAvg(this.props.habitId)
-  // }
+
   render() {
     const compoundInterest = this.compoundInterest
     const weeklyAvg = this.props.weeklyAvg
     return (
       <div>
+        <h3>Potential Loss</h3>
         <VictoryChart domainPadding={10}>
           <VictoryAxis
             tickValues={[
@@ -174,13 +173,5 @@ class RedChart extends React.Component {
     )
   }
 }
-
-// const mapState = (state) => ({
-//   weeklyAvg: state.chart,
-// })
-
-// const mapDispatch = (dispatch) => ({
-//   fetchWeeklyAvg: (habitId) => dispatch(fetchWeeklyAvg(habitId)),
-// })
 
 export default RedChart
