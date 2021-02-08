@@ -101,7 +101,7 @@ router.post('/create_link_token', (req, res, next) => {
   }
 
   if (PLAID_REDIRECT_URI !== '') {
-    configs.redirect_uri = PLAID_REDIRECT_URI
+    configs.redirect_uri = process.env.PLAID_REDIRECT_URI
   }
 
   if (PLAID_ANDROID_PACKAGE_NAME !== '') {
