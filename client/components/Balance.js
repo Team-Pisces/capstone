@@ -17,7 +17,7 @@ import {
 import {makeStyles} from '@material-ui/core/styles'
 import React, {useState, useEffect} from 'react'
 import {connect} from 'react-redux'
-import {fetchBalance, fetchTransactions} from '../store/plaid'
+import {getBalance, getTransactions} from '../store/plaid2'
 
 const useStyles = makeStyles(theme => ({
   formControl: {
@@ -35,8 +35,8 @@ export const Balance = props => {
   const [account, setAccount] = useState('')
 
   useEffect(() => {
-    props.fetchBalance()
-    props.fetchTransactions()
+    props.getBalance()
+    props.getTransactions()
   }, [])
 
   const handleChange = event => {
@@ -192,8 +192,8 @@ const mapState = state => ({
 })
 
 const mapDispatch = dispatch => ({
-  fetchBalance: () => dispatch(fetchBalance()),
-  fetchTransactions: () => dispatch(fetchTransactions())
+  getBalance: () => dispatch(getBalance()),
+  getTransactions: () => dispatch(getTransactions())
 })
 
 export default connect(mapState, mapDispatch)(Balance)

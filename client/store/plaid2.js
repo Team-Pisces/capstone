@@ -1,11 +1,12 @@
 import axios from 'axios'
 
-export const LOGIN_USER = 'LOGIN_USER'
-export const SIGNUP_USER = 'SIGNUP_USER'
-export const GENERATE_LINK_TOKEN = 'GENERATE_LINK_TOKEN'
-export const GENERATE_LINK_TRANSACTIONS = 'GENERATE_LINK_TRANSACTIONS'
-export const GET_TRANSACTIONS = 'GET_TRANSACTIONS'
-export const GET_ACCOUNTS = 'GET_ACCOUNTS'
+const LOGIN_USER = 'LOGIN_USER'
+const SIGNUP_USER = 'SIGNUP_USER'
+const GENERATE_LINK_TOKEN = 'GENERATE_LINK_TOKEN'
+const GENERATE_LINK_TRANSACTIONS = 'GENERATE_LINK_TRANSACTIONS'
+const GET_TRANSACTIONS = 'GET_TRANSACTIONS'
+const GET_ACCOUNTS = 'GET_ACCOUNTS'
+const GET_BALANCE = 'GET_BALANCE'
 
 let initialState = {}
 
@@ -56,6 +57,16 @@ export const getTransactions = () => async dispatch => {
   }
 }
 
+export const getBalance = () => async dispatch => {
+  const res = await axios.get('/api/plaid/balance')
+  if (res.status === 200) {
+    dispatch({
+      type: GET_TRANSACTIONS,
+      payload: {transactions: res.data}
+    })
+  }
+}
+
 export default function(state = initialState, action) {
   switch (action.type) {
     case GET_ACCOUNTS:
@@ -67,6 +78,11 @@ export default function(state = initialState, action) {
       return {
         ...state,
         transactions: action.payload.transactions
+      }
+    case GET_BALANCE:
+      return {
+        ...state,
+        balance: action.payload.balance
       }
     case GENERATE_LINK_TRANSACTIONS:
       return {
