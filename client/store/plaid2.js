@@ -46,34 +46,12 @@ export const generateLinkToken = () => async dispatch => {
   }
 }
 
-export const loginUser = (email, password, callback) => async dispatch => {
-  const res = await axios.post('/api/plaid/login', {email, password})
-  if (res.status === 200) {
-    dispatch({
-      type: LOGIN_USER,
-      payload: {uid: res.data.id, isLoggedin: true}
-    })
-
-    generateLinkToken(res.data.id)
-  }
-}
-
 export const getTransactions = () => async dispatch => {
   const res = await axios.get('/api/plaid/transactions')
   if (res.status === 200) {
     dispatch({
       type: GET_TRANSACTIONS,
       payload: {transactions: res.data}
-    })
-  }
-}
-
-export const signupUser = (email, password) => async dispatch => {
-  const res = await axios.post('/api/plaid/register', {email, password})
-  if (res.status === 200) {
-    dispatch({
-      type: SIGNUP_USER,
-      payload: {formCompleted: true}
     })
   }
 }
@@ -99,17 +77,6 @@ export default function(state = initialState, action) {
       return {
         ...state,
         link_token: action.payload.link_token
-      }
-    case LOGIN_USER:
-      return {
-        ...state,
-        uid: action.payload.uid,
-        isLoggedin: action.payload.isLoggedin
-      }
-    case SIGNUP_USER:
-      return {
-        ...state,
-        formCompleted: action.payload.formCompleted
       }
     default:
       return state
