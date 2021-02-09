@@ -12,7 +12,6 @@ class RedChart extends React.Component {
   render() {
     const compoundInterest = this.compoundInterest
     const weeklyAvg = this.props.weeklyAvg
-    console.log(weeklyAvg)
     return (
       <div>
         <h3>Potential Loss</h3>
