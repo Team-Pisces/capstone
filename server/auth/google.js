@@ -34,7 +34,7 @@ if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
   )
 
   passport.use(strategy)
-  console.log(strategy)
+  console.log()
 
   router.get(
     '/',
