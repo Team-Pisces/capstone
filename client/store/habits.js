@@ -1,5 +1,5 @@
 import axios from 'axios'
-import config from '../app'
+import {config} from '../app'
 
 const GET_HABITS = 'GET_HABITS'
 const ADD_HABIT = 'ADD_HABIT'
@@ -15,6 +15,7 @@ const addedHabit = habit => ({
 })
 
 export const fetchHabits = () => {
+  console.log('config ->', config)
   return async dispatch => {
     try {
       const {data: habits} = await axios.get('/api/habits', config)
