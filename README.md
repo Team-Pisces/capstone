@@ -16,7 +16,7 @@ If you would like to pull this code down you are welcome to do so.
 
 ### Plaid, JWT, Google oAuth
 
-Cashed useds Plaid to connect to our user bank accounts, JWT to secure all routes and google oAuth for secure external login.
+Cashed useds Plaid to connect our user's bank accounts, JWT to secure all routes and google oAuth for secure external login.
 
 To use these features developers will need to set up environment variables in a .env file
 
