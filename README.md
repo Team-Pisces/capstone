@@ -9,3 +9,9 @@ Cashed is a web app that allows users to track their spedning habits, create goa
 If you would like to pull this code down you are welcome to do so.
 
 ### Cloning the repo
+
+`git clone https://github.com/Team-Pisces/capstone.git`
+`npm install`
+
+Create a .env file (this will store all of the necessary environemnt variables)
+Please contact one of our team members to request access to these keys
