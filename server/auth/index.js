@@ -2,6 +2,9 @@ const router = require('express').Router()
 const User = require('../db/models/user')
 module.exports = router
 const jwt = require('jsonwebtoken')
+const passport = require('passport')
+const LocalStrategy = require('passport-local').Strategy
+require('dotenv')
 
 router.post('/login', async (req, res, next) => {
   try {
@@ -19,6 +22,23 @@ router.post('/login', async (req, res, next) => {
     next(err)
   }
 })
+
+passport.use(
+  new LocalStrategy(function(done) {
+    User.findOne({email: req.body.email}, function(err, user) {
+      if (err) {
+        return done(err)
+      }
+      if (!user) {
+        return done(null, false, {message: 'Incorrect username.'})
+      }
+      if (!user.validPassword(req.body.password)) {
+        return done(null, false, {message: 'Incorrect password.'})
+      }
+      return done(null, user)
+    })
+  })
+)
 
 router.post('/signup', async (req, res, next) => {
   try {
@@ -40,7 +60,12 @@ router.post('/logout', (req, res) => {
 })
 
 router.get('/me', (req, res) => {
-  res.json(req.user)
+  var token = jwt.sign(
+    {id: req.user.id, firstName: req.user.firstName},
+    process.env.JWT_SECRET
+  )
+  console.log(token)
+  res.json({user: req.user, jwt: token})
 })
 
 router.use('/google', require('./google'))
