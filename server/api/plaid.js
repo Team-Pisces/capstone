@@ -25,7 +25,6 @@ const PLAID_PRODUCTS = (process.env.PLAID_PRODUCTS || 'transactions').split(',')
 const PLAID_COUNTRY_CODES = (process.env.PLAID_COUNTRY_CODES || 'US').split(',')
 
 // Parameters used for the OAuth redirect Link flow.
-//
 // Set PLAID_REDIRECT_URI to 'http://localhost:8000/oauth-response.html'
 // The OAuth redirect flow requires an endpoint on the developer's website
 // that the bank website should redirect to. You will need to configure
@@ -89,10 +88,11 @@ router.post('/info', function(request, response, next) {
 // Create a link token with configs which we can then use to initialize Plaid Link client-side.
 // See https://plaid.com/docs/#create-link-token
 router.post('/create_link_token', (req, res, next) => {
+  let idString = req.user.dataValues.id.toString()
   const configs = {
     user: {
       // This should correspond to a unique id for the current user.
-      client_user_id: req.user.dataValues.googleId
+      client_user_id: idString
     },
     client_name: 'Cashed',
     products: PLAID_PRODUCTS,

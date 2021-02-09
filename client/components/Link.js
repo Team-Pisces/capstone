@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import React from 'react'
 import {PlaidLink} from 'react-plaid-link'
 import {connect} from 'react-redux'
