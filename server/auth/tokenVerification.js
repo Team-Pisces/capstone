@@ -1,5 +1,4 @@
 const verifyToken = (req, res, next) => {
-  console.log('VERIFY REQ HEADERS', req.headers)
   const bearerHeader = req.headers.authorization
 
   if (typeof bearerHeader !== 'undefined') {

@@ -7,7 +7,6 @@ module.exports = router
 // GET api/habits
 router.get('/', verifyToken, (req, res, next) => {
   try {
-    console.log(req.token)
     jwt.verify(req.token, process.env.JWT_SECRET, async (err, authData) => {
       if (err) {
         res.sendStatus(403)
