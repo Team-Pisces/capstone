@@ -5,7 +5,15 @@ import {VictoryBar, VictoryChart, VictoryAxis, VictoryTooltip} from 'victory'
 
 class RedChart extends React.Component {
   compoundInterest(weeklyAvg, year) {
-    let result = weeklyAvg * 52 * (1 + 0.08 / 1) ** year
+    let PMT = weeklyAvg
+    let interest = 0.07
+    let monthlyAvg = weeklyAvg * 52 / 12
+    let investments = 12
+
+    let result = weeklyAvg * (1 + interst / investments) ** (year * investments)
+    console.log(result)
+    console.log(result)
+    //(weeklyAvg * 52) * (1.08) ** year
     return result.toFixed(2) * -1
   }
 
