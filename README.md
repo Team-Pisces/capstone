@@ -11,6 +11,7 @@ If you would like to pull this code down you are welcome to do so.
 ### Cloning the repo
 
 `git clone https://github.com/Team-Pisces/capstone.git`
+ 
 `npm install`
 
 Create a .env file (this will store all of the necessary environemnt variables)
