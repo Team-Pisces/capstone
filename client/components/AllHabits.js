@@ -36,7 +36,15 @@ class AllHabits extends React.Component {
       <Box paddingTop="100px">
         <Grid container spacing={3} justify="center">
           <Box width="80vw">
+            <Button variant="contained" color="primary" href="/habitform">
+              Create Habit
+            </Button>
+          </Box>
+        </Grid>
+        <Grid container spacing={3} justify="center">
+          <Box width="80vw" paddingTop="50px">
             <Typography>All Habits</Typography>
+
             <TableContainer component={Paper}>
               <Table aria-label="simple-table">
                 <TableHead>

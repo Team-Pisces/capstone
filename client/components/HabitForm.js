@@ -1,5 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import {Redirect} from 'react-router-dom'
 import {addHabit} from '../store/habits'
 import {
   Box,
@@ -20,7 +21,8 @@ import {
   Checkbox,
   Paper,
   TableHead,
-  TableBody
+  TableBody,
+  Link
 } from '@material-ui/core'
 import {getTransactions} from '../store/plaid2'
 
@@ -30,7 +32,8 @@ class Habits extends React.Component {
     this.state = {
       name: '',
       goal: '',
-      transactions: 0
+      transactions: 0,
+      redirect: false
     }
   }
 
@@ -56,10 +59,13 @@ class Habits extends React.Component {
     }
   }
 
-  handleSubmit = e => {
+  handleSubmit = async e => {
     e.preventDefault()
+    await this.props.addHabit(this.state)
 
-    this.props.addHabit(this.state)
+    this.setState({
+      redirect: true
+    })
   }
 
   render() {
@@ -67,6 +73,7 @@ class Habits extends React.Component {
 
     return (
       <Box paddingTop="60px">
+        {this.state.redirect ? <Redirect to="/habits" /> : null}
         <Grid container spacing={3} justify="center">
           <Box width="25vw" paddingTop="40px" paddingRight="20px">
             <Card>
