@@ -46,6 +46,7 @@
     "axios": "^0.19.2",
     "compression": "^1.7.3",
     "connect-session-sequelize": "^6.1.1",
+    "css-loader": "^5.0.2",
     "dotenv": "^8.2.0",
     "envvar": "^2.0.0",
     "express": "^4.16.4",
@@ -71,6 +72,7 @@
     "redux-thunk": "^2.3.0",
     "sequelize": "^5.22.3",
     "socket.io": "^2.4.1",
+    "style-loader": "^2.0.0",
     "util": "^0.12.3",
     "victory": "^35.4.8"
   },

@@ -39,6 +39,7 @@ router.post('/', verifyToken, async (req, res, next) => {
   try {
     jwt.verify(req.token, process.env.JWT_SECRET, async (err, authData) => {
       if (err) {
+        console.error(err)
         res.sendStatus(403)
       } else {
         const habit = await Habit.create({

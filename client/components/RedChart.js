@@ -14,7 +14,6 @@ class RedChart extends React.Component {
     const weeklyAvg = this.props.weeklyAvg
     return (
       <div>
-        <h3>Potential Loss</h3>
         <VictoryChart domainPadding={10}>
           <VictoryAxis
             tickValues={[
