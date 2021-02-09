@@ -3,6 +3,27 @@ import {connect} from 'react-redux'
 import {fetchSingleHabit} from '../store/singleHabit'
 import RedChart from './RedChart'
 import GreenChart from './GreenChart'
+import {
+  Box,
+  Grid,
+  Typography,
+  FormGroup,
+  InputLabel,
+  Input,
+  Button,
+  FormHelperText,
+  FormControl,
+  Card,
+  CardContent,
+  Table,
+  TableContainer,
+  TableRow,
+  TableCell,
+  Checkbox,
+  Paper,
+  TableHead,
+  TableBody
+} from '@material-ui/core'
 
 class SingleHabit extends React.Component {
   componentDidMount() {
