@@ -4,7 +4,7 @@ const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy
 const {User} = require('../db/models')
 module.exports = router
 
-require('../../secrets')
+require('dotenv').config()
 
 /**
  * For OAuth keys and other secrets, your Node process will search
