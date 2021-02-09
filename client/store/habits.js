@@ -1,4 +1,5 @@
 import axios from 'axios'
+import config from '../app'
 
 const GET_HABITS = 'GET_HABITS'
 const ADD_HABIT = 'ADD_HABIT'
@@ -16,7 +17,7 @@ const addedHabit = habit => ({
 export const fetchHabits = () => {
   return async dispatch => {
     try {
-      const {data: habits} = await axios.get('/api/habits')
+      const {data: habits} = await axios.get('/api/habits', config)
       dispatch(getHabits(habits))
     } catch (err) {
       console.error(err)
@@ -27,7 +28,7 @@ export const fetchHabits = () => {
 export const addHabit = habit => {
   return async dispatch => {
     try {
-      const {data} = await axios.post('/api/habits', habit)
+      const {data} = await axios.post('/api/habits', habit, config)
       dispatch(addedHabit(data))
     } catch (err) {
       console.error(err)
