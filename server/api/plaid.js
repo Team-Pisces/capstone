@@ -25,7 +25,6 @@ const PLAID_PRODUCTS = (process.env.PLAID_PRODUCTS || 'transactions').split(',')
 const PLAID_COUNTRY_CODES = (process.env.PLAID_COUNTRY_CODES || 'US').split(',')
 
 // Parameters used for the OAuth redirect Link flow.
-//
 // Set PLAID_REDIRECT_URI to 'http://localhost:8000/oauth-response.html'
 // The OAuth redirect flow requires an endpoint on the developer's website
 // that the bank website should redirect to. You will need to configure
