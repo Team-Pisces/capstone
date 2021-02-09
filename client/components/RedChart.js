@@ -10,7 +10,8 @@ class RedChart extends React.Component {
     let monthlyAvg = weeklyAvg * 52 / 12
     let investments = 12
 
-    let result = weeklyAvg * (1 + interst / investments) ** (year * investments)
+    let result =
+      weeklyAvg * (1 + interest / investments) ** (year * investments)
     console.log(result)
     console.log(result)
     //(weeklyAvg * 52) * (1.08) ** year
