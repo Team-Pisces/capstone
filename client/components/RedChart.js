@@ -7,9 +7,10 @@ import {Card, CardContent, Typography} from '@material-ui/core'
 
 class RedChart extends React.Component {
   compoundInterest = (weeklyAvg, year) => {
-    return compound(0, weeklyAvg, year, 0.07, 52).result
+    return compound(0, weeklyAvg, year, 0.07, 52)
   }
 
+  // eslint-disable-next-line complexity
   render() {
     const compoundInterest = this.compoundInterest
     const weeklyAvg = this.props.weeklyAvg || null
@@ -21,6 +22,8 @@ class RedChart extends React.Component {
     let displayText = display.map(val => val.toString())
 
     let type = this.props.type || ''
+
+    let total = compoundInterest(weeklyAvg, 30).total
     return (
       <Card>
         {this.props.weeklyAvg ? (
@@ -42,12 +45,10 @@ class RedChart extends React.Component {
                 data={display.map(year => {
                   return {
                     x: year,
-                    y:
-                      compoundInterest(weeklyAvg, year) *
-                      (type === 'spending' ? -1 : 1),
-                    label: `${
-                      type === 'spending' ? '-' : ''
-                    }$${compoundInterest(weeklyAvg, year).toLocaleString()}`
+                    y: total[year] * (type === 'spending' ? -1 : 1),
+                    label: `${type === 'spending' ? '-' : ''}$${total[
+                      year
+                    ].toLocaleString()}`
                   }
                 })}
                 style={
@@ -129,7 +130,8 @@ class RedChart extends React.Component {
               />
             </VictoryChart>
             <Typography variant="caption">
-              Hypothetical 'Loss' projection if weekly average spending
+              Hypothetical {type === 'spending' ? 'Loss' : 'Gain'} projection if
+              weekly average {type}
               continues.
             </Typography>
           </CardContent>

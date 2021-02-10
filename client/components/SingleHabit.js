@@ -50,6 +50,7 @@ class SingleHabit extends React.Component {
             </Card>
           </Box>
           <Box width="50vw" paddingTop="40px" paddingLeft="10px">
+            <RedChart weeklyAvg={weeklyAvg - goal} type="saving" />
             <RedChart weeklyAvg={weeklyAvg} type="spending" />
           </Box>
           <Box width="80vw">
