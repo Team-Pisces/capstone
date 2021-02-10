@@ -12,7 +12,6 @@ class RedChart extends React.Component {
 
   // eslint-disable-next-line complexity
   render() {
-    const compoundInterest = this.compoundInterest
     const weeklyAvg = this.props.weeklyAvg || null
     let years = Array(30)
       .fill(1, 0, 30)
@@ -23,16 +22,16 @@ class RedChart extends React.Component {
 
     let type = this.props.type || ''
 
-    let total = compoundInterest(weeklyAvg, 30).total
+    let total = this.compoundInterest(weeklyAvg, 30).total
     return (
       <Card>
         {this.props.weeklyAvg ? (
           <CardContent>
             <Typography variant="h4">
-              Potential {type === 'spending' ? 'Loss' : 'Gain'}:
+              Potential {type === 'spending' ? 'Loss' : 'Gain'}: ${total[30].toLocaleString()}
             </Typography>
             <VictoryChart domainPadding={10}>
-              <VictoryAxis tickValues={display} tickFormat={displayText} />
+              <VictoryAxis tickValues={display} />
               <VictoryBar
                 labelComponent={
                   <VictoryTooltip
@@ -45,10 +44,8 @@ class RedChart extends React.Component {
                 data={display.map(year => {
                   return {
                     x: year,
-                    y: total[year] * (type === 'spending' ? -1 : 1),
-                    label: `${type === 'spending' ? '-' : ''}$${total[
-                      year
-                    ].toLocaleString()}`
+                    y: total[year],
+                    label: `$${total[year].toLocaleString()}`
                   }
                 })}
                 style={
