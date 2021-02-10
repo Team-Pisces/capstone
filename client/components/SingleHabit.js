@@ -1,25 +1,17 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {fetchSingleHabit} from '../store/singleHabit'
-import RedChart from './RedChart'
-import GreenChart from './GreenChart'
+import RedChart from './Chart'
 import {
   Box,
   Grid,
   Typography,
-  FormGroup,
-  InputLabel,
-  Input,
-  Button,
-  FormHelperText,
-  FormControl,
   Card,
   CardContent,
   Table,
   TableContainer,
   TableRow,
   TableCell,
-  Checkbox,
   Paper,
   TableHead,
   TableBody

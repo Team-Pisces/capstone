@@ -18,7 +18,6 @@ class RedChart extends React.Component {
       .map((num, index) => num + index)
 
     let display = years.filter(num => num % 2 === 0)
-    let displayText = display.map(val => val.toString())
 
     let type = this.props.type || ''
 
