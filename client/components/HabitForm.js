@@ -69,6 +69,7 @@ class Habits extends React.Component {
   }
 
   render() {
+    console.log('props-->', this.props)
     const transactions = this.props.transactions || []
 
     return (

@@ -51,6 +51,7 @@ class AllHabits extends React.Component {
                     <TableCell>Name</TableCell>
                     <TableCell align="right">Goal</TableCell>
                     <TableCell align="right">Weekly Average</TableCell>
+                    <TableCell align="right">Details</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -65,6 +66,15 @@ class AllHabits extends React.Component {
                           <TableCell align="right">${habit.goal}</TableCell>
                           <TableCell align="right">
                             ${habit.initialWeeklyAvg / 100}
+                          </TableCell>
+                          <TableCell align="right">
+                            <Button
+                              variant="contained"
+                              color="primary"
+                              href={`/habits/${habit.id}`}
+                            >
+                              See details
+                            </Button>
                           </TableCell>
                         </TableRow>
                       ))
