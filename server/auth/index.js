@@ -1,6 +1,9 @@
 const router = require('express').Router()
 const User = require('../db/models/user')
 module.exports = router
+const jwt = require('jsonwebtoken')
+const passport = require('passport')
+require('dotenv')
 
 router.post('/login', async (req, res, next) => {
   try {
@@ -39,7 +42,13 @@ router.post('/logout', (req, res) => {
 })
 
 router.get('/me', (req, res) => {
-  res.json(req.user)
+  console.log(req.user)
+  var token = jwt.sign(
+    {id: req.user.id, firstName: req.user.firstName},
+    process.env.JWT_SECRET
+  )
+  console.log(token)
+  res.json({user: req.user, jwt: token})
 })
 
 router.use('/google', require('./google'))

@@ -1,16 +1,24 @@
 const router = require('express').Router()
 const {Habit} = require('../db/models')
+const jwt = require('jsonwebtoken')
+const verifyToken = require('../auth/tokenVerification')
 module.exports = router
 
 // GET api/habits
-router.get('/', async (req, res, next) => {
+router.get('/', verifyToken, (req, res, next) => {
   try {
-    const habits = await Habit.findAll({
-      where: {
-        userId: req.user.id
+    jwt.verify(req.token, process.env.JWT_SECRET, async (err, authData) => {
+      if (err) {
+        res.sendStatus(403)
+      } else {
+        const habits = await Habit.findAll({
+          where: {
+            userId: req.user.id
+          }
+        })
+        res.send(habits)
       }
     })
-    res.send(habits)
   } catch (err) {
     next(err)
   }
@@ -27,15 +35,22 @@ router.get('/:habitId', async (req, res, next) => {
 })
 
 // POST api/habits
-router.post('/', async (req, res, next) => {
+router.post('/', verifyToken, async (req, res, next) => {
   try {
-    const habit = await Habit.create({
-      name: req.body.name,
-      goal: req.body.goal,
-      initialWeeklyAvg: req.body.transactions,
-      userId: req.user.id
+    jwt.verify(req.token, process.env.JWT_SECRET, async (err, authData) => {
+      if (err) {
+        console.error(err)
+        res.sendStatus(403)
+      } else {
+        const habit = await Habit.create({
+          name: req.body.name,
+          goal: req.body.goal,
+          initialWeeklyAvg: req.body.transactions,
+          userId: req.user.id
+        })
+        res.send(habit)
+      }
     })
-    res.send(habit)
   } catch (err) {
     next(err)
   }
