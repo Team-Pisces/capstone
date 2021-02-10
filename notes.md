@@ -32,22 +32,27 @@
 ## Product Roadmap (Priority)
 
 * Project board (create tickets for each roadmap priority task)
-* Edit README (create db, seed, start your code etc. more instructions on how to start the project, including secrets, fake account etc.)
+* If user is not logged in bring them automatically to the login page. If logged in bring the to the home page
+* Change nav bar when logged in without the need to refresh ?? or need to connect account?
+* Edit home page to have a check whether user has linked accoutns or now and show ithem promp to connect one OR add more account accordingly
+* Route to the newly created habit after creating a habit
 * On Homepage add more details on what this app is for and why user is asked to link their bank account + provide a choice to use fake account
-* Implement category filter on transactions page
-* Implement category filter on habits page
+* Create User Profile page
 * Add headers to transaction page
-* Edit single habit page to make it more clear about what numbers are saying
 * Add details on Habits page (form) what the goal is (max spending vs min savings)
 * Fix number of selected transaction on Habits page (form)
-* Make more prominent to go to that page aka click on listed habit
-* Route to the newly created habit after creating a habit
+* Edit single habit page to make it more clear about what numbers are saying (chart labels)
 * Add button 'show details' on all habits page
-* Fix: unlinking accoutn OR add information on not being able to unlink for dummy data
-* If user is not logged in bring them automatically to the login page. If logged in bring the to the home page
-* Create User Profile page
-* Edit home page to have a check whether user has linked accoutns or now and show ithem promp to connect one OR add more account accordingly
+
+## Product Roadmap (Second Priority)
+
+* Implement category filter on transactions page
+* Implement category filter on habits page
+* Fix: unlinking account OR add information on not being able to unlink for dummy data
 * Feature: update user email & password
-* Change nav bar when logged in without the need to refresh
+* Edit README (create db, seed, start your code etc. more instructions on how to start the project, including secrets, fake account etc.)
+* add .env.details file to have a list of secrets someone needs without their actual values (do not include in .gitignore)
 
 ### Secondary Features
+
+* as per MVP document
