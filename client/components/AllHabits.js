@@ -31,7 +31,6 @@ class AllHabits extends React.Component {
   }
   render() {
     const {habits} = this.props
-    console.log(habits)
     return (
       <Box paddingTop="100px">
         <Grid container spacing={3} justify="center">

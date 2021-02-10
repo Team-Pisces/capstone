@@ -12,7 +12,6 @@ import Link from './Link'
 export const UserHome = props => {
   const {firstName} = props
 
-  console.log(props)
   return (
     <Box display="flex" paddingTop="100px" justifyContent="center">
       <Box width="33vw">

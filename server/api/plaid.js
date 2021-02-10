@@ -126,7 +126,7 @@ router.post('/set_access_token', (req, res, next) => {
   PUBLIC_TOKEN = req.body.public_token
   client.exchangePublicToken(PUBLIC_TOKEN, async (error, tokenResponse) => {
     if (error !== null) {
-      console.log(error)
+      console.error(error)
       return res.json({
         error
       })
@@ -194,7 +194,6 @@ router.get('/transactions', linkedPlaidOnly, async (req, res, next) => {
       startDate,
       endDate
     )
-    console.log(response.transactions)
     res.send(response.transactions)
   } catch (error) {
     next(error)

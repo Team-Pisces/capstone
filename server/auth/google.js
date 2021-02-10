@@ -5,7 +5,7 @@ const {User} = require('../db/models')
 const jwt = require('jsonwebtoken')
 module.exports = router
 
-require('../../secrets')
+require('dotenv').config()
 
 if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
   console.log('Google client ID / secret not found. Skipping Google OAuth.')
@@ -34,7 +34,6 @@ if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
   )
 
   passport.use(strategy)
-  console.log()
 
   router.get(
     '/',
