@@ -19,7 +19,6 @@ class RedChart extends React.Component {
     let display = years.filter(num => num % 2 === 0)
     let displayText = display.map(val => val.toString())
 
-    console.log(compoundInterest(weeklyAvg, years[0]))
     return (
       <div>
         {this.props.weeklyAvg ? (
@@ -30,7 +29,6 @@ class RedChart extends React.Component {
                 <VictoryTooltip cornerRadius={0} style={{fill: 'red'}} />
               }
               data={display.map(year => {
-                console.log(compoundInterest(weeklyAvg, year))
                 return {
                   x: year,
                   y: compoundInterest(weeklyAvg, year),
