@@ -18,9 +18,4 @@ phases:
 
 artifacts:
   files:
-    - 'public/**/*'
-
-cache:
-  paths:
-    - '/root/.npm/**/*'
-    - '/node_modules/'
+    - '**/*'
