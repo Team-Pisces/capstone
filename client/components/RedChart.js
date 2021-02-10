@@ -3,6 +3,7 @@ import React from 'react'
 // import {fetchWeeklyAvg} from '../store/chart'
 import {VictoryBar, VictoryChart, VictoryAxis, VictoryTooltip} from 'victory'
 import compound from 'compound-interest-calc'
+import {Card, CardContent, Typography} from '@material-ui/core'
 
 class RedChart extends React.Component {
   compoundInterest = (weeklyAvg, year) => {
@@ -19,65 +20,121 @@ class RedChart extends React.Component {
     let display = years.filter(num => num % 2 === 0)
     let displayText = display.map(val => val.toString())
 
-    console.log(compoundInterest(weeklyAvg, years[0]))
+    let type = this.props.type || ''
     return (
-      <div>
+      <Card>
         {this.props.weeklyAvg ? (
-          <VictoryChart domainPadding={10}>
-            <VictoryAxis tickValues={display} tickFormat={displayText} />
-            <VictoryBar
-              labelComponent={
-                <VictoryTooltip cornerRadius={0} style={{fill: 'red'}} />
-              }
-              data={display.map(year => {
-                console.log(compoundInterest(weeklyAvg, year))
-                return {
-                  x: year,
-                  y: compoundInterest(weeklyAvg, year),
-                  label: `$${compoundInterest(
-                    weeklyAvg,
-                    year
-                  ).toLocaleString()}`
-                }
-              })}
-              style={{
-                data: {fill: 'red', width: 15}
-              }}
-              events={[
-                {
-                  target: 'data',
-                  eventHandlers: {
-                    onMouseOver: () => {
-                      return [
-                        {
-                          target: 'data',
-                          mutation: () => ({style: {fill: 'pink', width: 18}})
-                        },
-                        {
-                          target: 'labels',
-                          mutation: () => ({active: true})
-                        }
-                      ]
-                    },
-                    onMouseOut: () => {
-                      return [
-                        {
-                          target: 'data',
-                          mutation: () => {}
-                        },
-                        {
-                          target: 'labels',
-                          mutation: () => ({active: false})
-                        }
-                      ]
+          <CardContent>
+            <Typography variant="h4">
+              Potential {type === 'spending' ? 'Loss' : 'Gain'}:
+            </Typography>
+            <VictoryChart domainPadding={10}>
+              <VictoryAxis tickValues={display} tickFormat={displayText} />
+              <VictoryBar
+                labelComponent={
+                  <VictoryTooltip
+                    cornerRadius={0}
+                    style={
+                      type === 'spending' ? {fill: 'red'} : {fill: 'green'}
                     }
-                  }
+                  />
                 }
-              ]}
-            />
-          </VictoryChart>
+                data={display.map(year => {
+                  return {
+                    x: year,
+                    y:
+                      compoundInterest(weeklyAvg, year) *
+                      (type === 'spending' ? -1 : 1),
+                    label: `${
+                      type === 'spending' ? '-' : ''
+                    }$${compoundInterest(weeklyAvg, year).toLocaleString()}`
+                  }
+                })}
+                style={
+                  type === 'spending'
+                    ? {data: {fill: 'red', width: 15}}
+                    : {
+                        data: {fill: 'green', width: 15}
+                      }
+                }
+                events={
+                  type === 'spending'
+                    ? [
+                        {
+                          target: 'data',
+                          eventHandlers: {
+                            onMouseOver: () => {
+                              return [
+                                {
+                                  target: 'data',
+                                  mutation: () => ({
+                                    style: {fill: 'pink', width: 18}
+                                  })
+                                },
+                                {
+                                  target: 'labels',
+                                  mutation: () => ({active: true})
+                                }
+                              ]
+                            },
+                            onMouseOut: () => {
+                              return [
+                                {
+                                  target: 'data',
+                                  mutation: () => {}
+                                },
+                                {
+                                  target: 'labels',
+                                  mutation: () => ({active: false})
+                                }
+                              ]
+                            }
+                          }
+                        }
+                      ]
+                    : [
+                        {
+                          target: 'data',
+                          eventHandlers: {
+                            onMouseOver: () => {
+                              return [
+                                {
+                                  target: 'data',
+                                  mutation: () => ({
+                                    style: {fill: 'LightGreen', width: 18}
+                                  })
+                                },
+                                {
+                                  target: 'labels',
+                                  mutation: () => ({active: true})
+                                }
+                              ]
+                            },
+                            onMouseOut: () => {
+                              return [
+                                {
+                                  target: 'data',
+                                  mutation: () => {}
+                                },
+                                {
+                                  target: 'labels',
+                                  mutation: () => ({active: false})
+                                }
+                              ]
+                            }
+                          }
+                        }
+                      ]
+                }
+              />
+            </VictoryChart>
+            <Typography variant="caption">
+              Hypothetical 'Loss' projection if weekly average spending
+              continues.
+            </Typography>
+          </CardContent>
         ) : null}
-      </div>
+      </Card>
     )
   }
 }
