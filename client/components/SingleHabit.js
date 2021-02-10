@@ -38,14 +38,26 @@ class SingleHabit extends React.Component {
       <Box paddingTop="60px">
         <Grid container spacing={3} justify="center">
           <Box width="25vw" paddingTop="40px" paddingRight="20px">
-            <Card>
+            <Card style={{backgroundColor: '#42AC42'}}>
               <CardContent>
-                <Typography variant="h5">Habit:</Typography>
-                <Typography variant="h3">{habit.name}</Typography>
-                <Typography>Weekly Average Spending:</Typography>
-                <Typography variant="h4">${weeklyAvg}</Typography>
-                <Typography>Weekly Goal/Budget:</Typography>
-                <Typography variant="h4">${goal}</Typography>
+                <Typography style={{color: 'white'}} variant="h5">
+                  Habit:
+                </Typography>
+                <Typography style={{color: 'white'}} variant="h3">
+                  {habit.name}
+                </Typography>
+                <Typography style={{color: 'white'}}>
+                  Weekly Average Spending:
+                </Typography>
+                <Typography style={{color: 'white'}} variant="h4">
+                  ${weeklyAvg}
+                </Typography>
+                <Typography style={{color: 'white'}}>
+                  Weekly Goal/Budget:
+                </Typography>
+                <Typography style={{color: 'white'}} variant="h4">
+                  ${goal}
+                </Typography>
               </CardContent>
             </Card>
           </Box>

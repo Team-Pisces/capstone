@@ -7,7 +7,7 @@ import {AppBar, Typography, Toolbar, Button, Box} from '@material-ui/core'
 
 const Navbar = ({handleClick, isLoggedIn, user}) => (
   <Box display="relative">
-    <AppBar style={{backgroundColor: 'green'}}>
+    <AppBar style={{backgroundColor: '#42AC42'}}>
       <Toolbar>
         {isLoggedIn && user.plaidAccessToken ? (
           <>
