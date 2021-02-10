@@ -42,6 +42,7 @@ class Habits extends React.Component {
   }
 
   handleChange = e => {
+    console.log(e.target.value.split(',')[1])
     if (e.target.name !== 'transactions') {
       this.setState({
         [e.target.name]: e.target.value
@@ -49,7 +50,7 @@ class Habits extends React.Component {
     } else {
       // .233333 = (1 / 30) * 7
       // representing an average spending per week
-      let rawNum = Number(e.target.value) * 0.2333333333333
+      let rawNum = Number(e.target.value[1]) * 0.2333333333333
       // Formats to currency value
       let parsedNum = Math.floor(rawNum * 100)
       let total = this.state.transactions
@@ -152,7 +153,11 @@ class Habits extends React.Component {
                           <TableCell align="right">
                             <Checkbox
                               name="transactions"
-                              value={transaction.amount}
+                              value={[
+                                transaction.name,
+                                transaction.amount,
+                                transaction.date
+                              ]}
                               onChange={this.handleChange}
                             />
                           </TableCell>

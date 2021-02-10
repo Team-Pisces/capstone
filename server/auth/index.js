@@ -42,6 +42,7 @@ router.post('/logout', (req, res) => {
 })
 
 router.get('/me', (req, res) => {
+  console.log(req)
   var token = jwt.sign(
     {id: req.user.id, firstName: req.user.firstName},
     process.env.JWT_SECRET
