@@ -3,7 +3,6 @@ import {connect} from 'react-redux'
 import {fetchSingleHabit} from '../store/singleHabit'
 import RedChart from './RedChart'
 import GreenChart from './GreenChart'
-import '../css/singleHabit.css'
 import {
   Box,
   Grid,

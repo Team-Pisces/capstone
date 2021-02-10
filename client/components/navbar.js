@@ -9,22 +9,28 @@ const Navbar = ({handleClick, isLoggedIn, user}) => (
   <Box display="relative">
     <AppBar style={{backgroundColor: '#42AC42'}}>
       <Toolbar>
+        <Typography variant="h4">Cashed</Typography>
         {isLoggedIn && user.plaidAccessToken ? (
           <>
             {/* The navbar will show these links after you log in */}
-            <Button color="inherit" href="/home">
+            <Button align="right" color="inherit" href="/home">
               Home
             </Button>
-            <Button color="inherit" href="/habits">
+            <Button align="right" color="inherit" href="/habits">
               Habits
             </Button>
-            <Button color="inherit" href="/transactions">
+            <Button align="right" color="inherit" href="/transactions">
               Transactions
             </Button>
-            <Button color="inherit" href="/accounts">
+            <Button align="right" color="inherit" href="/accounts">
               Accounts
             </Button>
-            <Button color="inherit" href="#" onClick={handleClick}>
+            <Button
+              align="right"
+              color="inherit"
+              href="#"
+              onClick={handleClick}
+            >
               Logout
             </Button>
           </>
