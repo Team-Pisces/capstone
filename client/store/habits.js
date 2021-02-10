@@ -15,7 +15,6 @@ const addedHabit = habit => ({
 })
 
 export const fetchHabits = () => {
-  console.log('config ->', config)
   return async dispatch => {
     try {
       const {data: habits} = await axios.get('/api/habits', config)
