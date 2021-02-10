@@ -14,11 +14,17 @@ export const UserHome = props => {
 
   return (
     <Box display="flex" paddingTop="100px" justifyContent="center">
-      <Box width="33vw">
-        <Card width="33vw">
+      <Box height="50%" width="33vw">
+        <Card
+          style={{backgroundColor: '#42AC42', height: '30vh'}}
+          height="100%"
+          width="33vw"
+        >
           <CardContent>
-            <Typography variant="h4">Welcome, {firstName}</Typography>
-            <Typography variant="h6">
+            <Typography style={{color: 'white'}} variant="h4">
+              Welcome, {firstName}
+            </Typography>
+            <Typography style={{color: 'white'}} variant="h6">
               Please connect a bank account to continue
             </Typography>
             <Link />
