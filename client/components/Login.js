@@ -20,7 +20,7 @@ function Copyright() {
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
       <Link color="inherit" href="https://material-ui.com/">
-        Your Website
+        Cashed
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -101,20 +101,29 @@ const LogIn = props => {
           >
             {displayName}
           </Button>
-          <Grid container>
-            <Grid item xs>
+          <Button
+            variant="contained"
+            color="primary"
+            href="/auth/google"
+            fullWidth
+          >
+            Log in with Google
+          </Button>
+          <Grid
+            container
+            direction="column"
+            justify="center"
+            alignItems="center"
+          >
+            <Grid item xs={12}>
               <Link href="#" variant="body2">
                 Forgot password?
               </Link>
             </Grid>
-            <Grid item>
+
+            <Grid item xs={12}>
               <Link href="/signup" variant="body2">
-                Don't have an account? Sign Up
-              </Link>
-            </Grid>
-            <Grid item>
-              <Link href="/auth/google" variant="body2">
-                Login with Google
+                Don't have an account? Sign Up Here
               </Link>
             </Grid>
           </Grid>
