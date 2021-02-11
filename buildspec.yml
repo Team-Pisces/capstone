@@ -17,6 +17,5 @@ phases:
       - echo Build Completed on `date`
 
 artifacts:
-  base-directory: outputDirectory
   files:
     - '**/*'
