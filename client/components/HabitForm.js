@@ -33,6 +33,7 @@ class Habits extends React.Component {
       name: '',
       goal: '',
       transactions: 0,
+      transactionCount: 0,
       redirect: false
     }
   }
@@ -47,20 +48,26 @@ class Habits extends React.Component {
         [e.target.name]: e.target.value
       })
     } else {
+      e.target.checked
+        ? this.setState({transactionCount: this.state.transactionCount + 1})
+        : this.setState({transactionCount: this.state.transactionCount - 1})
       // .233333 = (1 / 30) * 7
       // representing an average spending per week
       let rawNum = Number(e.target.value) * 0.2333333333333
       // Formats to currency value
-      let parsedNum = Math.floor(rawNum * 100)
-      let total = this.state.transactions
+      let parsedNum = parseFloat(rawNum.toFixed(2))
+      let total =
+        this.state.transactions +
+        (e.target.checked ? parsedNum : parsedNum * -1)
       this.setState({
-        [e.target.name]: total + (e.target.checked ? parsedNum : parsedNum * -1)
+        [e.target.name]: parseFloat(total.toFixed(2))
       })
     }
   }
 
   handleSubmit = async e => {
     e.preventDefault()
+    console.log('hello')
     await this.props.addHabit(this.state)
 
     this.setState({
@@ -76,12 +83,25 @@ class Habits extends React.Component {
         {this.state.redirect ? <Redirect to="/habits" /> : null}
         <Grid container spacing={3} justify="center">
           <Box width="25vw" paddingTop="40px" paddingRight="20px">
-            <Card>
+            <Card style={{backgroundColor: '#42AC42'}}>
               <CardContent>
-                <Typography>Habit: {this.state.name}</Typography>
-                <Typography>Goal: ${this.state.goal}</Typography>
-                <Typography>
-                  Weekly Spending: ${this.state.transactions / 100}
+                <Typography style={{color: 'white'}} variant="h5">
+                  Habit:
+                </Typography>
+                <Typography style={{color: 'white'}} variant="h3">
+                  {this.state.name}
+                </Typography>
+                <Typography style={{color: 'white'}}>
+                  Weekly Average Spending:
+                </Typography>
+                <Typography style={{color: 'white'}} variant="h4">
+                  ${this.state.transactions}
+                </Typography>
+                <Typography style={{color: 'white'}}>
+                  Weekly Goal/Budget:
+                </Typography>
+                <Typography style={{color: 'white'}} variant="h4">
+                  ${this.state.goal}
                 </Typography>
               </CardContent>
             </Card>
@@ -108,7 +128,10 @@ class Habits extends React.Component {
                       onChange={this.handleChange}
                       value={this.state.goal}
                     />
-                    <Typography>Number of selected transactions:</Typography>
+                    <Typography>
+                      Number of selected transactions:{' '}
+                      {this.state.transactionCount}
+                    </Typography>
                     <Button
                       onClick={this.handleSubmit}
                       variant="contained"
