@@ -33,6 +33,7 @@ class Habits extends React.Component {
       name: '',
       goal: '',
       transactions: 0,
+      transactionCount: 0,
       redirect: false
     }
   }
@@ -47,6 +48,9 @@ class Habits extends React.Component {
         [e.target.name]: e.target.value
       })
     } else {
+      e.target.checked
+        ? this.setState({transactionCount: this.state.transactionCount + 1})
+        : this.setState({transactionCount: this.state.transactionCount - 1})
       // .233333 = (1 / 30) * 7
       // representing an average spending per week
       let rawNum = Number(e.target.value) * 0.2333333333333
@@ -108,7 +112,10 @@ class Habits extends React.Component {
                       onChange={this.handleChange}
                       value={this.state.goal}
                     />
-                    <Typography>Number of selected transactions:</Typography>
+                    <Typography>
+                      Number of selected transactions:{' '}
+                      {this.state.transactionCount}
+                    </Typography>
                     <Button
                       onClick={this.handleSubmit}
                       variant="contained"
