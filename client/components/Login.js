@@ -21,13 +21,25 @@ const LogIn = props => {
 
   return (
     <Box display="flex" justifyContent="center" paddingTop="20vh">
-      <Grid display="flex" justify="center" container alignItems="center">
+      <Grid display="flex" justify="center" container>
         <Grid item xs={5}>
           <Box width="33vw">
-            <Card style={{margin: '10px, 10px, 10px, 10px', height: '300px'}}>
+            <Card
+              style={{
+                margin: '10px, 10px, 10px, 10px',
+                height: '300px',
+                backgroundColor: '#42AC42'
+              }}
+            >
               <CardContent>
-                <Typography variant="h5">Welcome to Cashed!</Typography>
-                <Typography>Hello</Typography>
+                <Typography style={{color: 'white'}} variant="h5">
+                  Welcome to Cashed!
+                </Typography>
+                <Box padding="20px, 20px, 20px, 20px">
+                  <Typography style={{color: 'white'}}>
+                    some description about the cashed app
+                  </Typography>
+                </Box>
               </CardContent>
             </Card>
           </Box>
@@ -40,56 +52,58 @@ const LogIn = props => {
                 <Typography component="h1" variant="h5">
                   Login
                 </Typography>
-                <FormGroup onSubmit={handleSubmit} noValidate name={name}>
-                  <TextField
-                    variant="outlined"
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="email"
-                    label="Email Address"
-                    name="email"
-                    autoComplete="email"
-                    autoFocus
-                  />
-                  <TextField
-                    variant="outlined"
-                    margin="normal"
-                    required
-                    fullWidth
-                    name="password"
-                    label="Password"
-                    type="password"
-                    id="password"
-                    autoComplete="current-password"
-                  />
-                  <FormControlLabel
-                    control={<Checkbox value="remember" color="primary" />}
-                    label="Remember me"
-                  />
-                  <Button
-                    type="submit"
-                    fullWidth
-                    variant="contained"
-                    color="primary"
-                  >
-                    {displayName}
-                  </Button>
-                  <Grid container>
-                    <Grid item xs={12}>
-                      <Link href="/signup" variant="body2">
-                        Don't have an account? Sign Up
-                      </Link>
+                <form onSubmit={handleSubmit} noValidate name={name}>
+                  <FormGroup>
+                    <TextField
+                      variant="outlined"
+                      margin="normal"
+                      required
+                      fullWidth
+                      id="email"
+                      label="Email Address"
+                      name="email"
+                      autoComplete="email"
+                      autoFocus
+                    />
+                    <TextField
+                      variant="outlined"
+                      margin="normal"
+                      required
+                      fullWidth
+                      name="password"
+                      label="Password"
+                      type="password"
+                      id="password"
+                      autoComplete="current-password"
+                    />
+                    <FormControlLabel
+                      control={<Checkbox value="remember" color="primary" />}
+                      label="Remember me"
+                    />
+                    <Button
+                      type="submit"
+                      fullWidth
+                      variant="contained"
+                      color="primary"
+                    >
+                      {displayName}
+                    </Button>
+                    <Grid container>
+                      <Grid item xs={12}>
+                        <Link href="/signup" variant="body2">
+                          Don't have an account? Sign Up
+                        </Link>
+                      </Grid>
+                      <Grid item xs={12}>
+                        <Link href="/auth/google" variant="body2">
+                          Login with Google
+                        </Link>
+                      </Grid>
                     </Grid>
-                    <Grid item xs={12}>
-                      <Link href="/auth/google" variant="body2">
-                        Login with Google
-                      </Link>
-                    </Grid>
-                  </Grid>
-                  {error &&
-                    error.response && <div> {error.response.data} </div>}
-                </FormGroup>
+                    {error &&
+                      error.response && <div> {error.response.data} </div>}
+                  </FormGroup>
+                </form>
               </CardContent>
             </Card>
           </Box>
