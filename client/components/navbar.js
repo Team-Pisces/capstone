@@ -9,9 +9,10 @@ const Navbar = ({handleClick, isLoggedIn, user}) => (
   <Box display="relative">
     {user.plaidAccessToken ? (
       user.plaidAccessToken.slice(7, 14) === 'sandbox' ? (
-        <AppBar style={{paddingTop: '68px'}}>
+        <AppBar color="secondary" style={{paddingTop: '68px'}}>
           <Typography align="center">
-            'You are currently using sandbox mode'
+            'You are currently using sandbox mode, certain functions will be
+            limited or disabled'
           </Typography>
         </AppBar>
       ) : null
