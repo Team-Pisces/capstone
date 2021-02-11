@@ -15,3 +15,23 @@ router.get('/', async (req, res, next) => {
     next(err)
   }
 })
+
+router.put('/', async (req, res, next) => {
+  try {
+    const user = await User.findOne({
+      where: {
+        email: req.body.currentEmail
+      }
+    })
+    if (user) {
+      await user.update({
+        email: req.body.newEmail
+      })
+      res.send(user)
+    } else {
+      res.sendStatus(404)
+    }
+  } catch (err) {
+    next(err)
+  }
+})
