@@ -67,6 +67,7 @@ class Habits extends React.Component {
 
   handleSubmit = async e => {
     e.preventDefault()
+    console.log('hello')
     await this.props.addHabit(this.state)
 
     this.setState({
