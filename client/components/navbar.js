@@ -7,6 +7,15 @@ import {AppBar, Link, Typography, Toolbar, Button, Box} from '@material-ui/core'
 
 const Navbar = ({handleClick, isLoggedIn, user}) => (
   <Box display="relative">
+    {user.plaidAccessToken ? (
+      user.plaidAccessToken.slice(7, 14) === 'sandbox' ? (
+        <AppBar style={{paddingTop: '68px'}}>
+          <Typography align="center">
+            'You are currently using sandbox mode'
+          </Typography>
+        </AppBar>
+      ) : null
+    ) : null}
     <AppBar style={{backgroundColor: '#42AC42'}}>
       <Toolbar>
         <Box display="flex" flexGrow={1}>
