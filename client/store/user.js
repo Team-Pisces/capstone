@@ -91,6 +91,17 @@ export const updateEmail = (currentEmail, newEmail) => {
   }
 }
 
+export const updatePassword = (currentEmail, newPassword) => {
+  return async dispatch => {
+    try {
+      const {data} = await axios.put('/api/users', {currentEmail, newPassword})
+      dispatch(updateUser(data))
+    } catch (err) {
+      console.error(err)
+    }
+  }
+}
+
 export const logout = () => async dispatch => {
   try {
     await axios.post('/auth/logout')

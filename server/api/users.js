@@ -24,12 +24,19 @@ router.put('/', async (req, res, next) => {
       }
     })
     if (user) {
-      await user.update({
-        email: req.body.newEmail
-      })
+      if (req.body.newEmail) {
+        await user.update({
+          email: req.body.newEmail
+        })
+      }
+      if (req.body.newPassword) {
+        await user.update({
+          password: req.body.newPassword
+        })
+      }
       res.send(user)
     } else {
-      res.sendStatus(404)
+      res.sendStatus(403)
     }
   } catch (err) {
     next(err)

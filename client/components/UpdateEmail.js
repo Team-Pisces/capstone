@@ -34,7 +34,6 @@ const useStyles = makeStyles(theme => ({
 const UpdateEmail = props => {
   const classes = useStyles()
   const {name, displayName, handleSubmit, error} = props
-  console.log(props)
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />

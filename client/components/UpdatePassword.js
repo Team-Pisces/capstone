@@ -34,14 +34,13 @@ const useStyles = makeStyles(theme => ({
 const UpdatePassword = props => {
   const classes = useStyles()
   const {name, displayName, handleSubmit, error} = props
-  console.log(props)
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar} />
         <Typography component="h1" variant="h5">
-          Update Password
+          Change Password
         </Typography>
         <form
           onSubmit={handleSubmit}
@@ -54,10 +53,10 @@ const UpdatePassword = props => {
             margin="normal"
             required
             fullWidth
-            id="currentPassword"
-            label="Current Password"
-            name="currentPassword"
-            autoComplete="currentPassword"
+            id="currentEmail"
+            label="Your Email"
+            name="currentEmail"
+            autoComplete="currentEmail"
             autoFocus
           />
           <TextField
@@ -67,7 +66,7 @@ const UpdatePassword = props => {
             fullWidth
             name="newPassword"
             label="New Password"
-            type="newPassword"
+            type="password"
             id="newPassword"
             autoComplete="newPassword"
           />
@@ -78,7 +77,7 @@ const UpdatePassword = props => {
             fullWidth
             name="confirmPassword"
             label="Confirm New Password"
-            type="confirmPassword"
+            type="password"
             id="confirmPassword"
             autoComplete="confirmPassword"
           />
@@ -98,7 +97,7 @@ const UpdatePassword = props => {
   )
 }
 
-const mapUpdateEmail = state => {
+const mapUpdatePassword = state => {
   return {
     name: 'updatePassword',
     displayName: 'Update Password',
@@ -109,15 +108,15 @@ const mapDispatch = dispatch => {
   return {
     handleSubmit(evt) {
       evt.preventDefault()
-      const currentPassword = evt.target.currentPassword.value
+      const currentEmail = evt.target.currentEmail.value
       const newPassword = evt.target.newPassword.value
       const confirmPassword = evt.target.confirmPassword.value
       if (confirmPassword === newPassword) {
-        dispatch(updatePassword(currentPassword, newPassword))
+        dispatch(updatePassword(currentEmail, newPassword))
       } else {
         alert('Passwords do not match!')
       }
     }
   }
 }
-export default connect(mapUpdateEmail, mapDispatch)(UpdatePassword)
+export default connect(mapUpdatePassword, mapDispatch)(UpdatePassword)
