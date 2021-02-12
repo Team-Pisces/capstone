@@ -10,6 +10,7 @@ import {
   TableRow,
   Paper
 } from '@material-ui/core'
+import Balance from './Balance'
 
 // const useStyles = makeStyles({
 //   table: {
@@ -47,6 +48,7 @@ class Transactions extends React.Component {
               : null}
           </TableBody>
         </Table>
+        <Balance />
       </TableContainer>
     )
   }
