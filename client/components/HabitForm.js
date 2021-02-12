@@ -65,6 +65,7 @@ class Habits extends React.Component {
   }
 
   handleChange = e => {
+    console.log(e.target.value.split(',')[1])
     if (e.target.name !== 'transactions') {
       this.setState({
         [e.target.name]: e.target.value
@@ -75,7 +76,7 @@ class Habits extends React.Component {
         : this.setState({transactionCount: this.state.transactionCount - 1})
       // .233333 = (1 / 30) * 7
       // representing an average spending per week
-      let rawNum = Number(e.target.value) * 0.2333333333333
+      let rawNum = Number(e.target.value[1]) * 0.2333333333333
       // Formats to currency value
       let parsedNum = parseFloat(rawNum.toFixed(2))
       let total =

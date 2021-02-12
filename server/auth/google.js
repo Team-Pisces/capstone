@@ -3,6 +3,7 @@ const router = require('express').Router()
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy
 const {User} = require('../db/models')
 const jwt = require('jsonwebtoken')
+require('dotenv')
 module.exports = router
 
 require('dotenv').config()
