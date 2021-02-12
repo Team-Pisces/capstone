@@ -22,9 +22,11 @@ import {
   Paper,
   TableHead,
   TableBody,
+  TextField,
   Link
 } from '@material-ui/core'
 import {getTransactions} from '../store/plaid2'
+import {Autocomplete} from '@material-ui/lab'
 
 class Habits extends React.Component {
   constructor(props) {
@@ -33,8 +35,10 @@ class Habits extends React.Component {
       name: '',
       goal: '',
       transactions: 0,
-      transactionCount: 0,
-      redirect: false
+      redirect: false,
+      categories: [],
+      category: '',
+      allChecked: false
     }
   }
 
@@ -43,6 +47,8 @@ class Habits extends React.Component {
   }
 
   handleChange = e => {
+    if (e.target.name === 'all')
+      this.setState({allChecked: !this.state.allChecked})
     if (e.target.name !== 'transactions') {
       this.setState({
         [e.target.name]: e.target.value
@@ -60,7 +66,7 @@ class Habits extends React.Component {
         this.state.transactions +
         (e.target.checked ? parsedNum : parsedNum * -1)
       this.setState({
-        [e.target.name]: parseFloat(total.toFixed(2))
+        transactions: parseFloat(total.toFixed(2))
       })
     }
   }
@@ -76,7 +82,20 @@ class Habits extends React.Component {
   }
 
   render() {
-    const transactions = this.props.transactions || []
+    let transactions = this.props.transactions || []
+    if (this.state.category !== '') {
+      transactions = transactions.filter(
+        tran => (tran.category[0] === this.state.category ? tran : null)
+      )
+    } else if (this.state.category === '') {
+      transactions = this.props.transactions || []
+    }
+    const categories = this.props.transactions
+      ? this.props.transactions.map(t => t.category[0])
+      : []
+    const uniq = [...new Set(categories)]
+    const cat = uniq.map(categ => categ)
+    console.log('uniq: ---> ', uniq)
 
     return (
       <Box paddingTop="60px">
@@ -152,10 +171,31 @@ class Habits extends React.Component {
                 <TableHead>
                   <TableRow>
                     <TableCell>Name</TableCell>
-                    <TableCell align="right">Amount</TableCell>
-                    <TableCell align="right">Date</TableCell>
-
-                    <TableCell align="right">Include</TableCell>
+                    <TableCell align="left">
+                      <Autocomplete
+                        id="combo-box-demo"
+                        options={uniq}
+                        getOptionLabel={option => option}
+                        renderInput={params => (
+                          <TextField
+                            {...params}
+                            name="category"
+                            label="Category"
+                            variant="outlined"
+                          />
+                        )}
+                        onChange={this.handleCategory}
+                      />
+                    </TableCell>
+                    <TableCell align="left">Amount</TableCell>
+                    <TableCell align="left">Date</TableCell>
+                    <TableCell padding="checkbox">
+                      <Checkbox
+                        checked={this.state.allChecked}
+                        name="all"
+                        onChange={this.handleChange}
+                      />
+                    </TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -172,12 +212,21 @@ class Habits extends React.Component {
                             {transaction.date}
                           </TableCell>
 
-                          <TableCell align="right">
-                            <Checkbox
-                              name="transactions"
-                              value={transaction.amount}
-                              onChange={this.handleChange}
-                            />
+                          <TableCell padding="checkbox">
+                            {this.state.allChecked ? (
+                              <Checkbox
+                                checked={true}
+                                name="transactions"
+                                value={transaction.amount}
+                                onChange={this.handleChange}
+                              />
+                            ) : (
+                              <Checkbox
+                                name="transactions"
+                                value={transaction.amount}
+                                onChange={this.handleChange}
+                              />
+                            )}
                           </TableCell>
                         </TableRow>
                       ))
