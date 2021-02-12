@@ -54,8 +54,8 @@ class Routes extends Component {
             <Route exact path="/habits" component={AllHabits} />
             <Route path="/habits/:habitId" component={SingleHabit} />
             <Route path="/profile" component={UserProfile} />
-            <Route path="/updateemail" component={UpdateEmail} />
-            <Route path="/updatepassword" component={UpdatePassword} />
+            <Route path="/updateEmail" component={UpdateEmail} />
+            <Route path="/updatePassword" component={UpdatePassword} />
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}

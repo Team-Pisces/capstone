@@ -203,9 +203,18 @@ const UserProfile = props => {
                         <Button
                           variant="contained"
                           color="primary"
-                          href="/updateInfo"
+                          href="/updateEmail"
                         >
-                          Update Profile
+                          Update Email
+                        </Button>
+                      </TableCell>
+                      <TableCell>
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          href="/updatePassword"
+                        >
+                          Change Password
                         </Button>
                       </TableCell>
                     </TableBody>

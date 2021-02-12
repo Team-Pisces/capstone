@@ -20,9 +20,15 @@ const Navbar = ({handleClick, isLoggedIn, user}) => {
       <AppBar style={{backgroundColor: '#42AC42'}}>
         <Toolbar>
           <Box display="flex" flexGrow={1}>
-            <Link variant="h4" href="/home" color="inherit" align="left">
-              Cashed
-            </Link>
+            {isLoggedIn ? (
+              <Link variant="h4" href="/home" color="inherit" align="left">
+                Cashed
+              </Link>
+            ) : (
+              <Link variant="h4" href="/login" color="inherit" align="left">
+                Cashed
+              </Link>
+            )}
           </Box>
 
           {isLoggedIn && user.plaidAccessToken ? (
