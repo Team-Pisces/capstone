@@ -11,9 +11,11 @@ import {
   AccountsPage,
   Balance,
   Link,
-  Chart,
   SingleHabit,
-  AllHabits
+  AllHabits,
+  UserProfile,
+  UpdateEmail,
+  UpdatePassword
 } from './components'
 import {me} from './store'
 // import SignUp from './components/SignUp'
@@ -31,6 +33,11 @@ class Routes extends Component {
 
     return (
       <Switch>
+        {isLoggedIn ? (
+          <Route exact path="/" component={UserHome} />
+        ) : (
+          <Route exact path="/" component={Login} />
+        )}
         {/* Routes placed here are available to all visitors */}
         <Route path="/login" component={Login} />
         {/* <Route path="/signup" component={Signup} /> */}
@@ -46,6 +53,9 @@ class Routes extends Component {
             <Route path="/accounts" component={AccountsPage} />
             <Route exact path="/habits" component={AllHabits} />
             <Route path="/habits/:habitId" component={SingleHabit} />
+            <Route path="/profile" component={UserProfile} />
+            <Route path="/updateEmail" component={UpdateEmail} />
+            <Route path="/updatePassword" component={UpdatePassword} />
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}

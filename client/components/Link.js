@@ -11,10 +11,21 @@ class Link extends React.Component {
   }
 
   render() {
+    let user = this.props.user.plaidAccessToken || ''
     let {link_token} = this.props.plaid2
+    console.log('access -> ', user)
     return link_token ? (
       <PlaidLink
-        style={{marginRight: '0', marginLeft: 'auto'}}
+        style={{
+          borderRadius: '10px',
+          backgroundColor: 'white',
+          border: 'none',
+          textAlign: 'center',
+          fontSize: '16px',
+          padding: '10px',
+          cursor: 'pointer',
+          margin: '5px'
+        }}
         token={link_token}
         // onSuccess generates a public token this token on its own
         onSuccess={async public_token => {
@@ -22,14 +33,17 @@ class Link extends React.Component {
           await this.props.me()
         }}
       >
-        Connect a bank account
+        {user !== ''
+          ? 'Connect another bank account'
+          : 'Connect a bank account'}
       </PlaidLink>
     ) : null
   }
 }
 
 const mapStateToProps = state => ({
-  plaid2: state.plaid2
+  plaid2: state.plaid2,
+  user: state.user
 })
 
 const mapDispatchToProps = dispatch => ({

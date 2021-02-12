@@ -22,8 +22,11 @@ import {
   Paper,
   TableHead,
   TableBody,
+  TextField,
   Link
 } from '@material-ui/core'
+import {Autocomplete} from '@material-ui/lab'
+import {fetchCategories} from '../store/categories'
 import {getTransactions} from '../store/plaid2'
 
 class Habits extends React.Component {
@@ -33,12 +36,32 @@ class Habits extends React.Component {
       name: '',
       goal: '',
       transactions: 0,
-      redirect: false
+      redirect: false,
+      categories: [],
+      category: '',
+      allChecked: false
     }
   }
 
   componentDidMount() {
     this.props.getTransactions()
+    this.props.fetchCategories()
+  }
+
+  formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 2
+  })
+
+  handleCategory = e => {
+    if (e.target.innerHTML[0] === undefined || e.target.innerHTML[0] === '<') {
+      this.setState({category: ''})
+    } else {
+      this.setState({
+        category: e.target.innerHTML
+      })
+    }
   }
 
   handleChange = e => {
@@ -48,20 +71,26 @@ class Habits extends React.Component {
         [e.target.name]: e.target.value
       })
     } else {
+      e.target.checked
+        ? this.setState({transactionCount: this.state.transactionCount + 1})
+        : this.setState({transactionCount: this.state.transactionCount - 1})
       // .233333 = (1 / 30) * 7
       // representing an average spending per week
       let rawNum = Number(e.target.value[1]) * 0.2333333333333
       // Formats to currency value
-      let parsedNum = Math.floor(rawNum * 100)
-      let total = this.state.transactions
+      let parsedNum = parseFloat(rawNum.toFixed(2))
+      let total =
+        this.state.transactions +
+        (e.target.checked ? parsedNum : parsedNum * -1)
       this.setState({
-        [e.target.name]: total + (e.target.checked ? parsedNum : parsedNum * -1)
+        transactions: parseFloat(total.toFixed(2))
       })
     }
   }
 
   handleSubmit = async e => {
     e.preventDefault()
+    console.log('hello')
     await this.props.addHabit(this.state)
 
     this.setState({
@@ -70,19 +99,44 @@ class Habits extends React.Component {
   }
 
   render() {
-    const transactions = this.props.transactions || []
-
+    let transactions = this.props.transactions || []
+    if (this.state.category !== '') {
+      transactions = transactions.filter(
+        tran => (tran.category[0] === this.state.category ? tran : null)
+      )
+    } else if (this.state.category === '') {
+      transactions = this.props.transactions || []
+    }
+    const categories = this.props.transactions
+      ? this.props.transactions.map(t => t.category[0])
+      : []
+    const uniq = [...new Set(categories)]
+    const cat = uniq.map(categ => categ)
+    console.log('uniq: ---> ', uniq)
     return (
       <Box paddingTop="60px">
         {this.state.redirect ? <Redirect to="/habits" /> : null}
         <Grid container spacing={3} justify="center">
           <Box width="25vw" paddingTop="40px" paddingRight="20px">
-            <Card>
+            <Card style={{backgroundColor: '#42AC42'}}>
               <CardContent>
-                <Typography>Habit: {this.state.name}</Typography>
-                <Typography>Goal: ${this.state.goal}</Typography>
-                <Typography>
-                  Weekly Spending: ${this.state.transactions / 100}
+                <Typography style={{color: 'white'}} variant="h5">
+                  Habit:
+                </Typography>
+                <Typography style={{color: 'white'}} variant="h3">
+                  {this.state.name}
+                </Typography>
+                <Typography style={{color: 'white'}}>
+                  Weekly Average Spending:
+                </Typography>
+                <Typography style={{color: 'white'}} variant="h4">
+                  ${this.state.transactions}
+                </Typography>
+                <Typography style={{color: 'white'}}>
+                  Weekly Goal/Budget:
+                </Typography>
+                <Typography style={{color: 'white'}} variant="h4">
+                  ${this.state.goal}
                 </Typography>
               </CardContent>
             </Card>
@@ -109,7 +163,10 @@ class Habits extends React.Component {
                       onChange={this.handleChange}
                       value={this.state.goal}
                     />
-                    <Typography>Number of selected transactions:</Typography>
+                    <Typography>
+                      Number of selected transactions:{' '}
+                      {this.state.transactionCount}
+                    </Typography>
                     <Button
                       onClick={this.handleSubmit}
                       variant="contained"
@@ -123,46 +180,86 @@ class Habits extends React.Component {
               </CardContent>
             </Card>
           </Box>
-          <Box width="80vw">
+          <Box width="90vw">
             <Typography>Check All that Apply</Typography>
-            <TableContainer component={Paper}>
-              <Table aria-label="simple table">
+            <TableContainer style={{maxHeight: 500}} component={Paper}>
+              <Table stickyHeader aria-label="sticky table">
                 <TableHead>
                   <TableRow>
-                    <TableCell>Name</TableCell>
-                    <TableCell align="right">Amount</TableCell>
-                    <TableCell align="right">Date</TableCell>
-
-                    <TableCell align="right">Include</TableCell>
+                    <TableCell width="22vw">Name</TableCell>
+                    <TableCell align="left">
+                      <Autocomplete
+                        id="combo-box-demo"
+                        options={uniq}
+                        getOptionLabel={option => option}
+                        renderInput={params => (
+                          <TextField
+                            {...params}
+                            name="category"
+                            label="Category"
+                            variant="outlined"
+                          />
+                        )}
+                        onChange={this.handleCategory}
+                      />
+                    </TableCell>
+                    <TableCell width="22vw" align="left">
+                      Amount
+                    </TableCell>
+                    <TableCell width="22vw" align="left">
+                      Date
+                    </TableCell>
+                    <TableCell width="12vw" padding="checkbox">
+                      <Checkbox />
+                    </TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   {transactions.length > 0
-                    ? transactions.map(transaction => (
-                        <TableRow key={transaction.transaction_id}>
-                          <TableCell component="th">
-                            {transaction.name}
-                          </TableCell>
-                          <TableCell align="right">
-                            {transaction.amount}
-                          </TableCell>
-                          <TableCell align="right">
-                            {transaction.date}
-                          </TableCell>
+                    ? transactions.map(transaction => {
+                        return (
+                          <TableRow
+                            key={transaction.transaction_id}
+                            hover
+                            // onClick={(e) => handleClick(e, row.name)}
+                            role="checkbox"
+                            // aria-checked={isItemSelected}
+                            // tabIndex={-1}
+                            // key={row.name}
+                            // selected={isItemSelected}
+                          >
+                            <TableCell width="22vw" component="th">
+                              {transaction.name}
+                            </TableCell>
+                            <TableCell width="22vw" align="left">
+                              {transaction.category[0]}
+                            </TableCell>
+                            <TableCell width="22vw" align="left">
+                              {this.formatter.format(transaction.amount)}
+                            </TableCell>
+                            <TableCell width="22vw" align="left">
+                              {transaction.date}
+                            </TableCell>
 
-                          <TableCell align="right">
-                            <Checkbox
-                              name="transactions"
-                              value={[
-                                transaction.name,
-                                transaction.amount,
-                                transaction.date
-                              ]}
-                              onChange={this.handleChange}
-                            />
-                          </TableCell>
-                        </TableRow>
-                      ))
+                            <TableCell width="12vw" padding="checkbox">
+                              {this.state.allChecked ? (
+                                <Checkbox
+                                  checked={true}
+                                  name="transactions"
+                                  value={transaction.amount}
+                                  onChange={this.handleChange}
+                                />
+                              ) : (
+                                <Checkbox
+                                  name="transactions"
+                                  value={transaction.amount}
+                                  onChange={this.handleChange}
+                                />
+                              )}
+                            </TableCell>
+                          </TableRow>
+                        )
+                      })
                     : null}
                 </TableBody>
               </Table>
@@ -182,7 +279,8 @@ const mapState = state => ({
 
 const mapDispatch = dispatch => ({
   addHabit: habit => dispatch(addHabit(habit)),
-  getTransactions: () => dispatch(getTransactions())
+  getTransactions: () => dispatch(getTransactions()),
+  fetchCategories: () => dispatch(fetchCategories())
 })
 
 export default connect(mapState, mapDispatch)(Habits)
