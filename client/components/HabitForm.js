@@ -65,8 +65,6 @@ class Habits extends React.Component {
   }
 
   handleChange = e => {
-    if (e.target.name === 'all')
-      this.setState({allChecked: !this.state.allChecked})
     if (e.target.name !== 'transactions') {
       this.setState({
         [e.target.name]: e.target.value
@@ -211,11 +209,7 @@ class Habits extends React.Component {
                       Date
                     </TableCell>
                     <TableCell width="12vw" padding="checkbox">
-                      <Checkbox
-                        checked={this.state.allChecked}
-                        name="all"
-                        onChange={this.handleChange}
-                      />
+                      <Checkbox />
                     </TableCell>
                   </TableRow>
                 </TableHead>

@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import Balance from './Balance'
-import {Box, Typography, Card, CardContent} from '@material-ui/core'
+import {Box, Typography, Card, CardContent, Grid} from '@material-ui/core'
 import Link from './Link'
 
 /**
@@ -13,24 +13,33 @@ export const UserHome = props => {
   const {firstName} = props
 
   return (
-    <Box display="flex" paddingTop="100px" justifyContent="center">
-      <Box height="50%" width="33vw">
-        <Card
-          style={{backgroundColor: '#42AC42', height: '30vh'}}
-          height="100%"
-          width="33vw"
-        >
-          <CardContent>
-            <Typography style={{color: 'white'}} variant="h4">
-              Welcome, {firstName}
-            </Typography>
-            <Typography style={{color: 'white'}} variant="h6">
-              Please connect a bank account to continue
-            </Typography>
-            <Link />
-          </CardContent>
-        </Card>
-      </Box>
+    <Box width="100vw">
+      <Grid display="flex" justify="center" container>
+        <Grid item xs={5}>
+          <Box
+            display="flex"
+            paddingTop="20vh"
+            justifyContent="center"
+            height="300px"
+            width="33vw"
+          >
+            <Card
+              style={{backgroundColor: '#42AC42', height: '300px'}}
+              width="33vw"
+            >
+              <CardContent>
+                <Typography style={{color: 'white'}} variant="h4">
+                  Welcome, {firstName}
+                </Typography>
+                <Typography style={{color: 'white'}} variant="h6">
+                  Please connect a bank account to continue
+                </Typography>
+                <Link />
+              </CardContent>
+            </Card>
+          </Box>
+        </Grid>
+      </Grid>
     </Box>
   )
 }
