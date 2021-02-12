@@ -10,7 +10,8 @@ export let config = {
   }
 }
 
-const App = () => {
+const App = props => {
+  console.log('props ->', props)
   return (
     <div>
       <Navbar />
