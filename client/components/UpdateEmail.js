@@ -42,6 +42,8 @@ const UpdateEmail = props => {
   )
   const email = props.email || []
   let [redirect, setRedirect] = useState(false)
+  let [current, setCurrent] = useState(false)
+  let [match, setMatch] = useState(false)
   const classes = useStyles()
   const {name, displayName, changeEmail, error} = props
   const handleSubmit = evt => {
@@ -49,10 +51,18 @@ const UpdateEmail = props => {
     const currentEmail = evt.target.currentEmail.value
     const newEmail = evt.target.newEmail.value
     const confirmEmail = evt.target.confirmEmail.value
-    if (email !== currentEmail) {
-      alert('Incorrect Current Email Address')
-    } else if (confirmEmail !== newEmail) {
-      alert('Emails do not match!')
+    if (
+      email !== currentEmail &&
+      (confirmEmail !== newEmail || confirmEmail === '')
+    ) {
+      setCurrent((current = true))
+      setMatch((match = true))
+    } else if (email !== currentEmail) {
+      setCurrent((current = true))
+      setMatch((match = false))
+    } else if (confirmEmail !== newEmail || confirmEmail === '') {
+      setCurrent((current = false))
+      setMatch((match = true))
     } else {
       changeEmail(currentEmail, newEmail)
       setRedirect((redirect = true))
@@ -71,39 +81,88 @@ const UpdateEmail = props => {
           noValidate
           name={name}
         >
-          <TextField
-            variant="standard"
-            margin="normal"
-            required
-            fullWidth
-            id="currentEmail"
-            label="Current Email Address"
-            name="currentEmail"
-            autoComplete="currentEmail"
-            autoFocus
-          />
-          <TextField
-            variant="standard"
-            margin="normal"
-            required
-            fullWidth
-            name="newEmail"
-            label="New Email Address"
-            type="newEmail"
-            id="newEmail"
-            autoComplete="newEmail"
-          />
-          <TextField
-            variant="standard"
-            margin="normal"
-            required
-            fullWidth
-            name="confirmEmail"
-            label="Confirm New Email Address"
-            type="confirmEmail"
-            id="confirmEmail"
-            autoComplete="confirmEmail"
-          />
+          {current === false ? (
+            <TextField
+              variant="standard"
+              margin="normal"
+              required
+              fullWidth
+              id="currentEmail"
+              label="Current Email Address"
+              name="currentEmail"
+              autoComplete="currentEmail"
+              autoFocus
+            />
+          ) : (
+            <TextField
+              variant="standard"
+              margin="normal"
+              required
+              error
+              helperText="Incorrect Current Email Address"
+              fullWidth
+              id="currentEmail"
+              label="Current Email Address"
+              name="currentEmail"
+              autoComplete="currentEmail"
+              autoFocus
+            />
+          )}
+          {match === false ? (
+            <>
+              <TextField
+                variant="standard"
+                margin="normal"
+                required
+                fullWidth
+                name="newEmail"
+                label="New Email Address"
+                type="newEmail"
+                id="newEmail"
+                autoComplete="newEmail"
+              />
+              <TextField
+                variant="standard"
+                margin="normal"
+                required
+                fullWidth
+                name="confirmEmail"
+                label="Confirm New Email Address"
+                type="confirmEmail"
+                id="confirmEmail"
+                autoComplete="confirmEmail"
+              />
+            </>
+          ) : (
+            <>
+              <TextField
+                variant="standard"
+                margin="normal"
+                required
+                error
+                fullWidth
+                name="newEmail"
+                label="New Email Address"
+                type="newEmail"
+                id="newEmail"
+                autoComplete="newEmail"
+              />
+              <TextField
+                variant="standard"
+                margin="normal"
+                required
+                error
+                helperText="New Emails Do Not Match"
+                fullWidth
+                name="confirmEmail"
+                label="Confirm New Email Address"
+                type="confirmEmail"
+                id="confirmEmail"
+                autoComplete="confirmEmail"
+              />
+            </>
+          )}
+
           <Button
             type="submit"
             fullWidth
@@ -113,7 +172,7 @@ const UpdateEmail = props => {
           >
             {displayName}
           </Button>
-          {error && error.response && <div> {error.response.data} </div>}
+          {/* {error && error.response && <div> {error.response.data} </div>} */}
         </form>
         {redirect === true ? <Redirect to="/profile" /> : null}
       </div>

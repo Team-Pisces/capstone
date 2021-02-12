@@ -115,11 +115,11 @@ const LogIn = props => {
             justify="center"
             alignItems="center"
           >
-            <Grid item xs={12}>
+            {/* <Grid item xs={12}>
               <Link href="/updatePassword" variant="body2">
                 Forgot password?
               </Link>
-            </Grid>
+            </Grid> */}
 
             <Grid item xs={12}>
               <Link href="/signup" variant="body2">
