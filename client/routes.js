@@ -15,7 +15,8 @@ import {
   AllHabits,
   UserProfile,
   UpdateEmail,
-  UpdatePassword
+  UpdatePassword,
+  TransactionTable
 } from './components'
 import {me} from './store'
 // import SignUp from './components/SignUp'
@@ -56,6 +57,7 @@ class Routes extends Component {
             <Route path="/profile" component={UserProfile} />
             <Route path="/updateEmail" component={UpdateEmail} />
             <Route path="/updatePassword" component={UpdatePassword} />
+            <Route path="/transactionTable" component={TransactionTable} />
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}
