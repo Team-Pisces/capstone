@@ -16,7 +16,6 @@ import {
   UserProfile,
   UpdateEmail,
   UpdatePassword
-
 } from './components'
 import {me} from './store'
 // import SignUp from './components/SignUp'
@@ -43,6 +42,7 @@ class Routes extends Component {
         <Route path="/login" component={Login} />
         {/* <Route path="/signup" component={Signup} /> */}
         <Route path="/signup" component={Signup} />
+        <Route path="/updatepassword" component={UpdatePassword} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}

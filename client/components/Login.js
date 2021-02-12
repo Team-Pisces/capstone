@@ -116,7 +116,7 @@ const LogIn = props => {
             alignItems="center"
           >
             <Grid item xs={12}>
-              <Link href="#" variant="body2">
+              <Link href="/updatePassword" variant="body2">
                 Forgot password?
               </Link>
             </Grid>

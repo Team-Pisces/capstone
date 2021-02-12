@@ -9,6 +9,7 @@ import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
 import {makeStyles} from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
+import {me} from '../store'
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -33,7 +34,17 @@ const useStyles = makeStyles(theme => ({
 
 const UpdatePassword = props => {
   const classes = useStyles()
-  const {name, displayName, handleSubmit, error} = props
+  const {name, displayName, changePassword, error} = props
+  const handleSubmit = evt => {
+    const currentEmail = evt.target.currentEmail.value
+    const newPassword = evt.target.newPassword.value
+    const confirmPassword = evt.target.confirmPassword.value
+    if (confirmPassword === newPassword) {
+      changePassword(currentEmail, newPassword)
+    } else {
+      alert('Passwords do not match!')
+    }
+  }
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -86,6 +97,7 @@ const UpdatePassword = props => {
             fullWidth
             variant="contained"
             color="primary"
+            href="/profile"
             className={classes.submit}
           >
             {displayName}
@@ -106,17 +118,8 @@ const mapUpdatePassword = state => {
 }
 const mapDispatch = dispatch => {
   return {
-    handleSubmit(evt) {
-      evt.preventDefault()
-      const currentEmail = evt.target.currentEmail.value
-      const newPassword = evt.target.newPassword.value
-      const confirmPassword = evt.target.confirmPassword.value
-      if (confirmPassword === newPassword) {
-        dispatch(updatePassword(currentEmail, newPassword))
-      } else {
-        alert('Passwords do not match!')
-      }
-    }
+    changePassword: (currentEmail, newPassword) =>
+      dispatch(updatePassword(currentEmail, newPassword))
   }
 }
 export default connect(mapUpdatePassword, mapDispatch)(UpdatePassword)
