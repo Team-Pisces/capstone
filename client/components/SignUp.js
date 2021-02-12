@@ -123,17 +123,23 @@ const SignUp = props => {
           >
             {displayName}
           </Button>
-          <Grid container justify="flex-end">
+          <Button
+            variant="contained"
+            color="primary"
+            href="/auth/google"
+            fullWidth
+          >
+            Sign Up with Google
+          </Button>
+          <Grid
+            container
+            direction="column"
+            justify="center"
+            alignItems="center"
+          >
             <Grid item>
               <Link href="/login" variant="body2">
-                Already have an account? Sign in
-              </Link>
-            </Grid>
-          </Grid>
-          <Grid container justify="flex-end">
-            <Grid item>
-              <Link href="/auth/google" variant="body2">
-                Sign up with Google
+                Already have an account? Log In Here
               </Link>
             </Grid>
           </Grid>

@@ -25,8 +25,9 @@ import {
   TextField,
   Link
 } from '@material-ui/core'
-import {getTransactions} from '../store/plaid2'
 import {Autocomplete} from '@material-ui/lab'
+import {fetchCategories} from '../store/categories'
+import {getTransactions} from '../store/plaid2'
 
 class Habits extends React.Component {
   constructor(props) {
@@ -44,6 +45,23 @@ class Habits extends React.Component {
 
   componentDidMount() {
     this.props.getTransactions()
+    this.props.fetchCategories()
+  }
+
+  formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 2
+  })
+
+  handleCategory = e => {
+    if (e.target.innerHTML[0] === undefined || e.target.innerHTML[0] === '<') {
+      this.setState({category: ''})
+    } else {
+      this.setState({
+        category: e.target.innerHTML
+      })
+    }
   }
 
   handleChange = e => {
@@ -96,7 +114,6 @@ class Habits extends React.Component {
     const uniq = [...new Set(categories)]
     const cat = uniq.map(categ => categ)
     console.log('uniq: ---> ', uniq)
-
     return (
       <Box paddingTop="60px">
         {this.state.redirect ? <Redirect to="/habits" /> : null}
@@ -164,13 +181,13 @@ class Habits extends React.Component {
               </CardContent>
             </Card>
           </Box>
-          <Box width="80vw">
+          <Box width="90vw">
             <Typography>Check All that Apply</Typography>
-            <TableContainer component={Paper}>
-              <Table aria-label="simple table">
+            <TableContainer style={{maxHeight: 500}} component={Paper}>
+              <Table stickyHeader aria-label="sticky table">
                 <TableHead>
                   <TableRow>
-                    <TableCell>Name</TableCell>
+                    <TableCell width="22vw">Name</TableCell>
                     <TableCell align="left">
                       <Autocomplete
                         id="combo-box-demo"
@@ -187,9 +204,13 @@ class Habits extends React.Component {
                         onChange={this.handleCategory}
                       />
                     </TableCell>
-                    <TableCell align="left">Amount</TableCell>
-                    <TableCell align="left">Date</TableCell>
-                    <TableCell padding="checkbox">
+                    <TableCell width="22vw" align="left">
+                      Amount
+                    </TableCell>
+                    <TableCell width="22vw" align="left">
+                      Date
+                    </TableCell>
+                    <TableCell width="12vw" padding="checkbox">
                       <Checkbox
                         checked={this.state.allChecked}
                         name="all"
@@ -200,36 +221,50 @@ class Habits extends React.Component {
                 </TableHead>
                 <TableBody>
                   {transactions.length > 0
-                    ? transactions.map(transaction => (
-                        <TableRow key={transaction.transaction_id}>
-                          <TableCell component="th">
-                            {transaction.name}
-                          </TableCell>
-                          <TableCell align="right">
-                            {transaction.amount}
-                          </TableCell>
-                          <TableCell align="right">
-                            {transaction.date}
-                          </TableCell>
+                    ? transactions.map(transaction => {
+                        return (
+                          <TableRow
+                            key={transaction.transaction_id}
+                            hover
+                            // onClick={(e) => handleClick(e, row.name)}
+                            role="checkbox"
+                            // aria-checked={isItemSelected}
+                            // tabIndex={-1}
+                            // key={row.name}
+                            // selected={isItemSelected}
+                          >
+                            <TableCell width="22vw" component="th">
+                              {transaction.name}
+                            </TableCell>
+                            <TableCell width="22vw" align="left">
+                              {transaction.category[0]}
+                            </TableCell>
+                            <TableCell width="22vw" align="left">
+                              {this.formatter.format(transaction.amount)}
+                            </TableCell>
+                            <TableCell width="22vw" align="left">
+                              {transaction.date}
+                            </TableCell>
 
-                          <TableCell padding="checkbox">
-                            {this.state.allChecked ? (
-                              <Checkbox
-                                checked={true}
-                                name="transactions"
-                                value={transaction.amount}
-                                onChange={this.handleChange}
-                              />
-                            ) : (
-                              <Checkbox
-                                name="transactions"
-                                value={transaction.amount}
-                                onChange={this.handleChange}
-                              />
-                            )}
-                          </TableCell>
-                        </TableRow>
-                      ))
+                            <TableCell width="12vw" padding="checkbox">
+                              {this.state.allChecked ? (
+                                <Checkbox
+                                  checked={true}
+                                  name="transactions"
+                                  value={transaction.amount}
+                                  onChange={this.handleChange}
+                                />
+                              ) : (
+                                <Checkbox
+                                  name="transactions"
+                                  value={transaction.amount}
+                                  onChange={this.handleChange}
+                                />
+                              )}
+                            </TableCell>
+                          </TableRow>
+                        )
+                      })
                     : null}
                 </TableBody>
               </Table>
@@ -249,7 +284,8 @@ const mapState = state => ({
 
 const mapDispatch = dispatch => ({
   addHabit: habit => dispatch(addHabit(habit)),
-  getTransactions: () => dispatch(getTransactions())
+  getTransactions: () => dispatch(getTransactions()),
+  fetchCategories: () => dispatch(fetchCategories())
 })
 
 export default connect(mapState, mapDispatch)(Habits)

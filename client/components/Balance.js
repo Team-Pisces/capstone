@@ -12,7 +12,8 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Paper
+  Paper,
+  Box
 } from '@material-ui/core'
 import {makeStyles} from '@material-ui/core/styles'
 import React, {useState, useEffect} from 'react'
@@ -75,6 +76,11 @@ export const Balance = props => {
 
   return (
     <div>
+      <Typography>
+        <Box paddingTop={3}>
+          Choose an account to see account transactions and activity
+        </Box>
+      </Typography>
       <FormControl variant="filled" className={classes.formControl}>
         <InputLabel id="accountL">Select Account</InputLabel>
 
@@ -112,13 +118,13 @@ export const Balance = props => {
                             100
                         ).toLocaleString('en')}
                       </Typography>
-                      <Typography>
+                      {/* <Typography>
                         Available: $
                         {parseFloat(
                           Math.floor(accountBalance.balances.available * 100) /
                             100
                         ).toLocaleString('en')}
-                      </Typography>
+                      </Typography> */}
                     </div>
                   )
                 } else {
@@ -166,7 +172,7 @@ export const Balance = props => {
         <Table aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell>Name</TableCell>
+              <TableCell>Category</TableCell>
               <TableCell align="right">Frequency</TableCell>
             </TableRow>
           </TableHead>
@@ -187,8 +193,8 @@ export const Balance = props => {
 }
 
 const mapState = state => ({
-  balance: state.plaid.balance,
-  transactions: state.plaid.transactions
+  balance: state.plaid2.balance,
+  transactions: state.plaid2.transactions
 })
 
 const mapDispatch = dispatch => ({

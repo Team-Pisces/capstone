@@ -4,8 +4,8 @@ const pkg = require('../../package.json')
 const databaseName = pkg.name + (process.env.NODE_ENV === 'test' ? '-test' : '')
 
 const db = new Sequelize(
-  // process.env.DATABASE_URL || `postgres://localhost:5432/${databaseName}`,
-  `postgres://postgres:cashedaws@aa1pyztiain0nww.clj42glswx3p.us-east-1.rds.amazonaws.com:5432/postgres`,
+  process.env.DATABASE_URL || `postgres://localhost:5432/${databaseName}`,
+  // `postgres://postgres:cashedaws@aa1pyztiain0nww.clj42glswx3p.us-east-1.rds.amazonaws.com:5432/postgres`,
   {
     logging: false
   }
