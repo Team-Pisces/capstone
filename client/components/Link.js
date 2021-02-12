@@ -16,7 +16,16 @@ class Link extends React.Component {
     console.log('access -> ', user)
     return link_token ? (
       <PlaidLink
-        style={{marginRight: '0', marginLeft: 'auto'}}
+        style={{
+          borderRadius: '10px',
+          backgroundColor: 'white',
+          border: 'none',
+          textAlign: 'center',
+          fontSize: '16px',
+          padding: '10px',
+          cursor: 'pointer',
+          margin: '5px'
+        }}
         token={link_token}
         // onSuccess generates a public token this token on its own
         onSuccess={async public_token => {

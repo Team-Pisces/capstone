@@ -38,7 +38,8 @@ class Habits extends React.Component {
       transactions: 0,
       redirect: false,
       categories: [],
-      category: ''
+      category: '',
+      allChecked: false
     }
   }
 
@@ -81,7 +82,7 @@ class Habits extends React.Component {
         this.state.transactions +
         (e.target.checked ? parsedNum : parsedNum * -1)
       this.setState({
-        [e.target.name]: parseFloat(total.toFixed(2))
+        transactions: parseFloat(total.toFixed(2))
       })
     }
   }
@@ -184,7 +185,7 @@ class Habits extends React.Component {
               <Table stickyHeader aria-label="sticky table">
                 <TableHead>
                   <TableRow>
-                    <TableCell>Name</TableCell>
+                    <TableCell width="22vw">Name</TableCell>
                     <TableCell align="left">
                       <Autocomplete
                         id="combo-box-demo"
@@ -201,10 +202,14 @@ class Habits extends React.Component {
                         onChange={this.handleCategory}
                       />
                     </TableCell>
-                    <TableCell align="left">Amount</TableCell>
-                    <TableCell align="left">Date</TableCell>
-                    <TableCell padding="checkbox">
-                      <Checkbox onChange={this.selectAll} />
+                    <TableCell width="22vw" align="left">
+                      Amount
+                    </TableCell>
+                    <TableCell width="22vw" align="left">
+                      Date
+                    </TableCell>
+                    <TableCell width="12vw" padding="checkbox">
+                      <Checkbox />
                     </TableCell>
                   </TableRow>
                 </TableHead>
@@ -222,25 +227,34 @@ class Habits extends React.Component {
                             // key={row.name}
                             // selected={isItemSelected}
                           >
-                            <TableCell component="th">
+                            <TableCell width="22vw" component="th">
                               {transaction.name}
                             </TableCell>
-                            <TableCell align="left">
+                            <TableCell width="22vw" align="left">
                               {transaction.category[0]}
                             </TableCell>
-                            <TableCell align="left">
+                            <TableCell width="22vw" align="left">
                               {this.formatter.format(transaction.amount)}
                             </TableCell>
-                            <TableCell align="left">
+                            <TableCell width="22vw" align="left">
                               {transaction.date}
                             </TableCell>
 
-                            <TableCell padding="checkbox">
-                              <Checkbox
-                                name="transactions"
-                                value={transaction.amount}
-                                onChange={this.handleChange}
-                              />
+                            <TableCell width="12vw" padding="checkbox">
+                              {this.state.allChecked ? (
+                                <Checkbox
+                                  checked={true}
+                                  name="transactions"
+                                  value={transaction.amount}
+                                  onChange={this.handleChange}
+                                />
+                              ) : (
+                                <Checkbox
+                                  name="transactions"
+                                  value={transaction.amount}
+                                  onChange={this.handleChange}
+                                />
+                              )}
                             </TableCell>
                           </TableRow>
                         )

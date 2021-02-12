@@ -1,139 +1,115 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {auth1} from '../store'
-
-import Avatar from '@material-ui/core/Avatar'
-import Button from '@material-ui/core/Button'
-import CssBaseline from '@material-ui/core/CssBaseline'
-import TextField from '@material-ui/core/TextField'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
-import Checkbox from '@material-ui/core/Checkbox'
-import Link from '@material-ui/core/Link'
-import Box from '@material-ui/core/Box'
-import Grid from '@material-ui/core/Grid'
-import Typography from '@material-ui/core/Typography'
-import {makeStyles} from '@material-ui/core/styles'
-import Container from '@material-ui/core/Container'
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Cashed
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  )
-}
-
-const useStyles = makeStyles(theme => ({
-  paper: {
-    marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center'
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main
-  },
-  form: {
-    width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(1)
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2)
-  }
-}))
+import {
+  Card,
+  CardContent,
+  FormGroup,
+  Typography,
+  Grid,
+  Box,
+  Link,
+  Checkbox,
+  FormControlLabel,
+  TextField,
+  Avatar,
+  Button
+} from '@material-ui/core'
 
 const LogIn = props => {
-  const classes = useStyles()
   const {name, displayName, handleSubmit, error} = props
 
   return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar} />
-        <Typography component="h1" variant="h5">
-          Login
-        </Typography>
-        <form
-          onSubmit={handleSubmit}
-          className={classes.form}
-          noValidate
-          name={name}
-        >
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            autoFocus
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-          />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            {displayName}
-          </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            href="/auth/google"
-            fullWidth
-          >
-            Log in with Google
-          </Button>
-          <Grid
-            container
-            direction="column"
-            justify="center"
-            alignItems="center"
-          >
-            {/* <Grid item xs={12}>
-              <Link href="/updatePassword" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid> */}
-
-            <Grid item xs={12}>
-              <Link href="/signup" variant="body2">
-                Don't have an account? Sign Up Here
-              </Link>
-            </Grid>
-          </Grid>
-          {error && error.response && <div> {error.response.data} </div>}
-        </form>
-      </div>
-      <Box mt={8}>
-        <Copyright />
-      </Box>
-    </Container>
+    <Box display="flex" justifyContent="center" paddingTop="20vh">
+      <Grid display="flex" justify="center" container>
+        <Grid item xs={5}>
+          <Box width="33vw">
+            <Card
+              style={{
+                margin: '10px, 10px, 10px, 10px',
+                height: '300px',
+                backgroundColor: '#42AC42'
+              }}
+            >
+              <CardContent>
+                <Typography style={{color: 'white'}} variant="h5">
+                  Welcome to Cashed!
+                </Typography>
+                <Box padding="20px, 20px, 20px, 20px">
+                  <Typography style={{color: 'white'}}>
+                    some description about the cashed app
+                  </Typography>
+                </Box>
+              </CardContent>
+            </Card>
+          </Box>
+        </Grid>
+        <Grid item xs={5}>
+          <Box width="33vw">
+            <Card style={{margin: '10px, 10px, 10px, 10px'}}>
+              <CardContent display="flex">
+                <Avatar style={{backgroundColor: '#42AC42'}} />
+                <Typography component="h1" variant="h5">
+                  Login
+                </Typography>
+                <form onSubmit={handleSubmit} noValidate name={name}>
+                  <FormGroup>
+                    <TextField
+                      variant="outlined"
+                      margin="normal"
+                      required
+                      fullWidth
+                      id="email"
+                      label="Email Address"
+                      name="email"
+                      autoComplete="email"
+                      autoFocus
+                    />
+                    <TextField
+                      variant="outlined"
+                      margin="normal"
+                      required
+                      fullWidth
+                      name="password"
+                      label="Password"
+                      type="password"
+                      id="password"
+                      autoComplete="current-password"
+                    />
+                    <FormControlLabel
+                      control={<Checkbox value="remember" color="primary" />}
+                      label="Remember me"
+                    />
+                    <Button
+                      type="submit"
+                      fullWidth
+                      variant="contained"
+                      color="primary"
+                    >
+                      {displayName}
+                    </Button>
+                    <Grid container>
+                      <Grid item xs={12}>
+                        <Link href="/signup" variant="body2">
+                          Don't have an account? Sign Up
+                        </Link>
+                      </Grid>
+                      <Grid item xs={12}>
+                        <Link href="/auth/google" variant="body2">
+                          Login with Google
+                        </Link>
+                      </Grid>
+                    </Grid>
+                    {error &&
+                      error.response && <div> {error.response.data} </div>}
+                  </FormGroup>
+                </form>
+              </CardContent>
+            </Card>
+          </Box>
+        </Grid>
+      </Grid>
+    </Box>
   )
 }
 
