@@ -27,7 +27,8 @@ class RedChart extends React.Component {
         {this.props.weeklyAvg ? (
           <CardContent>
             <Typography variant="h4">
-              Potential {type === 'spending' ? 'Loss' : 'Gain'}: ${total[30].toLocaleString()}
+              Potential {type === 'spending' ? 'Loss' : 'Gain'}: $
+              {total[30].toLocaleString()}
             </Typography>
             <VictoryChart domainPadding={10}>
               <VictoryAxis tickValues={display} />
@@ -127,8 +128,7 @@ class RedChart extends React.Component {
             </VictoryChart>
             <Typography variant="caption">
               Hypothetical {type === 'spending' ? 'Loss' : 'Gain'} projection if
-              weekly average {type}
-              continues.
+              weekly average {type} continues.
             </Typography>
           </CardContent>
         ) : null}
