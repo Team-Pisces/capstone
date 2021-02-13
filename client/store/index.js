@@ -8,6 +8,7 @@ import plaid2 from './plaid2'
 import chart from './chart'
 import singleHabit from './singleHabit'
 import categories from './categories'
+import transactions from './transactions'
 
 const reducer = combineReducers({
   user,
@@ -15,7 +16,8 @@ const reducer = combineReducers({
   plaid2,
   chart,
   singleHabit,
-  categories
+  categories,
+  transactions
 })
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))
