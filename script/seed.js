@@ -1,7 +1,7 @@
 'use strict'
 
 const db = require('../server/db')
-const {User} = require('../server/db/models')
+const {User, Transaction, Habit} = require('../server/db/models')
 
 async function seed() {
   await db.sync({force: true})
@@ -17,7 +17,8 @@ async function seed() {
     User.create({
       firstName: 'Murphy',
       lastName: 'Bar',
-      email: 'murphy@gmail.com'
+      email: 'murphy@gmail.com',
+      password: '123'
     }),
     User.create({
       firstName: 'Ned',
@@ -38,6 +39,29 @@ async function seed() {
       password: '123'
     })
   ])
+
+  await Habit.create({
+    name: 'Coffee',
+    goal: 10,
+    initialWeeklyAvg: 2000
+  })
+
+  await Transaction.create({
+    title: 'Week 1',
+    amount: 8,
+    date: new Date()
+  })
+
+  const cody = await User.findByPk(1)
+  const coffee = await Habit.findByPk(1)
+  const week1 = await Transaction.findByPk(1)
+
+  await cody.addHabit(coffee)
+  await coffee.addTransaction(week1)
+
+  console.log(Object.keys(User.prototype))
+
+  // habit.addTransaction(transaction)
 
   console.log(`seeded ${users.length} users`)
   console.log(`seeded successfully`)

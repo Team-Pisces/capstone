@@ -63,6 +63,7 @@ class TransactionTable extends React.Component {
           pageSize={10}
           checkboxSelection
           onSelectionChange={rowIds => this.handleTransactionSelect(rowIds)}
+          onRowSelected={item => this.props.handleSelect(item)}
         />
       </div>
     )

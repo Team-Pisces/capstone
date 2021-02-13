@@ -1,7 +1,8 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {Redirect} from 'react-router-dom'
-import {addHabit} from '../store/habits'
+import {addHabit, fetchHabits} from '../store/habits'
+import {addTransaction} from '../store/transactions'
 import {
   Box,
   Grid,
@@ -28,7 +29,8 @@ class Habits extends React.Component {
       redirect: false,
       categories: [],
       category: '',
-      allChecked: false
+      allChecked: false,
+      transactionData: []
     }
     this.handleChange = this.handleChange.bind(this)
   }
@@ -36,6 +38,7 @@ class Habits extends React.Component {
   componentDidMount() {
     this.props.getTransactions()
     this.props.fetchCategories()
+    this.props.fetchHabits()
   }
 
   formatter = new Intl.NumberFormat('en-US', {
@@ -48,6 +51,26 @@ class Habits extends React.Component {
     this.setState({transactions: sum})
   }
 
+  handleSelect = item => {
+    let tData = this.state.transactionData
+    if (!item.isSelected) {
+      for (let i = 0; i < tData.length; i++) {
+        if (tData[i] === item.data) {
+          tData.splice(i, 1)
+          this.setState({
+            transactionData: tData
+          })
+        }
+      }
+    } else {
+      tData.push(item.data)
+      this.setState({
+        transactionData: tData
+      })
+    }
+    console.log('Transaction data on state ----->', this.state.transactionData)
+  }
+
   handleChange = e => {
     this.setState({
       [e.target.name]: e.target.value
@@ -57,6 +80,16 @@ class Habits extends React.Component {
   handleSubmit = async e => {
     e.preventDefault()
     await this.props.addHabit(this.state)
+    // let tData = this.state.transactionData
+    // let habitId = this.props.habits.length + 1
+    // for (let i = 0; i < tData.length; i++) {
+    //   this.props.addTransaction(
+    //     tData[i].name,
+    //     tData[i].amount,
+    //     tData[i].date,
+    //     habitId
+    //   )
+    // }
     this.setState({
       redirect: true
     })
@@ -78,7 +111,14 @@ class Habits extends React.Component {
     console.log('uniq: ---> ', uniq)
     return (
       <Box paddingTop="60px">
-        {this.state.redirect ? <Redirect to="/habits" /> : null}
+        {this.state.redirect ? (
+          <Redirect
+            to={{
+              pathname: `/habits/${this.props.habits.length}`,
+              state: {transactions: this.state.transactionData}
+            }}
+          />
+        ) : null}
         <Grid container spacing={3} justify="center">
           <Box width="25vw" paddingTop="40px" paddingRight="20px">
             <Card style={{backgroundColor: '#42AC42'}}>
@@ -145,7 +185,10 @@ class Habits extends React.Component {
           </Box>
           <Box width="90vw">
             <Typography>Check All that Apply</Typography>
-            <TransactionTable handleForm={this.handleForm} />
+            <TransactionTable
+              handleForm={this.handleForm}
+              handleSelect={this.handleSelect}
+            />
             {/* <TableContainer style={{maxHeight: 500}} component={Paper}>
               <Table stickyHeader aria-label="sticky table">
                 <TableHead>
@@ -244,7 +287,10 @@ const mapState = state => ({
 const mapDispatch = dispatch => ({
   addHabit: habit => dispatch(addHabit(habit)),
   getTransactions: () => dispatch(getTransactions()),
-  fetchCategories: () => dispatch(fetchCategories())
+  fetchCategories: () => dispatch(fetchCategories()),
+  addTransaction: (title, amount, date, habitId) =>
+    dispatch(addTransaction(title, amount, date, habitId)),
+  fetchHabits: () => dispatch(fetchHabits())
 })
 
 export default connect(mapState, mapDispatch)(Habits)
