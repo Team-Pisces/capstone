@@ -67,28 +67,12 @@ class Habits extends React.Component {
   // }
 
   handleForm = e => {
-    if (e.data.amount[0] === '$') {
-      let numString = e.data.amount.split(',').join('')
-      let num = parseFloat(numString.slice(1, e.length))
-      if (!e.isSelected) {
-        num = num * -1
-      }
-      this.setState({
-        transactions: this.state.transactions + num
-      })
-      console.log(this.state.transactions)
-    } else if (e.data.amount[1] === '$') {
-      let numString = e.data.amount.split(',').join('')
-      let num = numString.slice(0, 1) + numString.slice(2, numString.length)
-      num = parseFloat(num)
-      if (!e.isSelected) {
-        num = num * -1
-      }
-      this.setState({
-        transactions: this.state.transactions + num
-      })
-      console.log(this.state.transactions)
+    let stripped = parseFloat(e.data.amount.replace(/[^0-9.-]/gi, ''))
+    let weeklyAvg = Math.floor(stripped * 23.3333333) / 100
+    if (!e.isSelected) {
+      weeklyAvg = weeklyAvg * -1
     }
+    this.setState({transactions: this.state.transactions + weeklyAvg})
   }
 
   handleChange = e => {
