@@ -8,6 +8,22 @@ class TransactionTable extends React.Component {
     this.props.getTransactions()
   }
 
+  handleTransactionSelect = array => {
+    if (array.rowIds.length > 0) {
+      let something = array.rowIds.map(rowId => {
+        return this.props.transactions.filter(t => {
+          if (rowId === t.transaction_id) {
+            return t
+          }
+        })[0]
+      })
+      let sum = something.reduce((accum, val) => accum + val.amount, 0)
+      this.props.handleForm(Math.floor(sum * 23.3333333) / 100)
+    } else {
+      this.props.handleForm(0)
+    }
+  }
+
   formatter = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
@@ -46,7 +62,7 @@ class TransactionTable extends React.Component {
           columns={columns}
           pageSize={10}
           checkboxSelection
-          onRowSelected={event => this.props.handleForm(event)}
+          onSelectionChange={rowIds => this.handleTransactionSelect(rowIds)}
         />
       </div>
     )
