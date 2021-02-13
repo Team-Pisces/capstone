@@ -10,22 +10,10 @@ import {
   InputLabel,
   Input,
   Button,
-  FormHelperText,
   FormControl,
   Card,
-  CardContent,
-  Table,
-  TableContainer,
-  TableRow,
-  TableCell,
-  Checkbox,
-  Paper,
-  TableHead,
-  TableBody,
-  TextField,
-  Link
+  CardContent
 } from '@material-ui/core'
-import {Autocomplete} from '@material-ui/lab'
 import {fetchCategories} from '../store/categories'
 import {getTransactions} from '../store/plaid2'
 import TransactionTable from './TransactionTable'
@@ -56,39 +44,8 @@ class Habits extends React.Component {
     minimumFractionDigits: 2
   })
 
-  // handleCategory = (e) => {
-  //   if (e.target.innerHTML[0] === undefined || e.target.innerHTML[0] === '<') {
-  //     this.setState({category: ''})
-  //   } else {
-  //     this.setState({
-  //       category: e.target.innerHTML,
-  //     })
-  //   }
-  // }
-
-  handleForm = e => {
-    if (e.data.amount[0] === '$') {
-      let numString = e.data.amount.split(',').join('')
-      let num = parseFloat(numString.slice(1, e.length))
-      if (!e.isSelected) {
-        num = num * -1
-      }
-      this.setState({
-        transactions: this.state.transactions + num
-      })
-      console.log(this.state.transactions)
-    } else if (e.data.amount[1] === '$') {
-      let numString = e.data.amount.split(',').join('')
-      let num = numString.slice(0, 1) + numString.slice(2, numString.length)
-      num = parseFloat(num)
-      if (!e.isSelected) {
-        num = num * -1
-      }
-      this.setState({
-        transactions: this.state.transactions + num
-      })
-      console.log(this.state.transactions)
-    }
+  handleForm = sum => {
+    this.setState({transactions: sum})
   }
 
   handleChange = e => {
@@ -99,9 +56,7 @@ class Habits extends React.Component {
 
   handleSubmit = async e => {
     e.preventDefault()
-    console.log('hello')
     await this.props.addHabit(this.state)
-
     this.setState({
       redirect: true
     })
@@ -113,9 +68,8 @@ class Habits extends React.Component {
       transactions = transactions.filter(
         tran => (tran.category[0] === this.state.category ? tran : null)
       )
-    } else if (this.state.category === '') {
-      transactions = this.props.transactions || []
     }
+
     const categories = this.props.transactions
       ? this.props.transactions.map(t => t.category[0])
       : []
