@@ -28,6 +28,7 @@ import {
 import {Autocomplete} from '@material-ui/lab'
 import {fetchCategories} from '../store/categories'
 import {getTransactions} from '../store/plaid2'
+import TransactionTable from './TransactionTable'
 
 class Habits extends React.Component {
   constructor(props) {
@@ -41,6 +42,7 @@ class Habits extends React.Component {
       category: '',
       allChecked: false
     }
+    this.handleChange = this.handleChange.bind(this)
   }
 
   componentDidMount() {
@@ -54,38 +56,45 @@ class Habits extends React.Component {
     minimumFractionDigits: 2
   })
 
-  handleCategory = e => {
-    if (e.target.innerHTML[0] === undefined || e.target.innerHTML[0] === '<') {
-      this.setState({category: ''})
-    } else {
+  // handleCategory = (e) => {
+  //   if (e.target.innerHTML[0] === undefined || e.target.innerHTML[0] === '<') {
+  //     this.setState({category: ''})
+  //   } else {
+  //     this.setState({
+  //       category: e.target.innerHTML,
+  //     })
+  //   }
+  // }
+
+  handleForm = e => {
+    if (e.data.amount[0] === '$') {
+      let numString = e.data.amount.split(',').join('')
+      let num = parseFloat(numString.slice(1, e.length))
+      if (!e.isSelected) {
+        num = num * -1
+      }
       this.setState({
-        category: e.target.innerHTML
+        transactions: this.state.transactions + num
       })
+      console.log(this.state.transactions)
+    } else if (e.data.amount[1] === '$') {
+      let numString = e.data.amount.split(',').join('')
+      let num = numString.slice(0, 1) + numString.slice(2, numString.length)
+      num = parseFloat(num)
+      if (!e.isSelected) {
+        num = num * -1
+      }
+      this.setState({
+        transactions: this.state.transactions + num
+      })
+      console.log(this.state.transactions)
     }
   }
 
   handleChange = e => {
-    console.log(e.target.value.split(',')[1])
-    if (e.target.name !== 'transactions') {
-      this.setState({
-        [e.target.name]: e.target.value
-      })
-    } else {
-      e.target.checked
-        ? this.setState({transactionCount: this.state.transactionCount + 1})
-        : this.setState({transactionCount: this.state.transactionCount - 1})
-      // .233333 = (1 / 30) * 7
-      // representing an average spending per week
-      let rawNum = Number(e.target.value[1]) * 0.2333333333333
-      // Formats to currency value
-      let parsedNum = parseFloat(rawNum.toFixed(2))
-      let total =
-        this.state.transactions +
-        (e.target.checked ? parsedNum : parsedNum * -1)
-      this.setState({
-        transactions: parseFloat(total.toFixed(2))
-      })
-    }
+    this.setState({
+      [e.target.name]: e.target.value
+    })
   }
 
   handleSubmit = async e => {
@@ -182,7 +191,8 @@ class Habits extends React.Component {
           </Box>
           <Box width="90vw">
             <Typography>Check All that Apply</Typography>
-            <TableContainer style={{maxHeight: 500}} component={Paper}>
+            <TransactionTable handleForm={this.handleForm} />
+            {/* <TableContainer style={{maxHeight: 500}} component={Paper}>
               <Table stickyHeader aria-label="sticky table">
                 <TableHead>
                   <TableRow>
@@ -191,8 +201,8 @@ class Habits extends React.Component {
                       <Autocomplete
                         id="combo-box-demo"
                         options={uniq}
-                        getOptionLabel={option => option}
-                        renderInput={params => (
+                        getOptionLabel={(option) => option}
+                        renderInput={(params) => (
                           <TextField
                             {...params}
                             name="category"
@@ -216,7 +226,7 @@ class Habits extends React.Component {
                 </TableHead>
                 <TableBody>
                   {transactions.length > 0
-                    ? transactions.map(transaction => {
+                    ? transactions.map((transaction) => {
                         return (
                           <TableRow
                             key={transaction.transaction_id}
@@ -263,7 +273,7 @@ class Habits extends React.Component {
                     : null}
                 </TableBody>
               </Table>
-            </TableContainer>
+            </TableContainer> */}
           </Box>
         </Grid>
       </Box>
