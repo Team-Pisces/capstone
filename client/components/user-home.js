@@ -2,9 +2,16 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import Balance from './Balance'
-import {Box, Typography, Card, CardContent, Grid} from '@material-ui/core'
+import {
+  Box,
+  Typography,
+  Card,
+  CardContent,
+  Grid,
+  SvgIcon
+} from '@material-ui/core'
 import Link from './Link'
-
+import CardImage from '../images/undraw01.svg'
 /**
  * COMPONENT
  */
@@ -15,6 +22,13 @@ export const UserHome = props => {
   return (
     <Box width="100vw">
       <Grid display="flex" justify="center" container>
+        <Grid item xs={5}>
+          <Box display="flex" paddingTop="20vh" justifyContent="center">
+            <SvgIcon style={{fontSize: 500}} viewBox="0 0 1000 1000">
+              <CardImage />
+            </SvgIcon>
+          </Box>
+        </Grid>
         <Grid item xs={5}>
           <Box
             display="flex"
