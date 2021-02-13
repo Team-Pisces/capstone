@@ -44,13 +44,8 @@ class Habits extends React.Component {
     minimumFractionDigits: 2
   })
 
-  handleForm = e => {
-    let stripped = parseFloat(e.data.amount.replace(/[^0-9.-]/gi, ''))
-    let weeklyAvg = Math.floor(stripped * 23.3333333) / 100
-    if (!e.isSelected) {
-      weeklyAvg = weeklyAvg * -1
-    }
-    this.setState({transactions: this.state.transactions + weeklyAvg})
+  handleForm = sum => {
+    this.setState({transactions: sum})
   }
 
   handleChange = e => {
