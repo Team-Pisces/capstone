@@ -13,7 +13,6 @@ class Link extends React.Component {
   render() {
     let user = this.props.user.plaidAccessToken || ''
     let {link_token} = this.props.plaid2
-    console.log('access -> ', user)
     return link_token ? (
       <PlaidLink
         style={{
