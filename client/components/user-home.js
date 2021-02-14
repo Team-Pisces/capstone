@@ -10,6 +10,7 @@ import {
   Grid,
   SvgIcon
 } from '@material-ui/core'
+import {Redirect} from 'react-router-dom'
 import Link from './Link'
 import CardImage from '../images/undraw01.svg'
 /**
@@ -17,10 +18,17 @@ import CardImage from '../images/undraw01.svg'
  */
 
 export const UserHome = props => {
-  const {firstName} = props
-
+  const {user} = props
+  console.log(user)
   return (
     <Box width="100vw">
+      {user.plaidAccessToken !== null ? (
+        <Redirect
+          to={{
+            pathname: `/profile`
+          }}
+        />
+      ) : null}
       <Grid display="flex" justify="center" container>
         <Grid item xs={5}>
           <Box display="flex" paddingTop="20vh" justifyContent="center">
@@ -43,7 +51,7 @@ export const UserHome = props => {
             >
               <CardContent>
                 <Typography style={{color: 'white'}} variant="h4">
-                  Welcome, {firstName}
+                  Welcome, {user.firstName}
                 </Typography>
                 <Typography style={{color: 'white'}} variant="h6">
                   Please connect a bank account to continue
@@ -63,7 +71,7 @@ export const UserHome = props => {
  */
 const mapState = state => {
   return {
-    firstName: state.user.firstName
+    user: state.user
   }
 }
 
@@ -73,5 +81,5 @@ export default connect(mapState)(UserHome)
  * PROP TYPES
  */
 UserHome.propTypes = {
-  email: PropTypes.string
+  user: PropTypes.object
 }
