@@ -35,22 +35,15 @@ router.get('/:habitId', async (req, res, next) => {
 })
 
 // POST api/habits
-router.post('/', verifyToken, async (req, res, next) => {
+router.post('/', async (req, res, next) => {
   try {
-    jwt.verify(req.token, process.env.JWT_SECRET, async (err, authData) => {
-      if (err) {
-        console.error(err)
-        res.sendStatus(403)
-      } else {
-        const habit = await Habit.create({
-          name: req.body.name,
-          goal: req.body.goal,
-          initialWeeklyAvg: req.body.transactions * 100,
-          userId: req.user.id
-        })
-        res.send(habit)
-      }
+    const habit = await Habit.create({
+      name: req.body.name,
+      goal: req.body.goal,
+      initialWeeklyAvg: req.body.transactions * 100,
+      userId: req.user.id
     })
+    res.send(habit)
   } catch (err) {
     next(err)
   }

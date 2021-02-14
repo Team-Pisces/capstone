@@ -47,29 +47,30 @@ class Habits extends React.Component {
     minimumFractionDigits: 2
   })
 
-  handleForm = sum => {
-    this.setState({transactions: sum})
+  handleForm = (sum, array) => {
+    this.setState({transactions: sum, transactionData: array})
+    console.log(this.state.transactionData)
   }
 
-  handleSelect = item => {
-    let tData = this.state.transactionData
-    if (!item.isSelected) {
-      for (let i = 0; i < tData.length; i++) {
-        if (tData[i] === item.data) {
-          tData.splice(i, 1)
-          this.setState({
-            transactionData: tData
-          })
-        }
-      }
-    } else {
-      tData.push(item.data)
-      this.setState({
-        transactionData: tData
-      })
-    }
-    console.log('Transaction data on state ----->', this.state.transactionData)
-  }
+  //handleSelect = item => {
+  //let tData = this.state.transactionData
+  //if (!item.isSelected) {
+  //  for (let i = 0; i < tData.length; i++) {
+  //    if (tData[i] === item.data) {
+  //      tData.splice(i, 1)
+  //      this.setState({
+  //        transactionData: tData
+  //      })
+  //    }
+  //  }
+  //} else {
+  //  tData.push(item.data)
+  //  this.setState({
+  //    transactionData: tData
+  //  })
+  //}
+  //console.log('Transaction data on state ----->', this.state.transactionData)
+  //}
 
   handleChange = e => {
     this.setState({
@@ -80,16 +81,24 @@ class Habits extends React.Component {
   handleSubmit = async e => {
     e.preventDefault()
     await this.props.addHabit(this.state)
-    // let tData = this.state.transactionData
-    // let habitId = this.props.habits.length + 1
-    // for (let i = 0; i < tData.length; i++) {
-    //   this.props.addTransaction(
-    //     tData[i].name,
-    //     tData[i].amount,
-    //     tData[i].date,
-    //     habitId
-    //   )
-    // }
+    let tData = this.state.transactionData
+    let habitId = this.props.habits.length + 1
+    console.log(
+      'data sent to thunk --->, ',
+      tData[0].name,
+      tData[0].amount,
+      tData[0].date,
+      habitId
+    )
+    for (let i = 0; i < tData.length; i++) {
+      let amount = Math.floor(tData[i].amount * 100)
+      await this.props.addTransaction(
+        tData[i].name,
+        amount,
+        tData[i].date,
+        habitId
+      )
+    }
     this.setState({
       redirect: true
     })
@@ -108,7 +117,6 @@ class Habits extends React.Component {
       : []
     const uniq = [...new Set(categories)]
     const cat = uniq.map(categ => categ)
-    console.log('uniq: ---> ', uniq)
     return (
       <Box paddingTop="60px">
         {this.state.redirect ? (
@@ -187,7 +195,7 @@ class Habits extends React.Component {
             <Typography>Check All that Apply</Typography>
             <TransactionTable
               handleForm={this.handleForm}
-              handleSelect={this.handleSelect}
+              //handleSelect={this.handleSelect}
             />
             {/* <TableContainer style={{maxHeight: 500}} component={Paper}>
               <Table stickyHeader aria-label="sticky table">

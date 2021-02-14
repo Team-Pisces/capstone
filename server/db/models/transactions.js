@@ -7,7 +7,7 @@ const Transaction = db.define('transaction', {
     allowNull: false
   },
   amount: {
-    type: Sequelize.STRING,
+    type: Sequelize.INTEGER,
     allowNull: false
   },
   date: {

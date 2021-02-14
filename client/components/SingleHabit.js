@@ -24,31 +24,34 @@ class SingleHabit extends React.Component {
     this.props.fetchSingleHabit(this.props.match.params.habitId)
     this.props.fetchTransactions(this.props.match.params.habitId)
     let transactions
-    if (this.props.location.state) {
-      transactions = this.props.location.state.transactions || []
-      for (let i = 0; i < transactions.length; i++) {
-        this.props.addTransaction(
-          transactions[i].name,
-          transactions[i].amount,
-          transactions[i].date,
-          this.props.match.params.habitId
-        )
-      }
-    }
+    //if (this.props.location.state) {
+    //  transactions = this.props.location.state.transactions || []
+    //  for (let i = 0; i < transactions.length; i++) {
+    //    this.props.addTransaction(
+    //      transactions[i].name,
+    //      transactions[i].amount,
+    //      transactions[i].date,
+    //      this.props.match.params.habitId
+    //    )
+    //  }
+    //}
   }
+
   render() {
-    let transactions
-    if (this.props.location.state) {
-      transactions = this.props.location.state.transactions || []
-    }
-    const dbTransactions = this.props.transactions || []
-    let filteredTransactions = []
-    const filtered = dbTransactions.filter(transaction => {
-      if (!filteredTransactions.includes(transaction.title)) {
-        filteredTransactions.push(transaction.title)
-        return transaction
-      }
-    })
+    let transactions = this.props.location.state
+      ? this.props.location.state.transactions || []
+      : []
+    //if (this.props.location.state) {
+    //  transactions = this.props.location.state.transactions || []
+    //}
+    //const dbTransactions = this.props.transactions || []
+    //let filteredTransactions = []
+    //const filtered = dbTransactions.filter(transaction => {
+    //  if (!filteredTransactions.includes(transaction.title)) {
+    //    filteredTransactions.push(transaction.title)
+    //    return transaction
+    //  }
+    //})
     const {habit} = this.props
     const goal = habit.goal
     const weeklyAvg = habit.initialWeeklyAvg / 100
@@ -111,7 +114,7 @@ class SingleHabit extends React.Component {
                           </TableRow>
                         )
                       })
-                    : filtered.map(transaction => {
+                    : transactions.map(transaction => {
                         return (
                           <TableRow key={transaction.transaction_id}>
                             <TableCell component="th">
