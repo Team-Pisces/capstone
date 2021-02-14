@@ -90,50 +90,61 @@ class AllHabits extends React.Component {
               />
             </Box>
           </Grid>
-          <Grid container spacing={3} justify="center">
-            <Box width="80vw" paddingBottom="50px">
-              <Typography fontWeight="fontWeightBold">All Habits</Typography>
 
-              <TableContainer component={Paper}>
-                <Table aria-label="simple-table">
-                  <TableHead>
-                    <TableRow>
-                      <TableCell>Name</TableCell>
-                      <TableCell align="right">Goal</TableCell>
-                      <TableCell align="right">Weekly Average</TableCell>
-                      <TableCell align="right">Details</TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {habits.length > 0
-                      ? habits.map(habit => (
-                          <TableRow key={habit.id}>
-                            <TableCell>
-                              <Link href={`/habits/${habit.id}`}>
-                                {habit.name}
-                              </Link>
-                            </TableCell>
-                            <TableCell align="right">${habit.goal}</TableCell>
-                            <TableCell align="right">
-                              ${habit.initialWeeklyAvg / 100}
-                            </TableCell>
-                            <TableCell align="right">
-                              <Button
-                                variant="contained"
-                                color="primary"
-                                href={`/habits/${habit.id}`}
-                              >
-                                See details
-                              </Button>
-                            </TableCell>
-                          </TableRow>
-                        ))
-                      : null}
-                  </TableBody>
-                </Table>
-              </TableContainer>
-            </Box>
-          </Grid>
+          {habits.length > 0 ? (
+            <Grid container spacing={3} justify="center">
+              <Box width="80vw" paddingBottom="50px">
+                <Typography fontWeight="fontWeightBold">All Habits</Typography>
+                <TableContainer component={Paper}>
+                  <Table aria-label="simple-table">
+                    <TableHead>
+                      <TableRow>
+                        <TableCell>Name</TableCell>
+                        <TableCell align="right">Goal</TableCell>
+                        <TableCell align="right">Weekly Average</TableCell>
+                        <TableCell align="right">Details</TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {habits.map(habit => (
+                        <TableRow key={habit.id}>
+                          <TableCell>
+                            <Link href={`/habits/${habit.id}`}>
+                              {habit.name}
+                            </Link>
+                          </TableCell>
+                          <TableCell align="right">${habit.goal}</TableCell>
+                          <TableCell align="right">
+                            ${habit.initialWeeklyAvg / 100}
+                          </TableCell>
+                          <TableCell align="right">
+                            <Button
+                              variant="contained"
+                              color="primary"
+                              href={`/habits/${habit.id}`}
+                            >
+                              See details
+                            </Button>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              </Box>
+            </Grid>
+          ) : (
+            <Grid
+              style={{paddingTop: '50px'}}
+              container
+              spacing={3}
+              justify="center"
+            >
+              <Box>
+                <Typography variant="h4">No Habits to display</Typography>
+              </Box>
+            </Grid>
+          )}
         </Box>
       </Box>
     )

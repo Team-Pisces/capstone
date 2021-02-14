@@ -5,33 +5,27 @@ const verifyToken = require('../auth/tokenVerification')
 module.exports = router
 
 // GET api/transactions
-router.get('/', verifyToken, (req, res, next) => {
+router.get('/', async (req, res, next) => {
   try {
-    jwt.verify(req.token, process.env.JWT_SECRET, async (err, authData) => {
-      if (err) {
-        res.sendStatus(403)
-      } else {
-        const transactions = await Transaction.findAll({
-          where: {
-            habitId: req.query.habitId
-          }
-        })
-        res.send(transactions)
+    const transactions = await Transaction.findAll({
+      where: {
+        habitId: req.query.habitId
       }
     })
+    res.send(transactions)
   } catch (err) {
     next(err)
   }
 })
 
 // POST api/transactions
-router.post('/', verifyToken, (req, res, next) => {
+router.post('/', verifyToken, async (req, res, next) => {
   try {
     jwt.verify(req.token, process.env.JWT_SECRET, async (err, authData) => {
       if (err) {
         res.sendStatus(403)
       } else {
-        console.log('req body', req.body)
+        console.log('REQ INFORMATION ', req.body.title)
         const transaction = await Transaction.findOrCreate({
           where: {
             title: req.body.title,

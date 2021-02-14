@@ -49,7 +49,7 @@ class Habits extends React.Component {
 
   handleForm = (sum, array) => {
     this.setState({transactions: sum, transactionData: array})
-    console.log(this.state.transactionData)
+    console.log('transactions -> ', array)
   }
 
   //handleSelect = item => {
@@ -80,16 +80,10 @@ class Habits extends React.Component {
 
   handleSubmit = async e => {
     e.preventDefault()
+    console.log('state -> transactions', this.state.transactionData)
     await this.props.addHabit(this.state)
     let tData = this.state.transactionData
-    let habitId = this.props.habits.length + 1
-    console.log(
-      'data sent to thunk --->, ',
-      tData[0].name,
-      tData[0].amount,
-      tData[0].date,
-      habitId
-    )
+    let habitId = this.props.habits.length
     for (let i = 0; i < tData.length; i++) {
       let amount = Math.floor(tData[i].amount * 100)
       await this.props.addTransaction(
@@ -122,7 +116,7 @@ class Habits extends React.Component {
         {this.state.redirect ? (
           <Redirect
             to={{
-              pathname: `/habits/${this.props.habits.length + 1}`
+              pathname: `/habits/${this.props.habits.length}`
             }}
           />
         ) : null}
