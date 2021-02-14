@@ -20,7 +20,7 @@ class TransactionTable extends React.Component {
       let sum = rowInfo.reduce((accum, val) => accum + val.amount, 0)
       this.props.handleForm(Math.floor(sum * 23.3333333) / 100, rowInfo)
     } else {
-      this.props.handleForm(0, array)
+      this.props.handleForm(0, [])
     }
   }
 

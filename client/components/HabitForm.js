@@ -172,6 +172,11 @@ class Habits extends React.Component {
                       {this.state.transactionCount}
                     </Typography>
                     <Button
+                      disabled={
+                        this.state.name === '' ||
+                        this.state.goal === '' ||
+                        this.state.transactionData.length === 0
+                      }
                       onClick={this.handleSubmit}
                       variant="contained"
                       color="primary"
