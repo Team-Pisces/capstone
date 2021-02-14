@@ -22,7 +22,8 @@ import {
   TableRow,
   TableContainer,
   Table,
-  Button
+  Button,
+  CardContent
 } from '@material-ui/core'
 import MenuIcon from '@material-ui/icons/Menu'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
@@ -55,7 +56,7 @@ const useStyles = makeStyles(theme => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen
     }),
-    marginTop: '50px'
+    marginTop: '92px'
   },
   appBarShift: {
     marginLeft: drawerWidth,
@@ -75,6 +76,7 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 1
   },
   drawerPaper: {
+    zIndex: 0,
     position: 'relative',
     whiteSpace: 'nowrap',
     width: drawerWidth,
@@ -82,9 +84,10 @@ const useStyles = makeStyles(theme => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen
     }),
-    marginTop: '50px'
+    marginTop: '92px'
   },
   drawerPaperClose: {
+    zIndex: 0,
     overflowX: 'hidden',
     transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
@@ -182,7 +185,11 @@ const UserProfile = props => {
       </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
-        <Container maxWidth="lg" className={classes.container}>
+        <Container
+          paddingTop="50px"
+          maxWidth="lg"
+          className={classes.container}
+        >
           <Grid container spacing={3}>
             <Grid container spacing={3} justify="center" item xs={12}>
               {/* User Information */}
@@ -232,12 +239,14 @@ const UserProfile = props => {
               </Paper>
             </Grid> */}
             {/* Habits Grid */}
-            <Grid item xs={6}>
+            <Grid item xs={12}>
               <Paper className={classes.paper}>
-                <AllHabits />
-                <Link color="inherit" href="/habits" className={classes.view}>
-                  View habits
-                </Link>
+                <CardContent>
+                  <AllHabits />
+                  <Link color="inherit" href="/habits" className={classes.view}>
+                    View habits
+                  </Link>
+                </CardContent>
               </Paper>
             </Grid>
             {/* Overall Chart */}
