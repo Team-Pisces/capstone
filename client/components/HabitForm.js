@@ -13,7 +13,8 @@ import {
   Button,
   FormControl,
   Card,
-  CardContent
+  CardContent,
+  CircularProgress
 } from '@material-ui/core'
 import {fetchCategories} from '../store/categories'
 import {getTransactions} from '../store/plaid2'
@@ -189,13 +190,22 @@ class Habits extends React.Component {
               </CardContent>
             </Card>
           </Box>
-          <Box width="90vw">
-            <Typography>Check All that Apply</Typography>
-            <TransactionTable
-              handleForm={this.handleForm}
-              //handleSelect={this.handleSelect}
-            />
-            {/* <TableContainer style={{maxHeight: 500}} component={Paper}>
+          {this.props.transactions ? (
+            <Box width="90vw">
+              <Typography>Check All that Apply</Typography>
+              <TransactionTable
+                handleForm={this.handleForm}
+                //handleSelect={this.handleSelect}
+              />
+            </Box>
+          ) : (
+            <Box paddingTop="75px" width="90vw">
+              <Grid container spacing={3} justify="center">
+                <CircularProgress style={{color: 'green'}} />
+              </Grid>
+            </Box>
+          )}
+          {/* <TableContainer style={{maxHeight: 500}} component={Paper}>
               <Table stickyHeader aria-label="sticky table">
                 <TableHead>
                   <TableRow>
@@ -277,7 +287,6 @@ class Habits extends React.Component {
                 </TableBody>
               </Table>
             </TableContainer> */}
-          </Box>
         </Grid>
       </Box>
     )

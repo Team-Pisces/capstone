@@ -32,6 +32,7 @@ class TransactionTable extends React.Component {
 
   render() {
     const transactions = this.props.transactions || []
+    console.log(this.props.transactions)
 
     const columns = [
       {field: 'name', headerName: 'Name', sortable: true, width: 200},
