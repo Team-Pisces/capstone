@@ -113,7 +113,7 @@ class Habits extends React.Component {
     const uniq = [...new Set(categories)]
     const cat = uniq.map(categ => categ)
     return (
-      <Box paddingTop="60px">
+      <Box paddingTop="100px">
         {this.state.redirect ? (
           <Redirect
             to={{

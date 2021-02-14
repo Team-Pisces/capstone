@@ -123,7 +123,6 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const UserProfile = props => {
-  console.log('this is props', props)
   const {user} = props
   const classes = useStyles()
 
@@ -168,6 +167,7 @@ const UserProfile = props => {
         </Toolbar>
       </AppBar>
       <Drawer
+        style={{height: '88vh'}}
         variant="permanent"
         classes={{
           paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose)
@@ -185,67 +185,64 @@ const UserProfile = props => {
       </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
-        <Container
-          paddingTop="50px"
-          maxWidth="lg"
-          className={classes.container}
-        >
-          <Grid container spacing={3}>
-            <Grid container spacing={3} justify="center" item xs={12}>
-              {/* User Information */}
-              <Box width="80vw" paddingBottom="50px" paddingTop="50px">
-                <Typography fontWeight="fontWeightBold">
-                  User Information
-                </Typography>
-                <TableContainer component={Paper}>
-                  <Table aria-label="simple-table">
-                    <TableHead>
-                      <TableRow />
-                    </TableHead>
-                    <TableBody>
-                      <TableCell>{user.firstName}</TableCell>
-                      <TableCell>{user.lastName}</TableCell>
-                      <TableCell>{user.email}</TableCell>
-                      <TableCell>
-                        <Button
-                          variant="contained"
-                          color="primary"
-                          href="/updateEmail"
-                        >
-                          Update Email
-                        </Button>
-                      </TableCell>
-                      <TableCell>
-                        <Button
-                          variant="contained"
-                          color="primary"
-                          href="/updatePassword"
-                        >
-                          Change Password
-                        </Button>
-                      </TableCell>
-                    </TableBody>
-                  </Table>
-                </TableContainer>
-              </Box>
+        <Container maxWidth="lg" className={classes.container}>
+          <Grid container spacing={3} style={{paddingTop: '100px'}}>
+            <Grid item xs={12}>
+              <Paper width="80vw">
+                <CardContent>
+                  <Typography fontWeight="fontWeightBold">
+                    User Information
+                  </Typography>
+                  <TableContainer component={Paper}>
+                    <Table aria-label="simple-table">
+                      <TableHead>
+                        <TableRow />
+                      </TableHead>
+                      <TableBody>
+                        <TableCell>{user.firstName}</TableCell>
+                        <TableCell>{user.lastName}</TableCell>
+                        <TableCell>{user.email}</TableCell>
+                        <TableCell>
+                          <Button
+                            variant="contained"
+                            color="primary"
+                            href="/updateEmail"
+                          >
+                            Update Email
+                          </Button>
+                        </TableCell>
+                        <TableCell>
+                          <Button
+                            variant="contained"
+                            color="primary"
+                            href="/updatePassword"
+                          >
+                            Change Password
+                          </Button>
+                        </TableCell>
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                </CardContent>
+              </Paper>
             </Grid>
             {/* Chart */}
             {/* <Grid item xs={12} md={8} lg={9}>
               <Paper className={fixedHeightPaper}>
-                <AllHabits />
-                <Link color="inherit" href="/habits">
-                  View habits
-                </Link>
+              <AllHabits />
+              <Link color="inherit" href="/habits">
+              View habits
+              </Link>
               </Paper>
             </Grid> */}
             {/* Habits Grid */}
             <Grid item xs={12}>
               <Paper className={classes.paper}>
                 <CardContent>
-                  <AllHabits />
                   <Link color="inherit" href="/habits" className={classes.view}>
                     View habits
                   </Link>
+                  <AllHabits profile={true} />
                 </CardContent>
               </Paper>
             </Grid>

@@ -7,19 +7,13 @@ import {
   Box,
   Grid,
   Typography,
-  FormGroup,
-  InputLabel,
-  Input,
   Button,
-  FormHelperText,
-  FormControl,
   Card,
   CardContent,
   Table,
   TableContainer,
   TableRow,
   TableCell,
-  Checkbox,
   Paper,
   TableHead,
   TableBody,
@@ -41,13 +35,17 @@ class AllHabits extends React.Component {
     this.setState({loaded: true})
   }
   render() {
-    const {habits} = this.props || []
+    let {habits} = this.props || []
     let totalWeeklyAvg = habits.reduce((accum, hab) => {
       return accum + hab.initialWeeklyAvg
     }, 0)
     let totalGoal = habits.reduce((accum, hab) => {
       return accum + hab.goal
     }, 0)
+    habits = this.props.user
+      ? habits.filter(h => h.userId === this.props.user.id)
+      : []
+
     return (
       <Box>
         {/* <Box
@@ -60,7 +58,7 @@ class AllHabits extends React.Component {
         >
           <Typography>All Your Habits</Typography>
         </Box> */}
-        <Box paddingTop="80px">
+        <Box paddingTop={this.props.profile ? '0px' : '80px'}>
           {/* <Grid container spacing={3} justify="center">
             <Box width="80vw" align="right">
               <Button variant="contained" color="primary" href="/habitform">
@@ -88,7 +86,7 @@ class AllHabits extends React.Component {
                     ${totalGoal}
                   </Typography>
                   <Button variant="contained" color="primary" href="/habitform">
-                    Create Habit
+                    Create New Habit
                   </Button>
                 </CardContent>
               </Card>
@@ -172,7 +170,8 @@ class AllHabits extends React.Component {
 }
 
 const mapState = state => ({
-  habits: state.habits
+  habits: state.habits,
+  user: state.user
 })
 
 const mapDispatch = dispatch => ({

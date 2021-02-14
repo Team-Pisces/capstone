@@ -8,7 +8,8 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Paper
+  Paper,
+  CardContent
 } from '@material-ui/core'
 import Balance from './Balance'
 
@@ -27,29 +28,35 @@ class Transactions extends React.Component {
     const transactions = this.props.transactions || []
     // const classes = useStyles()
     return (
-      <TableContainer component={Paper}>
-        <Table aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell>Name</TableCell>
-              <TableCell align="right">Amount</TableCell>
-              <TableCell align="right">Date</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {transactions.length > 0
-              ? transactions.map(transaction => (
-                  <TableRow key={transaction.transaction_id}>
-                    <TableCell component="th">{transaction.name}</TableCell>
-                    <TableCell align="right">{transaction.amount}</TableCell>
-                    <TableCell align="right">{transaction.date}</TableCell>
-                  </TableRow>
-                ))
-              : null}
-          </TableBody>
-        </Table>
-        <Balance />
-      </TableContainer>
+      <Paper style={{paddingTop: '100px'}}>
+        <CardContent>
+          <TableContainer component={Paper}>
+            <Table aria-label="simple table">
+              <TableHead>
+                <TableRow>
+                  <TableCell>Name</TableCell>
+                  <TableCell align="right">Amount</TableCell>
+                  <TableCell align="right">Date</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {transactions.length > 0
+                  ? transactions.map(transaction => (
+                      <TableRow key={transaction.transaction_id}>
+                        <TableCell component="th">{transaction.name}</TableCell>
+                        <TableCell align="right">
+                          {transaction.amount}
+                        </TableCell>
+                        <TableCell align="right">{transaction.date}</TableCell>
+                      </TableRow>
+                    ))
+                  : null}
+              </TableBody>
+            </Table>
+            <Balance />
+          </TableContainer>
+        </CardContent>
+      </Paper>
     )
   }
 }

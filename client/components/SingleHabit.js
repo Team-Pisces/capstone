@@ -65,7 +65,7 @@ class SingleHabit extends React.Component {
     const goal = habit.goal
     const weeklyAvg = habit.initialWeeklyAvg / 100
     return (
-      <Box paddingTop="60px">
+      <Box paddingTop="100px">
         <Grid container spacing={3} justify="center">
           <Box width="25vw" paddingTop="40px" paddingRight="20px">
             <Card style={{backgroundColor: '#42AC42'}}>
