@@ -23,7 +23,7 @@ class SingleHabit extends React.Component {
   componentDidMount() {
     this.props.fetchSingleHabit(this.props.match.params.habitId)
     this.props.fetchTransactions(this.props.match.params.habitId)
-    let transactions
+    //let transactions
     //if (this.props.location.state) {
     //  transactions = this.props.location.state.transactions || []
     //  for (let i = 0; i < transactions.length; i++) {
@@ -38,9 +38,19 @@ class SingleHabit extends React.Component {
   }
 
   render() {
-    let transactions = this.props.location.state
-      ? this.props.location.state.transactions || []
-      : []
+    let transactions = this.props.transactions || []
+    console.log(this.props, transactions)
+    if (Array.isArray(transactions[0])) {
+      transactions = []
+    }
+    if (transactions.length > 0) {
+      transactions = transactions.map(t => ({
+        ...t,
+        amount: t.amount / 100,
+        date: t.date.slice(0, 10)
+      }))
+    }
+
     //if (this.props.location.state) {
     //  transactions = this.props.location.state.transactions || []
     //}
@@ -86,53 +96,55 @@ class SingleHabit extends React.Component {
             <RedChart weeklyAvg={weeklyAvg - goal} type="saving" />
             <RedChart weeklyAvg={weeklyAvg * -1} type="spending" />
           </Box>
-          <Box width="80vw">
-            <Typography variant="h6">Transactions</Typography>
-            <TableContainer component={Paper}>
-              <Table aria-label="simple table">
-                <TableHead>
-                  <TableRow>
-                    <TableCell>List</TableCell>
-                    <TableCell align="right">Amount</TableCell>
-                    <TableCell align="right">Date</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {transactions
-                    ? transactions.map(transaction => {
-                        return (
-                          <TableRow key={transaction.transaction_id}>
-                            <TableCell component="th">
-                              {transaction.name}
-                            </TableCell>
-                            <TableCell align="right">
-                              {transaction.amount}
-                            </TableCell>
-                            <TableCell align="right">
-                              {transaction.date}
-                            </TableCell>
-                          </TableRow>
-                        )
-                      })
-                    : transactions.map(transaction => {
-                        return (
-                          <TableRow key={transaction.transaction_id}>
-                            <TableCell component="th">
-                              {transaction.title}
-                            </TableCell>
-                            <TableCell align="right">
-                              {transaction.amount}
-                            </TableCell>
-                            <TableCell align="right">
-                              {transaction.date}
-                            </TableCell>
-                          </TableRow>
-                        )
-                      })}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </Box>
+          {transactions.length > 0 ? (
+            <Box width="80vw">
+              <Typography variant="h6">Transactions</Typography>
+              <TableContainer component={Paper}>
+                <Table aria-label="simple table">
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Name</TableCell>
+                      <TableCell align="right">Amount</TableCell>
+                      <TableCell align="right">Date</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {transactions
+                      ? transactions.map(transaction => {
+                          return (
+                            <TableRow key={transaction.id}>
+                              <TableCell component="th">
+                                {transaction.title}
+                              </TableCell>
+                              <TableCell align="right">
+                                {transaction.amount}
+                              </TableCell>
+                              <TableCell align="right">
+                                {transaction.date}
+                              </TableCell>
+                            </TableRow>
+                          )
+                        })
+                      : transactions.map(transaction => {
+                          return (
+                            <TableRow key={transaction.transaction_id}>
+                              <TableCell component="th">
+                                {transaction.title}
+                              </TableCell>
+                              <TableCell align="right">
+                                {transaction.amount}
+                              </TableCell>
+                              <TableCell align="right">
+                                {transaction.date}
+                              </TableCell>
+                            </TableRow>
+                          )
+                        })}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </Box>
+          ) : null}
         </Grid>
       </Box>
     )

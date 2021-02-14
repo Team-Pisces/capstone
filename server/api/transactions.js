@@ -11,7 +11,11 @@ router.get('/', verifyToken, (req, res, next) => {
       if (err) {
         res.sendStatus(403)
       } else {
-        const transactions = await Transaction.findAll()
+        const transactions = await Transaction.findAll({
+          where: {
+            habitId: req.query.habitId
+          }
+        })
         res.send(transactions)
       }
     })

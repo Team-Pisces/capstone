@@ -33,18 +33,16 @@ class AllHabits extends React.Component {
     const {habits} = this.props
     return (
       <Box>
-        <Typography>
-          <Box
-            fontStyle="italic"
-            fontSize="h3.fontSize"
-            textAlign="center"
-            boxShadow={3}
-            style={{backgroundColor: '#42AC42'}}
-            color="inherit"
-          >
-            All Your Habits
-          </Box>
-        </Typography>
+        <Box
+          fontStyle="italic"
+          fontSize="h3.fontSize"
+          textAlign="center"
+          boxShadow={3}
+          style={{backgroundColor: '#42AC42'}}
+          color="inherit"
+        >
+          <Typography>All Your Habits</Typography>
+        </Box>
         <Box paddingTop="80px">
           <Grid container spacing={3} justify="center">
             <Box width="80vw" align="right">

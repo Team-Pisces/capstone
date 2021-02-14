@@ -122,8 +122,7 @@ class Habits extends React.Component {
         {this.state.redirect ? (
           <Redirect
             to={{
-              pathname: `/habits/${this.props.habits.length}`,
-              state: {transactions: this.state.transactionData}
+              pathname: `/habits/${this.props.habits.length + 1}`
             }}
           />
         ) : null}
