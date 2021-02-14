@@ -17,24 +17,11 @@ import {
   TableHead,
   TableBody
 } from '@material-ui/core'
-import {filter} from 'compression'
 
 class SingleHabit extends React.Component {
   componentDidMount() {
     this.props.fetchSingleHabit(this.props.match.params.habitId)
     this.props.fetchTransactions(this.props.match.params.habitId)
-    //let transactions
-    //if (this.props.location.state) {
-    //  transactions = this.props.location.state.transactions || []
-    //  for (let i = 0; i < transactions.length; i++) {
-    //    this.props.addTransaction(
-    //      transactions[i].name,
-    //      transactions[i].amount,
-    //      transactions[i].date,
-    //      this.props.match.params.habitId
-    //    )
-    //  }
-    //}
   }
 
   render() {
@@ -49,18 +36,6 @@ class SingleHabit extends React.Component {
         date: t.date.slice(0, 10)
       }))
     }
-
-    //if (this.props.location.state) {
-    //  transactions = this.props.location.state.transactions || []
-    //}
-    //const dbTransactions = this.props.transactions || []
-    //let filteredTransactions = []
-    //const filtered = dbTransactions.filter(transaction => {
-    //  if (!filteredTransactions.includes(transaction.title)) {
-    //    filteredTransactions.push(transaction.title)
-    //    return transaction
-    //  }
-    //})
     const {habit} = this.props
     const goal = habit.goal
     const weeklyAvg = habit.initialWeeklyAvg / 100

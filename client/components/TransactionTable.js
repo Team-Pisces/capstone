@@ -1,7 +1,9 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {getTransactions} from '../store/plaid2'
+import {TextField} from '@material-ui/core'
 import {DataGrid} from '@material-ui/data-grid'
+import moment from 'moment'
 
 class TransactionTable extends React.Component {
   componentDidMount() {
@@ -31,6 +33,8 @@ class TransactionTable extends React.Component {
   })
 
   render() {
+    let date = moment(moment().format('YYYY-MM-DD'), 'YYYY-MM-DD')
+    console.log(date)
     const transactions = this.props.transactions || []
     console.log(this.props.transactions)
 
@@ -58,13 +62,28 @@ class TransactionTable extends React.Component {
 
     return (
       <div style={{height: 500, width: '100%'}}>
+        <TextField
+          id="date"
+          label="Range: Today -> "
+          type="date"
+          defaultValue={date}
+          onChange={e => {
+            let days = moment
+              .duration(date.diff(moment(e.target.value, 'YYYY-MM-DD')))
+              .asDays()
+            console.log(days)
+            this.props.getTransactions(days)
+          }}
+          InputLabelProps={{
+            shrink: true
+          }}
+        />
         <DataGrid
           rows={rows}
           columns={columns}
           pageSize={10}
           checkboxSelection
           onSelectionChange={rowIds => this.handleTransactionSelect(rowIds)}
-          //onRowSelected={item => this.props.handleSelect(item)}
         />
       </div>
     )
@@ -79,7 +98,7 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    getTransactions: () => dispatch(getTransactions())
+    getTransactions: days => dispatch(getTransactions(days))
   }
 }
 

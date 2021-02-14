@@ -186,7 +186,7 @@ router.get('/accounts', linkedPlaidOnly, async (req, res, next) => {
 router.get('/transactions', linkedPlaidOnly, async (req, res, next) => {
   try {
     const startDate = moment()
-      .subtract(30, 'days')
+      .subtract(req.query.days, 'days')
       .format('YYYY-MM-DD')
     const endDate = moment().format('YYYY-MM-DD')
     const response = await client.getTransactions(
