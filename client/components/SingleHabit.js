@@ -39,7 +39,6 @@ class SingleHabit extends React.Component {
 
   render() {
     let transactions = this.props.transactions || []
-    console.log(this.props, transactions)
     if (Array.isArray(transactions[0])) {
       transactions = []
     }
