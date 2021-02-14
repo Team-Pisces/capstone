@@ -6,6 +6,14 @@ import {DataGrid} from '@material-ui/data-grid'
 import moment from 'moment'
 
 class TransactionTable extends React.Component {
+  constructor() {
+    super()
+
+    this.state = {
+      range: 30
+    }
+  }
+
   componentDidMount() {
     this.props.getTransactions()
   }
@@ -20,7 +28,10 @@ class TransactionTable extends React.Component {
         })[0]
       })
       let sum = rowInfo.reduce((accum, val) => accum + val.amount, 0)
-      this.props.handleForm(Math.floor(sum * 23.3333333) / 100, rowInfo)
+      this.props.handleForm(
+        Math.floor(sum * (100 / this.state.range * 7)) / 100,
+        rowInfo
+      )
     } else {
       this.props.handleForm(0, [])
     }
@@ -63,8 +74,9 @@ class TransactionTable extends React.Component {
     return (
       <div style={{height: 500, width: '100%'}}>
         <TextField
+          style={{width: '300px'}}
           id="date"
-          label="Range: Today -> "
+          label="Choose a range from today (optional)"
           type="date"
           defaultValue={date}
           onChange={e => {
@@ -72,6 +84,7 @@ class TransactionTable extends React.Component {
               .duration(date.diff(moment(e.target.value, 'YYYY-MM-DD')))
               .asDays()
             console.log(days)
+            this.setState({range: days})
             this.props.getTransactions(days)
           }}
           InputLabelProps={{
