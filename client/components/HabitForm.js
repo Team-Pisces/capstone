@@ -192,7 +192,9 @@ class Habits extends React.Component {
           </Box>
           {this.props.transactions ? (
             <Box width="90vw">
-              <Typography>Check All that Apply</Typography>
+              <Typography>
+                Choose transactions that relate to this habit
+              </Typography>
               <TransactionTable
                 handleForm={this.handleForm}
                 //handleSelect={this.handleSelect}
@@ -205,88 +207,6 @@ class Habits extends React.Component {
               </Grid>
             </Box>
           )}
-          {/* <TableContainer style={{maxHeight: 500}} component={Paper}>
-              <Table stickyHeader aria-label="sticky table">
-                <TableHead>
-                  <TableRow>
-                    <TableCell width="22vw">Name</TableCell>
-                    <TableCell align="left">
-                      <Autocomplete
-                        id="combo-box-demo"
-                        options={uniq}
-                        getOptionLabel={(option) => option}
-                        renderInput={(params) => (
-                          <TextField
-                            {...params}
-                            name="category"
-                            label="Category"
-                            variant="outlined"
-                          />
-                        )}
-                        onChange={this.handleCategory}
-                      />
-                    </TableCell>
-                    <TableCell width="22vw" align="left">
-                      Amount
-                    </TableCell>
-                    <TableCell width="22vw" align="left">
-                      Date
-                    </TableCell>
-                    <TableCell width="12vw" padding="checkbox">
-                      <Checkbox />
-                    </TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {transactions.length > 0
-                    ? transactions.map((transaction) => {
-                        return (
-                          <TableRow
-                            key={transaction.transaction_id}
-                            hover
-                            // onClick={(e) => handleClick(e, row.name)}
-                            role="checkbox"
-                            // aria-checked={isItemSelected}
-                            // tabIndex={-1}
-                            // key={row.name}
-                            // selected={isItemSelected}
-                          >
-                            <TableCell width="22vw" component="th">
-                              {transaction.name}
-                            </TableCell>
-                            <TableCell width="22vw" align="left">
-                              {transaction.category[0]}
-                            </TableCell>
-                            <TableCell width="22vw" align="left">
-                              {this.formatter.format(transaction.amount)}
-                            </TableCell>
-                            <TableCell width="22vw" align="left">
-                              {transaction.date}
-                            </TableCell>
-
-                            <TableCell width="12vw" padding="checkbox">
-                              {this.state.allChecked ? (
-                                <Checkbox
-                                  checked={true}
-                                  name="transactions"
-                                  value={transaction.amount}
-                                  onChange={this.handleChange}
-                                />
-                              ) : (
-                                <Checkbox
-                                  name="transactions"
-                                  value={transaction.amount}
-                                  onChange={this.handleChange}
-                                />
-                              )}
-                            </TableCell>
-                          </TableRow>
-                        )
-                      })
-                    : null}
-                </TableBody>
-              </Table>
-            </TableContainer> */}
         </Grid>
       </Box>
     )

@@ -1,7 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {fetchHabits} from '../store/habits'
-//import {Link} from 'react-router-dom'
 import Chart from './Chart'
 import {
   Box,
@@ -36,36 +35,19 @@ class AllHabits extends React.Component {
   }
   render() {
     let {habits} = this.props || []
+    habits = this.props.user
+      ? habits.filter(h => h.userId === this.props.user.id)
+      : []
     let totalWeeklyAvg = habits.reduce((accum, hab) => {
       return accum + hab.initialWeeklyAvg
     }, 0)
     let totalGoal = habits.reduce((accum, hab) => {
       return accum + hab.goal
     }, 0)
-    habits = this.props.user
-      ? habits.filter(h => h.userId === this.props.user.id)
-      : []
 
     return (
       <Box>
-        {/* <Box
-          fontStyle="italic"
-          fontSize="h3.fontSize"
-          textAlign="center"
-          boxShadow={3}
-          style={{backgroundColor: '#42AC42'}}
-          color="inherit"
-        >
-          <Typography>All Your Habits</Typography>
-        </Box> */}
         <Box paddingTop={this.props.profile ? '0px' : '80px'}>
-          {/* <Grid container spacing={3} justify="center">
-            <Box width="80vw" align="right">
-              <Button variant="contained" color="primary" href="/habitform">
-                Create Habit
-              </Button>
-            </Box>
-          </Grid> */}
           <Grid container spacing={3} justify="center">
             <Box width="25vw" paddingTop="40px" paddingRight="20px">
               <Card style={{backgroundColor: '#42AC42'}}>

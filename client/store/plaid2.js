@@ -68,8 +68,9 @@ export const generateLinkToken = () => async dispatch => {
   }
 }
 
-export const getTransactions = () => async dispatch => {
-  const res = await axios.get('/api/plaid/transactions')
+export const getTransactions = (days = 30) => async dispatch => {
+  console.log('thunk ->', days)
+  const res = await axios.get(`/api/plaid/transactions?days=${days}`)
   if (res.status === 200) {
     dispatch(setTransactions(res.data))
   }
