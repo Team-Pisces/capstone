@@ -93,8 +93,12 @@ class AllHabits extends React.Component {
                       <TableHead>
                         <TableRow>
                           <TableCell>Name</TableCell>
-                          <TableCell align="right">Goal</TableCell>
-                          <TableCell align="right">Weekly Average</TableCell>
+                          <TableCell align="right">
+                            Weekly Spending Goal
+                          </TableCell>
+                          <TableCell align="right">
+                            Weekly Average Spending
+                          </TableCell>
                           <TableCell align="right">Details</TableCell>
                         </TableRow>
                       </TableHead>
@@ -133,8 +137,15 @@ class AllHabits extends React.Component {
                 spacing={3}
                 justify="center"
               >
-                <Box>
+                <Box
+                  display="flex"
+                  flexDirection="column"
+                  justifyContent="center"
+                >
                   <Typography variant="h4">No Habits to display</Typography>
+                  <Typography variant="h5">
+                    Create a new habit and start saving!
+                  </Typography>
                 </Box>
               </Grid>
             )

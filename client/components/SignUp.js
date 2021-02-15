@@ -11,21 +11,11 @@ import {
   Grid,
   Box,
   Typography,
-  Container
+  Container,
+  Card,
+  CardContent,
+  FormGroup
 } from '@material-ui/core'
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Cashed
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  )
-}
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -53,102 +43,103 @@ const SignUp = props => {
   const {name, displayName, handleSubmit, error} = props
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container style={{paddingTop: '50px'}} component="main" maxWidth="xs">
       <CssBaseline />
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar} />
-        <Typography component="h1" variant="h5">
-          Sign up
-        </Typography>
-        <form
-          onSubmit={handleSubmit}
-          className={classes.form}
-          noValidate
-          name={name}
-        >
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                autoComplete="fname"
-                name="firstName"
-                variant="outlined"
-                required
-                fullWidth
-                id="firstName"
-                label="First Name"
-                autoFocus
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="lastName"
-                label="Last Name"
-                name="lastName"
-                autoComplete="lname"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-              />
-            </Grid>
-          </Grid>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
+      <Card className={classes.paper}>
+        <CardContent>
+          <Avatar className={classes.avatar} />
+          <Typography component="h1" variant="h5">
+            Sign up
+          </Typography>
+          <form
+            onSubmit={handleSubmit}
+            className={classes.form}
+            noValidate
+            name={name}
           >
-            {displayName}
-          </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            href="/auth/google"
-            fullWidth
-          >
-            Sign Up with Google
-          </Button>
-          <Grid
-            container
-            direction="column"
-            justify="center"
-            alignItems="center"
-          >
-            <Grid item>
-              <Link href="/login" variant="body2">
-                Already have an account? Log In Here
-              </Link>
-            </Grid>
-          </Grid>
-          {error && error.response && <div> {error.response.data} </div>}
-        </form>
-      </div>
-      <Box mt={5}>
-        <Copyright />
-      </Box>
+            <FormGroup>
+              <Grid container spacing={2}>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    autoComplete="fname"
+                    name="firstName"
+                    variant="outlined"
+                    required
+                    fullWidth
+                    id="firstName"
+                    label="First Name"
+                    autoFocus
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    variant="outlined"
+                    required
+                    fullWidth
+                    id="lastName"
+                    label="Last Name"
+                    name="lastName"
+                    autoComplete="lname"
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    variant="outlined"
+                    required
+                    fullWidth
+                    id="email"
+                    label="Email Address"
+                    name="email"
+                    autoComplete="email"
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    variant="outlined"
+                    required
+                    fullWidth
+                    name="password"
+                    label="Password"
+                    type="password"
+                    id="password"
+                    autoComplete="current-password"
+                  />
+                </Grid>
+              </Grid>
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                className={classes.submit}
+              >
+                {displayName}
+              </Button>
+              <Button
+                variant="contained"
+                color="primary"
+                href="/auth/google"
+                fullWidth
+              >
+                Sign Up with Google
+              </Button>
+              <Grid
+                container
+                direction="column"
+                justify="center"
+                alignItems="center"
+              >
+                <Grid item>
+                  <Link href="/login" variant="body2">
+                    Already have an account? Log In Here
+                  </Link>
+                </Grid>
+              </Grid>
+              {error && error.response && <div> {error.response.data} </div>}
+            </FormGroup>
+          </form>
+        </CardContent>
+      </Card>
     </Container>
   )
 }
