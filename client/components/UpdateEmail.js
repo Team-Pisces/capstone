@@ -9,29 +9,9 @@ import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
 import {makeStyles} from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
+import {CardContent, Paper, FormGroup} from '@material-ui/core'
 import {Redirect} from 'react-router-dom'
 import {me} from '../store'
-
-const useStyles = makeStyles(theme => ({
-  paper: {
-    marginTop: '100px',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main
-  },
-  form: {
-    width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(1)
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2)
-  }
-}))
 
 const UpdateEmail = props => {
   useEffect(
@@ -44,7 +24,6 @@ const UpdateEmail = props => {
   let [redirect, setRedirect] = useState(false)
   let [current, setCurrent] = useState(false)
   let [match, setMatch] = useState(false)
-  const classes = useStyles()
   const {name, displayName, changeEmail, error} = props
   const handleSubmit = evt => {
     evt.preventDefault()
@@ -69,113 +48,104 @@ const UpdateEmail = props => {
     }
   }
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" maxWidth="xs" style={{paddingTop: '150px'}}>
       <CssBaseline />
-      <div className={classes.paper}>
-        <Typography component="h1" variant="h5">
-          Update Email
-        </Typography>
-        <form
-          onSubmit={handleSubmit}
-          className={classes.form}
-          noValidate
-          name={name}
-        >
-          {current === false ? (
-            <TextField
-              variant="standard"
-              margin="normal"
-              required
-              fullWidth
-              id="currentEmail"
-              label="Current Email Address"
-              name="currentEmail"
-              autoComplete="currentEmail"
-              autoFocus
-            />
-          ) : (
-            <TextField
-              variant="standard"
-              margin="normal"
-              required
-              error
-              helperText="Incorrect Current Email Address"
-              fullWidth
-              id="currentEmail"
-              label="Current Email Address"
-              name="currentEmail"
-              autoComplete="currentEmail"
-              autoFocus
-            />
-          )}
-          {match === false ? (
-            <>
+      <Paper>
+        <CardContent>
+          <Typography component="h1" variant="h5">
+            Update Email
+          </Typography>
+          <form onSubmit={handleSubmit} noValidate name={name}>
+            {current === false ? (
               <TextField
                 variant="standard"
                 margin="normal"
                 required
-                fullWidth
-                name="newEmail"
-                label="New Email Address"
-                type="newEmail"
-                id="newEmail"
-                autoComplete="newEmail"
+                style={{width: '360px'}}
+                id="currentEmail"
+                label="Current Email Address"
+                name="currentEmail"
+                autoComplete="currentEmail"
+                autoFocus
               />
-              <TextField
-                variant="standard"
-                margin="normal"
-                required
-                fullWidth
-                name="confirmEmail"
-                label="Confirm New Email Address"
-                type="confirmEmail"
-                id="confirmEmail"
-                autoComplete="confirmEmail"
-              />
-            </>
-          ) : (
-            <>
+            ) : (
               <TextField
                 variant="standard"
                 margin="normal"
                 required
                 error
-                fullWidth
-                name="newEmail"
-                label="New Email Address"
-                type="newEmail"
-                id="newEmail"
-                autoComplete="newEmail"
+                helperText="Incorrect Current Email Address"
+                style={{width: '360px'}}
+                id="currentEmail"
+                label="Current Email Address"
+                name="currentEmail"
+                autoComplete="currentEmail"
+                autoFocus
               />
-              <TextField
-                variant="standard"
-                margin="normal"
-                required
-                error
-                helperText="New Emails Do Not Match"
-                fullWidth
-                name="confirmEmail"
-                label="Confirm New Email Address"
-                type="confirmEmail"
-                id="confirmEmail"
-                autoComplete="confirmEmail"
-              />
-            </>
-          )}
+            )}
+            {match === false ? (
+              <>
+                <TextField
+                  variant="standard"
+                  margin="normal"
+                  required
+                  style={{width: '360px'}}
+                  name="newEmail"
+                  label="New Email Address"
+                  type="newEmail"
+                  id="newEmail"
+                  autoComplete="newEmail"
+                />
+                <TextField
+                  variant="standard"
+                  margin="normal"
+                  required
+                  style={{width: '360px'}}
+                  name="confirmEmail"
+                  label="Confirm New Email Address"
+                  type="confirmEmail"
+                  id="confirmEmail"
+                  autoComplete="confirmEmail"
+                />
+              </>
+            ) : (
+              <>
+                <TextField
+                  variant="standard"
+                  margin="normal"
+                  required
+                  error
+                  style={{width: '360px'}}
+                  name="newEmail"
+                  label="New Email Address"
+                  type="newEmail"
+                  id="newEmail"
+                  autoComplete="newEmail"
+                />
+                <TextField
+                  variant="standard"
+                  margin="normal"
+                  required
+                  error
+                  helperText="New Emails Do Not Match"
+                  style={{width: '360px'}}
+                  name="confirmEmail"
+                  label="Confirm New Email Address"
+                  type="confirmEmail"
+                  id="confirmEmail"
+                  autoComplete="confirmEmail"
+                />
+              </>
+            )}
 
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            {displayName}
-          </Button>
-          {/* {error && error.response && <div> {error.response.data} </div>} */}
-        </form>
-        {redirect === true ? <Redirect to="/profile" /> : null}
-      </div>
+            {/* {error && error.response && <Paper> {error.response.data} </Paper>} */}
+            <Button type="submit" fullWidth variant="contained" color="primary">
+              {displayName}
+            </Button>
+          </form>
+          {redirect === true ? <Redirect to="/profile" /> : null}
+        </CardContent>
+      </Paper>
     </Container>
   )
 }

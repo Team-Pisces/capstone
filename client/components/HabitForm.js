@@ -176,7 +176,8 @@ class Habits extends React.Component {
                       disabled={
                         this.state.name === '' ||
                         this.state.goal === '' ||
-                        this.state.transactionData.length === 0
+                        this.state.transactionData.length === 0 ||
+                        parseInt(this.state.goal) > this.state.transactions
                       }
                       onClick={this.handleSubmit}
                       variant="contained"
@@ -191,7 +192,7 @@ class Habits extends React.Component {
             </Card>
           </Box>
           {this.props.transactions ? (
-            <Box width="90vw">
+            <Box paddingTop="50px" width="90vw">
               <Typography>
                 Choose transactions that relate to this habit
               </Typography>

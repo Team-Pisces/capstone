@@ -126,7 +126,7 @@ const UserProfile = props => {
   const {user} = props
   const classes = useStyles()
 
-  const [open, setOpen] = React.useState(true)
+  const [open, setOpen] = React.useState(false)
   const handleDrawerOpen = () => {
     setOpen(true)
   }
@@ -239,9 +239,9 @@ const UserProfile = props => {
             <Grid item xs={12}>
               <Paper className={classes.paper}>
                 <CardContent>
-                  <Link color="inherit" href="/habits" className={classes.view}>
+                  <Button variant="contained" color="primary" href="/habits">
                     View habits
-                  </Link>
+                  </Button>
                   <AllHabits profile={true} />
                 </CardContent>
               </Paper>
