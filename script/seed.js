@@ -40,18 +40,6 @@ async function seed() {
     })
   ])
 
-  await Habit.create({
-    name: 'Coffee',
-    goal: 10,
-    initialWeeklyAvg: 2000
-  })
-
-  await Transaction.create({
-    title: 'Week 1',
-    amount: 8,
-    date: new Date()
-  })
-
   const cody = await User.findByPk(1)
   const coffee = await Habit.findByPk(1)
   const week1 = await Transaction.findByPk(1)
