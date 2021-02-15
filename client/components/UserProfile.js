@@ -243,19 +243,6 @@ const UserProfile = props => {
                 </CardContent>
               </Paper>
             </Grid>
-            {/* Overall Chart */}
-            <Grid item xs={6}>
-              <Paper className={classes.paper}>
-                <Typography>
-                  All Weekly Spending, insert allWeekSpending component
-                </Typography>
-                <Chart />
-                <Link color="inherit" href="/habits" className={classes.view}>
-                  View details
-                </Link>
-              </Paper>
-            </Grid>
-            {/* Balance Grid */}
             <Grid item xs={12}>
               <Paper className={classes.paper}>
                 <Balance />
