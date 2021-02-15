@@ -40,13 +40,6 @@ async function seed() {
     })
   ])
 
-  const cody = await User.findByPk(1)
-  const coffee = await Habit.findByPk(1)
-  const week1 = await Transaction.findByPk(1)
-
-  await cody.addHabit(coffee)
-  await coffee.addTransaction(week1)
-
   console.log(Object.keys(User.prototype))
 
   // habit.addTransaction(transaction)
