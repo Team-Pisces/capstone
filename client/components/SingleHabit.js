@@ -1,8 +1,12 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {fetchSingleHabit} from '../store/singleHabit'
+import {fetchSingleHabit, deleteHabit} from '../store/singleHabit'
 import RedChart from './Chart'
-import {addTransaction, fetchTransactions} from '../store/transactions'
+import {
+  addTransaction,
+  fetchTransactions,
+  deleteTransactions
+} from '../store/transactions'
 import {
   Box,
   Grid,
@@ -15,16 +19,34 @@ import {
   TableCell,
   Paper,
   TableHead,
-  TableBody
+  TableBody,
+  Button
 } from '@material-ui/core'
+import {Redirect} from 'react-router-dom'
 
 class SingleHabit extends React.Component {
+  constructor() {
+    super()
+
+    this.state = {
+      redirect: null
+    }
+  }
   componentDidMount() {
     this.props.fetchSingleHabit(this.props.match.params.habitId)
     this.props.fetchTransactions(this.props.match.params.habitId)
   }
 
+  handleDelete = async id => {
+    await this.props.deleteHabit(id)
+    await this.props.deleteTransactions(id)
+    await this.setState({redirect: '/habits'})
+  }
+
   render() {
+    if (this.state.redirect) {
+      return <Redirect to={this.state.redirect} />
+    }
     let transactions = this.props.transactions || []
     if (Array.isArray(transactions[0])) {
       transactions = []
@@ -63,6 +85,16 @@ class SingleHabit extends React.Component {
                 <Typography style={{color: 'white'}} variant="h4">
                   ${goal}
                 </Typography>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  onClick={e => {
+                    console.log(e.target)
+                    this.handleDelete(this.props.habit.id)
+                  }}
+                >
+                  Delete Habit
+                </Button>
               </CardContent>
             </Card>
           </Box>
@@ -136,7 +168,9 @@ const mapDispatch = dispatch => ({
   fetchSingleHabit: id => dispatch(fetchSingleHabit(id)),
   addTransaction: (title, amount, date, habitId) =>
     dispatch(addTransaction(title, amount, date, habitId)),
-  fetchTransactions: habitId => dispatch(fetchTransactions(habitId))
+  fetchTransactions: habitId => dispatch(fetchTransactions(habitId)),
+  deleteHabit: id => dispatch(deleteHabit(id)),
+  deleteTransactions: id => dispatch(deleteTransactions(id))
 })
 
 export default connect(mapState, mapDispatch)(SingleHabit)

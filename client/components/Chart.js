@@ -30,6 +30,7 @@ class RedChart extends React.Component {
               Potential {type === 'spending' ? 'Loss' : 'Gain'}: $
               {total[30].toLocaleString()}
             </Typography>
+            <Typography variant="h6">Over 30 years</Typography>
             <VictoryChart domainPadding={10}>
               <VictoryAxis tickValues={display} />
               <VictoryBar

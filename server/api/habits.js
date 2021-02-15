@@ -38,3 +38,16 @@ router.post('/', async (req, res, next) => {
     next(err)
   }
 })
+
+router.delete('/:id', async (req, res, next) => {
+  try {
+    await Habit.destroy({
+      where: {
+        id: req.params.id
+      }
+    })
+    res.send()
+  } catch (error) {
+    next(error)
+  }
+})

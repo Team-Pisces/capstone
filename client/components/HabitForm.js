@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 import React from 'react'
 import {connect} from 'react-redux'
 import {Redirect} from 'react-router-dom'
@@ -84,7 +85,7 @@ class Habits extends React.Component {
     console.log('state -> transactions', this.state.transactionData)
     await this.props.addHabit(this.state)
     let tData = this.state.transactionData
-    let habitId = this.props.habits.length
+    let habitId = this.props.habits[this.props.habits.length - 1].id
     for (let i = 0; i < tData.length; i++) {
       let amount = Math.floor(tData[i].amount * 100)
       await this.props.addTransaction(
@@ -100,6 +101,7 @@ class Habits extends React.Component {
   }
 
   render() {
+    console.log(this.props)
     let transactions = this.props.transactions || []
     if (this.state.category !== '') {
       transactions = transactions.filter(
@@ -111,13 +113,14 @@ class Habits extends React.Component {
       ? this.props.transactions.map(t => t.category[0])
       : []
     const uniq = [...new Set(categories)]
-    const cat = uniq.map(categ => categ)
     return (
       <Box paddingTop="100px">
         {this.state.redirect ? (
           <Redirect
             to={{
-              pathname: `/habits/${this.props.habits.length}`
+              pathname: `/habits/${
+                this.props.habits[this.props.habits.length - 1].id
+              }`
             }}
           />
         ) : null}
