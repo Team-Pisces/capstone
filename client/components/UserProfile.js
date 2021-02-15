@@ -9,13 +9,11 @@ import {
   Link,
   Drawer,
   AppBar,
-  Box,
   Toolbar,
   List,
   Typography,
   Divider,
   IconButton,
-  Badge,
   TableHead,
   TableBody,
   TableCell,
@@ -27,12 +25,11 @@ import {
 } from '@material-ui/core'
 import MenuIcon from '@material-ui/icons/Menu'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
-import NotificationsIcon from '@material-ui/icons/Notifications'
 import {mainListItems} from './itemList'
 import Chart from './Chart'
 import Balance from './Balance'
 import AllHabits from './AllHabits'
-import {useDispatch, connect} from 'react-redux'
+import {connect} from 'react-redux'
 
 const drawerWidth = 240
 

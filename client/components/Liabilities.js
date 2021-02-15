@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Table, Button} from '@material-ui/core'
+import {Button} from '@material-ui/core'
 import {fetchLiabilities} from '../store/plaid'
 import {connect} from 'react-redux'
 

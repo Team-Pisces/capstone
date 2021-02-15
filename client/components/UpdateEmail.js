@@ -1,15 +1,15 @@
 import React, {useState, useEffect} from 'react'
 import {connect} from 'react-redux'
 import {updateEmail} from '../store/user'
-
-import Avatar from '@material-ui/core/Avatar'
-import Button from '@material-ui/core/Button'
-import CssBaseline from '@material-ui/core/CssBaseline'
-import TextField from '@material-ui/core/TextField'
-import Typography from '@material-ui/core/Typography'
-import {makeStyles} from '@material-ui/core/styles'
-import Container from '@material-ui/core/Container'
-import {CardContent, Paper, FormGroup} from '@material-ui/core'
+import {
+  CardContent,
+  Paper,
+  TextField,
+  Typography,
+  Container,
+  Button,
+  CssBaseline
+} from '@material-ui/core'
 import {Redirect} from 'react-router-dom'
 import {me} from '../store'
 
