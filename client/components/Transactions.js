@@ -13,12 +13,6 @@ import {
 } from '@material-ui/core'
 import Balance from './Balance'
 
-// const useStyles = makeStyles({
-//   table: {
-//     minWidth: 650,
-//   },
-// })
-
 class Transactions extends React.Component {
   componentDidMount() {
     this.props.getTransactions()
@@ -26,7 +20,6 @@ class Transactions extends React.Component {
 
   render() {
     const transactions = this.props.transactions || []
-    // const classes = useStyles()
     return (
       <Paper style={{paddingTop: '100px'}}>
         <CardContent>

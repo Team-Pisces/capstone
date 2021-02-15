@@ -45,9 +45,7 @@ class TransactionTable extends React.Component {
 
   render() {
     let date = moment(moment().format('YYYY-MM-DD'), 'YYYY-MM-DD')
-    console.log(date)
     const transactions = this.props.transactions || []
-    console.log(this.props.transactions)
 
     const columns = [
       {field: 'name', headerName: 'Name', sortable: true, width: 200},
@@ -83,7 +81,6 @@ class TransactionTable extends React.Component {
             let days = moment
               .duration(date.diff(moment(e.target.value, 'YYYY-MM-DD')))
               .asDays()
-            console.log(days)
             this.setState({range: days})
             this.props.getTransactions(days)
           }}

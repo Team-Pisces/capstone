@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import Balance from './Balance'
 import {
   Box,
   Typography,
@@ -19,7 +18,6 @@ import CardImage from '../images/undraw01.svg'
 
 export const UserHome = props => {
   const {user} = props
-  console.log(user)
   return (
     <Box width="100vw">
       {user.plaidAccessToken !== null ? (

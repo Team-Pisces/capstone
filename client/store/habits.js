@@ -26,7 +26,6 @@ export const fetchHabits = () => {
 }
 
 export const addHabit = habit => {
-  console.log(habit)
   return async dispatch => {
     try {
       const {data} = await axios.post('/api/habits', habit)

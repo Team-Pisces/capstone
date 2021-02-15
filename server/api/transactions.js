@@ -25,7 +25,7 @@ router.post('/', verifyToken, async (req, res, next) => {
       if (err) {
         res.sendStatus(403)
       } else {
-        console.log('REQ INFORMATION ', req.body.title)
+        console.log('REQ INFORMATION ', req.body.habitId)
         const transaction = await Transaction.findOrCreate({
           where: {
             title: req.body.title,
@@ -37,6 +37,20 @@ router.post('/', verifyToken, async (req, res, next) => {
         res.send(transaction)
       }
     })
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.delete('/:id', async (req, res, next) => {
+  console.log(req.params)
+  try {
+    await Transaction.destroy({
+      where: {
+        habitId: req.params.id
+      }
+    })
+    res.send()
   } catch (error) {
     next(error)
   }
