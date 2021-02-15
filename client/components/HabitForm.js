@@ -54,26 +54,6 @@ class Habits extends React.Component {
     console.log('transactions -> ', array)
   }
 
-  //handleSelect = item => {
-  //let tData = this.state.transactionData
-  //if (!item.isSelected) {
-  //  for (let i = 0; i < tData.length; i++) {
-  //    if (tData[i] === item.data) {
-  //      tData.splice(i, 1)
-  //      this.setState({
-  //        transactionData: tData
-  //      })
-  //    }
-  //  }
-  //} else {
-  //  tData.push(item.data)
-  //  this.setState({
-  //    transactionData: tData
-  //  })
-  //}
-  //console.log('Transaction data on state ----->', this.state.transactionData)
-  //}
-
   handleChange = e => {
     this.setState({
       [e.target.name]: e.target.value

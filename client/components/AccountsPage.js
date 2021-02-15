@@ -24,9 +24,7 @@ const AccountsPage = props => {
     [getAccounts]
   )
   const accounts = props.accounts || []
-  console.log(accounts)
   const classes = useStyles()
-  console.log(props)
   return (
     <div>
       <h1>Accounts:</h1>

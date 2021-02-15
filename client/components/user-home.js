@@ -19,7 +19,6 @@ import CardImage from '../images/undraw01.svg'
 
 export const UserHome = props => {
   const {user} = props
-  console.log(user)
   return (
     <Box width="100vw">
       {user.plaidAccessToken !== null ? (

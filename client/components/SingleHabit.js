@@ -88,8 +88,7 @@ class SingleHabit extends React.Component {
                 <Button
                   variant="contained"
                   color="secondary"
-                  onClick={e => {
-                    console.log(e.target)
+                  onClick={() => {
                     this.handleDelete(this.props.habit.id)
                   }}
                 >
