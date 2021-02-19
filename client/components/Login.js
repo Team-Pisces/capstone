@@ -37,7 +37,7 @@ const LogIn = props => {
                 </Typography>
                 <Box padding="20px, 20px, 20px, 20px">
                   <Typography style={{color: 'white'}}>
-                    some description about the cashed app
+                    Sign up or log in to start saving!
                   </Typography>
                 </Box>
               </CardContent>

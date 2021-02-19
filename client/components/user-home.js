@@ -55,6 +55,15 @@ export const UserHome = props => {
                   Please connect a bank account to continue
                 </Typography>
                 <Link />
+                <Typography style={{color: 'white'}} variant="h6">
+                  Just curious? Use our sandbox account:
+                </Typography>
+                <Typography style={{color: 'white'}} variant="h6">
+                  Username: user_good
+                </Typography>
+                <Typography style={{color: 'white'}} variant="h6">
+                  Password: pass_good
+                </Typography>
               </CardContent>
             </Card>
           </Box>
