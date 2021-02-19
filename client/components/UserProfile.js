@@ -223,16 +223,6 @@ const UserProfile = props => {
                 </CardContent>
               </Paper>
             </Grid>
-            {/* Chart */}
-            {/* <Grid item xs={12} md={8} lg={9}>
-              <Paper className={fixedHeightPaper}>
-              <AllHabits />
-              <Link color="inherit" href="/habits">
-              View habits
-              </Link>
-              </Paper>
-            </Grid> */}
-            {/* Habits Grid */}
             <Grid item xs={12}>
               <Paper className={classes.paper}>
                 <CardContent>
