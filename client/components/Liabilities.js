@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {Button} from '@material-ui/core'
-import {fetchLiabilities} from '../store/plaid'
+import {fetchLiabilities} from '../store/plaid2'
 import {connect} from 'react-redux'
 
 class Liabilitites extends Component {
