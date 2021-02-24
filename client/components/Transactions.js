@@ -13,7 +13,7 @@ import {
 } from '@material-ui/core'
 import Balance from './Balance'
 
-class Transactions extends React.Component {
+export class Transactions extends React.Component {
   componentDidMount() {
     this.props.getTransactions()
   }
@@ -21,7 +21,7 @@ class Transactions extends React.Component {
   render() {
     const transactions = this.props.transactions || []
     return (
-      <Paper style={{paddingTop: '100px'}}>
+      <Paper style={{paddingTop: '100px'}} test-id="transactions">
         <CardContent>
           <TableContainer component={Paper}>
             <Table aria-label="simple table">
