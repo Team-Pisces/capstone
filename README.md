@@ -4,7 +4,7 @@ Thank you for your interest in Cashed!
 
 Cashed is a web app that allows users to track their spending habits, create goals around those habits, and invest the money saved by reducing their spending. Users are encouraged to save money each week by tracking their weekly spending on particular habits. Any money that a user 'saves' relative to their average weekly spending on a given habit can be invested or saved directly from their cashed account.
 
-## Please visit our deployed site
+## Link to website
 
 http://cashed.us-east-1.elasticbeanstalk.com/
 
