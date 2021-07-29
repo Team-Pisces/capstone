@@ -45,7 +45,7 @@
     "@material-ui/data-grid": "^4.0.0-alpha.19",
     "@material-ui/icons": "^4.11.2",
     "@material-ui/lab": "^4.0.0-alpha.57",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "compound-interest-calc": "^1.0.1",
     "compression": "^1.7.3",
     "connect-session-sequelize": "^6.1.1",
